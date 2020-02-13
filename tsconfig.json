@@ -1,0 +1,27 @@
+// {
+//     "compilerOptions": {
+//         "strict": true,
+//         //"strict" 사용시 타입스크립트 사용 극대화!!
+//         "strictNullChecks": true, 
+//         //>> 옵션 추가 하면 null 과 undefined를 다르게 표현 한다
+//         "allowJs": true,
+//         "checkJs": true,
+//         // "outDir": "dist", >> 
+//         "jsx": "react",
+//         "target":"ES6", // 최신브라우저 만!!
+//         "typeRoots": ["./types", "./node_modules/@types"],//자신이 만든 d.ts를 인식하게끔 만드는 옵션!!
+//         "experimentalDecorators": true,
+//         "lib": ["ES5","ES2015","ES2020","ES2016","ES2017","ES2018","ES2019","DOM"]
+//         //lib 라이브러리 참조 함>> 브라우저 조작시 DOM 필요 다른 최신 문법 사용시 ES6이런식으로 추가하면 에러 없어짐!!
+//     },
+//     "exclude": ["*.js","./module","./collection","./types","./jscollector","./tutorial-ts","./tutorial-react/start.ts"]
+// }
+
+{
+    "compilerOptions": {
+      "strict": true,
+      "lib": ["es5", "es2015","ES2016", "dom"],
+      "jsx": "react"
+    },
+    "exclude": ["*.js","./module","./collection","./types","./jscollector","./tutorial-ts","./tutorial-react/start.ts"]
+  }
