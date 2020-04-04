@@ -1,0 +1,26 @@
+{
+    "presets": [
+        [
+            "@babel/env",
+            {
+                "targets": {
+                    "browsers": "> 5% in KR"
+                }
+            }
+        ],
+        "@babel/react"
+    ],
+    "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "react-hot-loader/babel",
+        "babel-plugin-styled-components",
+        [
+            "import",
+            {
+                "libraryName": "antd",
+                "libraryDirectory": "lib"
+            },
+            "antd"
+        ]
+    ]
+}
