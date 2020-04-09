@@ -4,7 +4,7 @@ import SubPage from './SubPage';
 import Axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux';
 
-const Counter = ({ value, onIncrement, onDecrement }) => {
+const Counter = () => {
   const { number, data } = useSelector(state => state);
   const ref = useRef();
   const ref1 = useRef();
@@ -14,15 +14,15 @@ const Counter = ({ value, onIncrement, onDecrement }) => {
     dispatch({ type: "AXIOS_FETCH_REQUEST", data: ref.current.textContent })
   }
   return (<div>
-    <button onClick={onIncrement}>
-      Increment after 1 second!!!!!!!!!!!!!
+    <button>
+      Increment after 1 !!
         </button>
     {' '}
-    <button onClick={onDecrement}>
+    <button>
       Decrement
         </button>
     <hr />
-    <SubPage value={value} />
+    {/* <SubPage/> */}
     <div>
       Clicked: {number} times
         </div>

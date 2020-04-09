@@ -1,8 +1,8 @@
 {
-  "name": "React_Templete",
-  "version": "0.0.0",
-  "description": "React + Redux(Redux-saga) + React-Router + Express   SSR Templete",
-  "main": "lib/index.js",
+  "name": "react_templete",
+  "version": "1.0.0",
+  "description": "",
+  "main": "babel.config.js",
   "scripts": {
     "backend:watch": " cross-env NODE_ENV=development webpack --watch",
     "backend:nodemon": "nodemon build/server",
@@ -10,7 +10,7 @@
     "front:node": "cross-env DEVELOP_COFIG=hot node build/server",
     "front": "concurrently \"npm run front:webpack\" \"npm run front:node\" ",
     "backend": "concurrently \"npm run backend:watch\" \"npm run backend:nodemon\" ",
-    "build":"cross-env NODE_ENV=production webpack && node build/server"
+    "build": "cross-env NODE_ENV=production webpack && node build/server"
   },
   "author": "dbals0@naver.com",
   "license": "MIT",
@@ -21,11 +21,15 @@
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
+    "normalizr": "^3.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
-    "redux-saga": "^1.1.3"
+    "redux-saga": "^1.1.3",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -34,7 +38,6 @@
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "budo": "^8.0.4",
     "nodemon": "^2.0.2",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
@@ -42,5 +45,13 @@
     "webpack-dev-server": "^3.10.3",
     "webpack-hot-middleware": "^2.25.0",
     "webpack-node-externals": "^1.7.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yumin-Kim/React_Templete.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Yumin-Kim/React_Templete/issues"
+  },
+  "homepage": "https://github.com/Yumin-Kim/React_Templete#readme"
 }

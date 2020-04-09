@@ -1,16 +1,19 @@
 import '@babel/polyfill'
 import express from 'express';
 
+import * as MarkUpRouter from './routes/Markup'; 
+
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import Counter from '../client/container/Counter';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware, { END } from 'redux-saga';
 
 import reducer from '../client/redux/reducer/reducers';
 import rootSaga from '../client/redux/saga/sagas';
+import { StaticRouter } from 'react-router';
+import Home from '../client/pages/Home';
 
 const app = express();
 app.use(express.static("build"));
@@ -26,33 +29,38 @@ if(process.env.DEVELOP_COFIG === "hot"){
     app.use(require("webpack-hot-middleware")(compiler))
 }
 
+app.use('/api/Markup',MarkUpRouter);
 
-app.get("/", async (req, res, next) => {
+app.get("*", async (req, res, next) => {
     const sagaMiddleware = createSagaMiddleware();
     const store = createStore(reducer, applyMiddleware(sagaMiddleware));
     const sagaPromise = sagaMiddleware.run(rootSaga).toPromise(); //promise로 변형
 
-    //staticRouter 에 dispatch 한 데이터 넣어서 보내기 
     //server에서 window의 데이터를 읽고 redux에 넣는 것은 못하는듯
     //서버에 staicRouter를 사용하고 context안에 데이터를 넣어서 
     //클라이언트에 보내는 방법은 this.props.staticContext를 사용하게끔
     //routes.js 파일 만들어서 동적인 라우팅 처리 
     //쿠기 사용하여 최근에 본 데이터도 추가하는 기능 구현
     //버튼 누르면 쿠키 삭제하여 최근에 본 리스트 삭제 기능
-    
-    const ReactComponent = ReactDOMServer.renderToStaticMarkup(
-            <Provider store={store}>
-                <Counter />
-            </Provider>
-    )
 
+    //req.url에따라 각기 다른 dispatch 할 수 있게끔
     store.dispatch({type:"AXIOS_FETCH_REQUEST",data:"javascript"})
     store.dispatch({type:"INCREMENT_ASYNC"})
     store.dispatch(END) //END로 dispatch 끊어버림
+
+    //redux와 req.url에 따라 분기 처리 필요!!
+    const data = {name : "ServerSide Rendering"}
+    
     try {
         await sagaPromise; //promise resolve작업
         const initialState = store.getState();
-        
+        const ReactComponent = ReactDOMServer.renderToStaticMarkup(
+            <StaticRouter location={req.url} context={data} >
+                <Provider store={store}>
+                        <Home />
+                </Provider>
+            </StaticRouter>
+        )
         res.send(`
         <!DOCTYPE html>
         <html>
@@ -61,6 +69,7 @@ app.get("/", async (req, res, next) => {
         <title>Redux-saga Sever side Rendering</title>
         <script type="text/javascript" charset="utf-8">
         window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
+        window.__INITIAL_ROUTE__ = ${JSON.stringify(data)};
         </script>
         </head>
         <body>
