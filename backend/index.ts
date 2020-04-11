@@ -10,6 +10,8 @@ import * as passport from 'passport'
 
 import userRouter from './routes/user';
 import postRouter from './routes/post';
+import postsRouter from './routes/posts';
+import hashtagRouter from './routes/hashtag';
 
 dotenv.config();
 
@@ -19,7 +21,7 @@ const app: express.Application = express();
 const devel: Boolean = process.env.NODE_ENV !== "production";
 app.set('port', devel ? 3000 : process.env.PORT)//express 내에서 변수 선언 할 수 있다
 
-sequelize.sync({ force: false })//force : true 할시 지시작 할떄 마다 계속 db 새로 생성
+sequelize.sync({ force: true })//force : true 할시 지시작 할떄 마다 계속 db 새로 생성
     .then(() => {console.log("DB compose") })
     .catch((error : Error)=>{console.error(error)})
 
@@ -59,6 +61,8 @@ app.use(passport.session());
 
 app.use('/user',userRouter);
 app.use('/post',postRouter);
+app.use('/posts',postsRouter);
+app.use('/hashtag',hashtagRouter);
 
 app.get('/', (req: express.Request, res: express.Response, next: express.NextFunction) => {
     res.send(`react NodeBird 백엔드 정상 작동`);
