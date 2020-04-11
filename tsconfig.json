@@ -23,5 +23,5 @@
       "lib": ["es5", "es2015","ES2016", "dom"],
       "jsx": "react"
     },
-    "exclude": ["*.js","./module","./collection","./types","./jscollector","./tutorial-ts","./tutorial-react/start.ts"]
+    "exclude": ["*.js","/lecture"]
   }

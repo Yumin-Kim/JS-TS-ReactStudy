@@ -236,6 +236,10 @@ interface ICard {
   att? : number;
   hp? : number;//public 아니면 에러남
 }
+class Card1 implements ICard{
+  att:number;
+}
+
 
 class Card implements ICard{ //implements 좀더 엄격하게 할려고 사용 >>public이 되는 경우 강제 해야할때 사용/실질적으로 Class를 사용하지 않으면 interface 사용!!
   //자유도 제한을 위해 public protected private
@@ -389,7 +393,7 @@ document.querySelectorAll<HTMLDivElement>('.asd').item(0)
 // 꼭 확인 할것 최신문법이여서 브라우저에 아직 적동 하지 않는다
 //모든 문법들이 익숙해지면 남의 라이브러리 확인하기
 //특피 Redux 는 TS공부할때 좋음
-//declare 없는 타입을 새로 만들때 >> d.ts에서 만들때 endientmodule??라고 부름
+//declare 없는 타입을 새로 만들때 >> d.ts에서 만들때 ambientmodule??라고 부름
 //    (///)트리플 슬래시라고하면 첨 문장에 있음(d.ts)파일 >>renference type="">>이런씩으로 참조 하고있다
 //위처럼 import 할수 있는데 안하는 이유 ? 두가지 방법이 있지만 다른 패키지를 참조 하기위해서 사용 >> 타입 만들때 사용( 자기라이브러리에 필요한 타입가지고 올때 )
 // 각 패키지마다 타입정의(d.ts)파일이 없으면 직접 타이핑 해서 만들어야함!!
