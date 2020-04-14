@@ -7,7 +7,7 @@ const backendConfig = {
   mode: dev ? 'development' : "production",
   target:"node",
   entry: {
-    server: './src/server/index.ts',
+    server: './src/server/index.tsx',
   },
   resolve: {
     extensions: ['.jsx', '.js', '.tsx', '.ts'],

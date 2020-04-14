@@ -16,12 +16,38 @@
 //     },
 //     "exclude": ["*.js","./module","./collection","./types","./jscollector","./tutorial-ts","./tutorial-react/start.ts"]
 // }
+//React Config
+// {
+//   "compilerOptions": {
+//     "strict": true,
+//     "lib": [
+//       "es5",
+//       "es2015",
+//       "ES2016",
+//       "dom"
+//     ],
+//     "jsx": "react",
+//   },
+//   "exclude": [
+//     "*.js",
+//     "./lecture"
+//   ]
+// }
+
 
 {
-    "compilerOptions": {
-      "strict": true,
-      "lib": ["es5", "es2015","ES2016", "dom"],
-      "jsx": "react",
-    },
-    "exclude": ["*.js","./lecture"]
-  }
+  "compilerOptions": {
+    "strict": true,
+    "lib": [
+      "es5",
+      "es2015",
+      "ES2016",
+      "dom"
+    ],
+  },
+  "exclude": [
+    "*.js",
+    "./lecture",
+    "./src",
+  ]
+}
