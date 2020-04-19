@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ClassProps } from './App';
 
-const Hooks = (props:ClassProps) => {
+const Hooks = (props:) => {
     return (
         <>
             <div>{props.value}</div>

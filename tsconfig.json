@@ -51,3 +51,12 @@
     "./src",
   ]
 }
+
+
+//axios 따라 만들기!!
+// {
+//   "compilerOptions": {
+//     "strict": true,
+//     "declaration": true
+//   }
+// }
