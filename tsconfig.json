@@ -38,6 +38,7 @@
 {
   "compilerOptions": {
     "strict": true,
+    "target": "ES5",
     "lib": [
       "es5",
       "es2015",
@@ -51,12 +52,3 @@
     "./src",
   ]
 }
-
-
-//axios 따라 만들기!!
-// {
-//   "compilerOptions": {
-//     "strict": true,
-//     "declaration": true
-//   }
-// }
