@@ -407,7 +407,7 @@ let x1 = { a: 1 , b : 2 , c : 3 , d : 4 };
 getProperty(x1,"a");
 getProperty(x1,"m");
 
-
+let mystr1: number = 123;
 
 
 

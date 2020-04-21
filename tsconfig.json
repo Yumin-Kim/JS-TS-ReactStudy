@@ -37,18 +37,18 @@
 
 {
   "compilerOptions": {
-    "strict": true,
+    "lib": ["es2020", "dom"],
     "target": "ES5",
-    "lib": [
-      "es5",
-      "es2015",
-      "ES2016",
-      "dom"
-    ],
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "strict": true
   },
   "exclude": [
     "*.js",
     "./lecture",
     "./src",
+    "./tsTutorial/ex0413.ts",
+    "./tsTutorial/vanillaJS_01.ts"
   ]
 }
