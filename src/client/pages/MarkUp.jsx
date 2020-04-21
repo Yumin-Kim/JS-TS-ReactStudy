@@ -10,7 +10,7 @@ class MarkUp extends Component{
         return(
             <>
             <div>Hello!!!!!!!!!</div>
-            < Draggable initialPos={{x:100 , y:200}} />
+            {/* < Draggable initialPos={{x:100 , y:200}} /> */}
             </>
         );
     }

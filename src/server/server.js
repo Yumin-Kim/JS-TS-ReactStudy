@@ -1,7 +1,7 @@
 import '@babel/polyfill'
 import express from 'express';
 
-import * as MarkUpRouter from './routes/Markup'; 
+import * as MarkUpRouter from './routes/Markup';
 
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -14,24 +14,27 @@ import reducer from '../client/redux/reducer/reducers';
 import rootSaga from '../client/redux/saga/sagas';
 import { StaticRouter } from 'react-router';
 import Home from '../client/pages/Home';
+import Html from './Html';
 
 const app = express();
 app.use(express.static("build"));
-if(process.env.DEVELOP_COFIG === "hot"){
+if (process.env.DEVELOP_COFIG === "hot") {
     console.log("Webpack Build")
     const webpack = require("webpack");
     const webpackConfig = require('../../webpack.config');
     const compiler = webpack(webpackConfig[0]);
-    app.use(require("webpack-dev-middleware")(compiler,{
-        publicPath:webpackConfig[0].output.publicPath,
-        stats:{colors:true}
+    app.use(require("webpack-dev-middleware")(compiler, {
+        publicPath: webpackConfig[0].output.publicPath,
+        stats: { colors: true }
     }))
     app.use(require("webpack-hot-middleware")(compiler))
 }
 
-app.use('/api/Markup',MarkUpRouter);
+app.use('/api/Markup', MarkUpRouter);
 
 app.get("*", async (req, res, next) => {
+
+
     const sagaMiddleware = createSagaMiddleware();
     const store = createStore(reducer, applyMiddleware(sagaMiddleware));
     const sagaPromise = sagaMiddleware.run(rootSaga).toPromise(); //promise로 변형
@@ -44,40 +47,31 @@ app.get("*", async (req, res, next) => {
     //버튼 누르면 쿠키 삭제하여 최근에 본 리스트 삭제 기능
 
     //req.url에따라 각기 다른 dispatch 할 수 있게끔
-    store.dispatch({type:"AXIOS_FETCH_REQUEST",data:"javascript"})
-    store.dispatch({type:"INCREMENT_ASYNC"})
+    store.dispatch({ type: "AXIOS_FETCH_REQUEST", data: "javascript" })
+    store.dispatch({ type: "INCREMENT_ASYNC" })
     store.dispatch(END) //END로 dispatch 끊어버림
 
     //redux와 req.url에 따라 분기 처리 필요!!
-    const data = {name : "ServerSide Rendering"}
-    
+    const data = { name: "ServerSide Rendering" }
+
     try {
         await sagaPromise; //promise resolve작업
         const initialState = store.getState();
-        const ReactComponent = ReactDOMServer.renderToStaticMarkup(
+        const renderProps = {
+            preloadState: `window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}`,
+            preloadRedux: `window.__INITIAL_ROUTE__ = ${JSON.stringify(data)}`,
+            script: "/build.js"
+        }
+
+        ReactDOMServer.renderToStaticNodeStream(
             <StaticRouter location={req.url} context={data} >
                 <Provider store={store}>
+                    <Html {...renderProps} >
                         <Home />
+                    </Html>
                 </Provider>
             </StaticRouter>
-        )
-        res.send(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-        <meta charset="UTF-8"/>
-        <title>Redux-saga Sever side Rendering</title>
-        <script type="text/javascript" charset="utf-8">
-        window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
-        window.__INITIAL_ROUTE__ = ${JSON.stringify(data)};
-        </script>
-        </head>
-        <body>
-        <div id="root">${ReactComponent}</div>
-        <script src="/build.js"></script>
-        </body>
-        </html>
-      `)
+        ).pipe(res)
     } catch (e) {
         console.log(e)
         res.status(500).send(e);
@@ -126,7 +120,7 @@ app.listen(3000, () => {
 //     console.log("\n\n");
 //     console.log("sagaPromise",sagaPromise);
 //     console.log("\n\n");
-    
+
 //     const preloadContext = {
 //         done: false, // 완료여부
 //         promises: [] // 적재된 작업들
@@ -161,7 +155,7 @@ app.listen(3000, () => {
 //     <body>
 //       <div id="root">${ReactComponent}</div>
 //       <script src="/index.js"></script>
-     
+
 //       </body>
 //       </html>
 //       `)

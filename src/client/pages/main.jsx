@@ -20,32 +20,3 @@ const Main = (props) =>{
     );
 }
 export default Main;
-
-
-// import React, { useState, useRef } from 'react'
-
-
-// class Main extends React.Component{
-//     constructor(props){
-//         super(props);
-//         let routeData;
-//         if(__isServer__){
-//             routeData = this.props.staticContext;
-//         }else{
-//             const data = window.__INITIAL_ROUTE__;
-//             routeData = data;
-//         }
-//         this.state = {
-//             routeData,
-//         }
-//     }
-//     render(){
-//         return(
-//             <>
-//             <p>StaticContext : {this.state.routeData.name}</p>
-//             <div>Main page</div>
-//             </>
-//         );
-//     }
-// }
-// export default Main;
