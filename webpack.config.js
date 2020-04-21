@@ -69,4 +69,4 @@ const frontConfig ={
   ]
 }
 
-module.exports = [frontConfig,backendConfig];
+module.exports = [frontConfig];

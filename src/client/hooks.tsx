@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { ClassProps } from './App';
+import { HooksProps } from './typedefine/type_props_state';
 
-const Hooks = (props:) => {
+const Hooks = (props : HooksProps) => {
     return (
         <>
             <div>{props.value}</div>

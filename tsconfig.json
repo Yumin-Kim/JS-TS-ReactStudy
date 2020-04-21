@@ -17,38 +17,20 @@
 //     "exclude": ["*.js","./module","./collection","./types","./jscollector","./tutorial-ts","./tutorial-react/start.ts"]
 // }
 //React Config
-// {
-//   "compilerOptions": {
-//     "strict": true,
-//     "lib": [
-//       "es5",
-//       "es2015",
-//       "ES2016",
-//       "dom"
-//     ],
-//     "jsx": "react",
-//   },
-//   "exclude": [
-//     "*.js",
-//     "./lecture"
-//   ]
-// }
-
-
 {
   "compilerOptions": {
-    "lib": ["es2020", "dom"],
-    "target": "ES5",
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
-    "strict": true
+    "strict": true,
+    "lib": [
+      "es5",
+      "es2015",
+      "ES2016",
+      "dom"
+    ],
+    "jsx": "react",
   },
   "exclude": [
     "*.js",
     "./lecture",
-    "./src",
-    "./tsTutorial/ex0413.ts",
-    "./tsTutorial/vanillaJS_01.ts"
+    "./tsTutorial",
   ]
 }
