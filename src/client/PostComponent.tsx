@@ -13,10 +13,11 @@ class PostComponent extends Component<PostProps> {
 
     render() {
         const {post} = this.props;
-        console.log("PostComponent post State",post);
+        console.log("PostComponent post State",post.length);
+        console.log(post.length)
         return (
             <>
-                {post.length !== 0 ? <h1>Comment</h1> :<h1>No comment</h1>}
+                {post.length !== undefined ? <h1>Comment</h1> :<h1>No comment</h1>}
             </>
         );
     }

@@ -5,6 +5,7 @@ import Hooks from './hooks';
 import LoginComponent from './LoginComponent';
 import PostComponent from './PostComponent';
 
+
 class App extends React.Component {
     render() {
         return (
@@ -12,11 +13,11 @@ class App extends React.Component {
                 <div>Typescript React Start!!!!!!!</div>
                 <Class value={"Hello"} text="Class Component" />
                 <Hooks value={"Hello"} text="Class Component" >Hooks component</Hooks>
-                <LoginComponent/>
-                <PostComponent/>
+                <LoginComponent />
             </>
         )
     }
 }
+
 
 export default App;

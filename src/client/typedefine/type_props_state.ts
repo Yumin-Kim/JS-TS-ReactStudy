@@ -9,6 +9,7 @@ export interface UserState{
     name:string | null;
     loginning : boolean;
     text:string | null;
+    loggined:boolean;
 }
 
 export interface PostState{

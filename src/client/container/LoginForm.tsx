@@ -1,40 +1,46 @@
 import * as React from 'react';
-import { useState, InputHTMLAttributes } from 'react';
+import { useState, useCallback } from 'react';
 import e = require('express');
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAction, loginRequest } from '../redux/action/action';
+import { InitialState } from '../typedefine/type_props_state';
 
-export const inputHooks = (value: string) :[ string , React.SetStateAction<any> ] => {
+export const inputHooks = (value: string): [string, React.SetStateAction<any>] => {
     const [state, setState] = useState(value);
-    const handler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-        setState(value);
-    }
+    const handler = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+            const { value } = e.target;
+            setState(value);
+        }, [value])
     return [state, handler];
 }
 
 const LoginForm = () => {
     const [name, onChangeName] = inputHooks("");
     const [text, onChangeText] = inputHooks("");
-
-    const onSubmitForm = (e:React.FormEvent) =>{
+    const dispath = useDispatch();
+    const { loginning } = useSelector((state: InitialState) => state.user);
+    const onSubmitForm = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(name , text);
+        console.log(name, text);
         //dispatch thunk 사용 
+        dispath(loginAction({ name, text }));
     }
-    
+
     return (
         <>
-        <h2>Redux + typescript로 구성된 Form</h2>
-        <form onSubmit={onSubmitForm} >
-            <p>
-                이름 입력!! : 
+            {loginning ? <h2>로그인 조회중</h2> : <p>로그인 해주세요!!</p>}
+            <h2>Redux + typescript로 구성된 Form</h2>
+            <form onSubmit={onSubmitForm} >
+                <p>
+                    이름 입력!! :
                 <input type="text" required value={name} onChange={onChangeName} placeholder="이름을 입력하세요!!" />
-            </p>
-            <p>
-                간단한 자기소개:
+                </p>
+                <p>
+                    간단한 자기소개:
                 <input type="text" required value={text} onChange={onChangeText} placeholder="자기 소개를 간단히 적어 보세요!!" />
-            </p>
-            <button type="submit" >제출해요!!</button>
-        </form>
+                </p>
+                <button type="submit" >제출해요!!</button>
+            </form>
         </>
     );
 }
