@@ -1,23 +1,29 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { connect } from 'react-redux'
-import { InitialState, PostState } from './typedefine/type_props_state';
+import { InitialState, PostState, CollectPost } from './typedefine/type_props_state';
 import { Dispatch } from 'redux';
 
 interface PostProps{
-    post:Array<PostState>;    
+    post: CollectPost;    
 } 
 
 
 class PostComponent extends Component<PostProps> {
 
     render() {
-        const {post} = this.props;
-        console.log("PostComponent post State",post.length);
+        const {post} = this.props.post;
+        console.log("/////////PostComponent post State",post);
         console.log(post.length)
         return (
             <>
-                {post.length !== undefined ? <h1>Comment</h1> :<h1>No comment</h1>}
+                {post.length !== 0 ? 
+                <div>
+                    <h1>Comment</h1>
+                    <ul>
+                {post.map(v=><li>작성자 : {v.name} 글 : {v.todo} 간단한 글 : {v.text}</li>)}
+                    </ul>
+                </div> :<h1>No comment</h1>}
             </>
         );
     }
@@ -28,8 +34,7 @@ const mapToState = (state: InitialState) => ({
     post:state.post
 });
 
-const mapToDispatch = (dispatch :Dispatch ) => {
-    console.log(dispatch);
-}
+const mapToDispatch = (dispatch :Dispatch ) => ({
+})
 
 export default connect(mapToState, mapToDispatch)(PostComponent);

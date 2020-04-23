@@ -9,13 +9,7 @@ const LoginComponent = () => {
     const { loggined , loginning }= useSelector((state : InitialState) => state.user);
     return(
         <>
-             
-            {!loggined ? 
-            <LoginForm/> :
-            <div>
-                <DataForm/>
-            </div>
-        }
+            {!loggined ? <LoginForm/> :<DataForm/>}
         <PostComponent/>
         </>
     );

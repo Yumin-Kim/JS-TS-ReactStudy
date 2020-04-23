@@ -16,11 +16,14 @@ export interface PostState{
     id:number | null;
     name: string;
     text:string;
+    todo:string;
 }
-
+export interface CollectPost {
+    post:Array<PostState>;
+}
 export interface InitialState{
     user: UserState;
-    post:Array<PostState>;    
+    post:CollectPost;    
 }
 
 

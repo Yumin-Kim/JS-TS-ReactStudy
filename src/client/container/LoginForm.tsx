@@ -18,7 +18,7 @@ const LoginForm = () => {
     const [name, onChangeName] = inputHooks("");
     const [text, onChangeText] = inputHooks("");
     const dispath = useDispatch();
-    const { loginning } = useSelector((state: InitialState) => state.user);
+    const { loginning , loggined } = useSelector((state: InitialState) => state.user);
     const onSubmitForm = (e: React.FormEvent) => {
         e.preventDefault();
         console.log(name, text);
@@ -28,7 +28,8 @@ const LoginForm = () => {
 
     return (
         <>
-            {loginning ? <h2>로그인 조회중</h2> : <p>로그인 해주세요!!</p>}
+            
+            {loginning ?  <h2>로그인 조회중</h2> : <p>로그인 해주세요!!</p>}
             <h2>Redux + typescript로 구성된 Form</h2>
             <form onSubmit={onSubmitForm} >
                 <p>
@@ -39,7 +40,7 @@ const LoginForm = () => {
                     간단한 자기소개:
                 <input type="text" required value={text} onChange={onChangeText} placeholder="자기 소개를 간단히 적어 보세요!!" />
                 </p>
-                <button type="submit" >제출해요!!</button>
+                <button type="submit" >로그인 !!</button>
             </form>
         </>
     );
