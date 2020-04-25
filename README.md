@@ -5,15 +5,15 @@
 
 1. first Text
 2. second Text
-3. third Text.___
+3. third Text.
 
 * Tutorial
     * Tutorial
         * Tutorial
 
-* 우리가 누구
-* 파워레인저
-
+```
+console.log()
+```
 안녕 하세요     
 연습중이요    
 
