@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { InitialState } from './typedefine/type_props_state';
+import { InitialState } from './redux/IStore';
 import LoginForm from './container/LoginForm';
 import DataForm from './container/DataForm';
 import PostComponent from './PostComponent';

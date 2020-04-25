@@ -1,4 +1,4 @@
-import { UserState } from '../../typedefine/type_props_state';
+import { UserState } from '../IStore';
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
 export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";

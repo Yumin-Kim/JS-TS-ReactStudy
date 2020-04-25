@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ClassProps } from './typedefine/type_props_state';
+import { ClassProps } from './models/type_props_state';
 
 class Class extends React.Component<ClassProps,{}>{
     constructor(props : ClassProps){

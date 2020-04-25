@@ -11,8 +11,8 @@
             * ActionType.ts - 모든 액션 타입 정의
             * IAction.ts - 동작을 정의 하는 인터 페이스 정의
         * api - API 호출을 수행 하는 기능만!! Redux와 무관!!
-        * components - Lifecycle과 관련된 파일 , 랜더링 할때 만 사용하는 파일 구성!!
-        * containers - mapStateToProps , mapDispatchToProps 사용하거나 reduxStore와 연결이 필요한 파일 구성
+        * components - Lifecycle과 관련된 파일 , 랜더링 할때 만 사용하는 파일 구성!!-- 부모 한데 받은 props만 사용하는 component들오 구성 되어있다(Dumb components)
+        * containers - mapStateToProps , mapDispatchToProps 사용하거나 reduxStore와 연결이 필요한 파일 구성 - 빈번하게 state의 변화를 주거나 dispatch를 하는 compoenent로 구성된다(smart Component)
         * config - 상수 값 과 구성 설정 관련 파일 구성(이유 모르겠음)
         * models - 우리가 정의한 state props 관련 type 파일 구성
         * reducer

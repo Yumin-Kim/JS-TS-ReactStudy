@@ -1,10 +1,3 @@
-export interface ClassProps{
-    value:string;
-    text:string;
-}
-export interface HooksProps extends ClassProps{
-    children:string;
-}
 export interface UserState{
     name:string | null;
     loginning : boolean;
@@ -18,12 +11,15 @@ export interface PostState{
     text:string;
     todo:string;
 }
+export interface CommentData {
+    user:PostState,
+    text:string;
+}
 export interface CollectPost {
     post:Array<PostState>;
+    comment:Array<CommentData>
 }
 export interface InitialState{
     user: UserState;
     post:CollectPost;    
 }
-
-

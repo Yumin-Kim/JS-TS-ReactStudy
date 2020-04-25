@@ -3,7 +3,7 @@ import { useState, useCallback } from 'react';
 import e = require('express');
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction, loginRequest } from '../redux/action/action';
-import { InitialState } from '../typedefine/type_props_state';
+import { InitialState } from '../redux/IStore';
 
 export const inputHooks = (value: string): [string, React.SetStateAction<any>] => {
     const [state, setState] = useState(value);

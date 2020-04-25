@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { InitialState } from '../typedefine/type_props_state';
+import { InitialState } from '../redux/IStore';
 import { inputHooks } from './LoginForm';
 import { LOG_IN_REQUEST, logoutAction } from '../redux/action/action';
 import { post_add, REQEUST, addPostAction } from '../redux/action/action_post';

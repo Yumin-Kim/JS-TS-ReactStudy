@@ -1,4 +1,4 @@
-import { PostState ,InitialState } from "../../typedefine/type_props_state"
+import { PostState ,InitialState } from "../IStore"
 import { Action } from "redux"
 import { post_add, REQEUST, POST_ADD, SUCCESS } from "../action/action_post";
 
