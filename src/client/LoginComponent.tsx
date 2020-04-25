@@ -6,7 +6,7 @@ import DataForm from './container/DataForm';
 import PostComponent from './PostComponent';
 
 const LoginComponent = () => {
-    const { loggined , loginning }= useSelector((state : InitialState) => state.user);
+    const { loggined  }= useSelector((state : InitialState) => state.user);
     return(
         <>
             {!loggined ? <LoginForm/> :<DataForm/>}

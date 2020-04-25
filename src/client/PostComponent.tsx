@@ -13,15 +13,13 @@ class PostComponent extends Component<PostProps> {
 
     render() {
         const {post} = this.props.post;
-        console.log("/////////PostComponent post State",post);
-        console.log(post.length)
         return (
             <>
                 {post.length !== 0 ? 
                 <div>
                     <h1>Comment</h1>
                     <ul>
-                {post.map(v=><li>작성자 : {v.name} 글 : {v.todo} 간단한 글 : {v.text}</li>)}
+                {post.map((v,id)=><li key={`${v.name}${id}`} >작성자 : {v.name} 글 : {v.todo} 간단한 글 : {v.text}</li>)}
                     </ul>
                 </div> :<h1>No comment</h1>}
             </>
