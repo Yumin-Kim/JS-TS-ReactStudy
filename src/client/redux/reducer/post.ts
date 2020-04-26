@@ -1,37 +1,79 @@
-import { PostState ,InitialState } from "../IStore"
-import { Action } from "redux"
-import { post_add, REQEUST, POST_ADD, SUCCESS } from "../action/action_post";
+import { PostState, CollectPost } from "../IStore";
+import { post_add, REQEUST, POST_ADD, SUCCESS, POST_UPDATE, post_update, ADD_POST_ID, POST_DELETE } from "../action/action_post";
 
 
-const initialState: {[key: string]: Array<PostState | null>} = {
+const initialState: CollectPost = {
     post: [],
-    comment:[],
+    comment: [],
+    updatePost: false,
+    updating: false,
+    postId: null,
 }
 
 export type InitialPostState = PostState[keyof PostState];
-
+//이렇게 data를 한번에 잡아 주면 타입 추론이 안됨
+// 각기 다르게 잡아줘야함
 interface AddPostAction {
     type: string;
-    data:Array<PostState>;
+    data: PostState;
 }
 
-const postReducer = (state = initialState,action:AddPostAction) => {
-    console.log(">>>>>>>>>>>>>> postReducer",action,state.post)
-    switch(action.type){
-        case POST_ADD[REQEUST]:{
-            return{
-                ...state
+const postReducer = (state = initialState, action: AddPostAction) => {
+    console.log("postReducer")
+    switch (action.type) {
+        case ADD_POST_ID: {
+            return {
+                ...state,
+                postId: state.post.length + 1,
             }
         }
-        case POST_ADD[SUCCESS]:{
+        case POST_ADD[REQEUST]: {
+            return {
+                ...state,
+                updatePost: true,
+            }
+        }
+        case POST_ADD[SUCCESS]: {
+            return {
+                ...state,
+                post: [...state.post, action.data],
+                updatePost: false,
+            }
+        }
+        case POST_UPDATE[REQEUST]: {
+            return {
+                ...state,
+                updating: true
+            }
+        }
+        case POST_UPDATE[SUCCESS]: {
+            const postID = state.post.findIndex(v => v.id === (action.data as unknown as PostState).id)
+            const selectPost = state.post[postID];
+            const post = [...state.post];
+            post[postID] = action.data
+            return {
+                ...state,
+                updating: false,
+                post
+            }
+        }
+        case POST_DELETE[REQEUST] :{
             return{
                 ...state,
-                post:[...state.post,action.data],
             }
         }
-        default : 
-        return state;
-    }    
+        case POST_DELETE[SUCCESS]:{
+            const deleteIndex = action.data as unknown as PostState["id"];
+            const post = [...state.post];
+            post.splice(deleteIndex,1);
+            return{
+                ...state,
+                post
+            }
+        }
+        default:
+            return state;
+    }
 }
 
 

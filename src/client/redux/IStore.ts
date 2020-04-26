@@ -6,18 +6,20 @@ export interface UserState{
 }
 
 export interface PostState{
-    id:number | null;
+    id:number;
     name: string;
     text:string;
     todo:string;
 }
-export interface CommentData {
-    user:PostState,
+export interface CommentData extends PostState {
     text:string;
 }
 export interface CollectPost {
     post:Array<PostState>;
-    comment:Array<CommentData>
+    comment:Array<CommentData>;
+    updatePost?:boolean;
+    updating:boolean;
+    postId:number|null;
 }
 export interface InitialState{
     user: UserState;

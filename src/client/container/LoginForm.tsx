@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
-import e = require('express');
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAction, loginRequest } from '../redux/action/action';
 import { InitialState } from '../redux/IStore';
@@ -21,7 +20,6 @@ const LoginForm = () => {
     const { loginning , loggined } = useSelector((state: InitialState) => state.user);
     const onSubmitForm = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(name, text);
         //dispatch thunk 사용 
         dispath(loginAction({ name, text }));
     }

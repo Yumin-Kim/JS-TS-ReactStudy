@@ -1,4 +1,3 @@
-import { Action } from "redux";
 import { InitialState, UserState } from "../IStore";
 import { LOG_IN_REQUEST, LoginSuccess, LoginFailure, LoginRequest, LOG_IN_SUCCESS, LOG_OUT_REQUEST, LogoutRequest, LogoutSuccess, LOG_OUT_SUCCESS } from "../action/action";
 //state 절대성 라이브러리 없이 구성 >> lodash 사용해서!!
@@ -13,7 +12,6 @@ type UserAction = LoginSuccess | LoginFailure | LoginRequest | LogoutRequest | L
 
 
 const userReducer = (state = initialState, action: UserAction )  => {
-    console.log("userReducer Dispatch",action);
     switch (action.type) {
         case LOG_IN_REQUEST :
             return {

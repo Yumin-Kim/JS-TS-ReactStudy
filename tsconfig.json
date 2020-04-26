@@ -26,6 +26,7 @@
       "ES2016",
       "dom"
     ],
+    "target": "ES6",
     "jsx": "react",
   },
   "exclude": [
