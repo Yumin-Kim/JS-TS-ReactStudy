@@ -20,6 +20,8 @@
 {
   "compilerOptions": {
     "strict": true,
+    // "noImplicitAny": true, //false할시 any관련 에러 무시!!
+    // "strictNullChecks": true, // false 할시 null관련 무시!! 
     "lib": [
       "es5",
       "es2015",
@@ -32,6 +34,7 @@
   "exclude": [
     "*.js",
     "./lecture",
-    "./tsTutorial",
+    "./src"
+    // "./tsTutorial",
   ]
 }

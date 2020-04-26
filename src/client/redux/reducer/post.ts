@@ -12,7 +12,9 @@ const initialState: CollectPost = {
 
 export type InitialPostState = PostState[keyof PostState];
 //이렇게 data를 한번에 잡아 주면 타입 추론이 안됨
+//action의 타입을 각각 지정하는 이유는 data즉 payload타입 추론이 거의 불가능 크게 잡으면 말이 안되딘함
 // 각기 다르게 잡아줘야함
+//타입 좁히는 방법 모르겠음
 interface AddPostAction {
     type: string;
     data: PostState;
