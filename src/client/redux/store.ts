@@ -1,6 +1,6 @@
 import { createStore, compose, applyMiddleware, AnyAction, Store, Dispatch, Action, MiddlewareAPI } from 'redux';
 import  reducer  from './reducer/index';
-import createSagaMiddleware from 'redux-saga';
+import createSagaMiddleware  from 'redux-saga';
 
 declare global {
     interface Window {

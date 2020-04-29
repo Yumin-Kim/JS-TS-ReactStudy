@@ -61,7 +61,7 @@ if ((pet as Fish).swim) {
 
 type animals = Fish | Bird;
 function isFish(pet: animals): pet is Fish {
-    return (<Fish>pet).swim !== undefined;
+    return (pet as Fish).swim !== undefined;
 }
 
 // if(isFish(pet)){
@@ -212,29 +212,86 @@ console.log("new BasicCalculator", v1);
 console.log("new ScientifiCalculator", v2);
 
 //index types 인덱스 타입을 사용하면 동적 프로퍼티이름을 사용하는 컴파일러가 검사 하도록 할수 있다
-function pluck<T,K extends keyof T>(o : T , name :K ):T[K][] {
-    return name.map( n => o[n]);
+function pluck<T, K extends keyof T>(o: T, name: K[]): T[K][] {
+    return name.map(n => o[n]);
 }
 
-interface Person_1{
-    name:string;
-    age:number;
+interface Person_1 {
+    name: string;
+    age: number;
+    sex: string
 }
 
 let Person_v = {
-    name:"Yumin",
-    age:35,
+    name: "Yumin",
+    age: 35,
 };
 
-let strings = pluck(Person_v,["name"]);
+let strings = pluck(Person_v, ["name", "age"]);
+
+type person_v_union = keyof Person_1;
+
+//새로운 연산자 
+//keyof T >> T관련되어 union타입으로 변경 "name" | "age"
+//T[K] >> Person_1["name"] >> string // Person_01["age"] >> number // >> (string | number)[]식의 결과값을 출력 하게 된다!!
+
+//Mapped Types
+//타입을 만들다보면 프로퍼티들이 선택적 프로퍼티이거나 혹은 Readonly일떄가 있습니다!!
+//한가지로 전부 매핑하는방법!!
+type Readonly_1<T> = {
+    readonly [P in keyof T]: T[P];
+}
+type Partial_1<T> = {
+    [P in keyof T]?: T[P];
+}
+type Nullable<T> = { [P in keyof T]: T[P] | null }
+
+type PersonPartial = Partial_1<Person_1>;
+type ReadonlyPerson = Readonly_1<Person_1>;
+type TutorialNULL = Nullable<Person_1>
+
+let person2: PersonPartial = { name: 'John', sex: "male" } // 모든 프로퍼티가 선택적, age 프로퍼티가 없지만 통과
+let person3: ReadonlyPerson = { name: 'Henry', age: 32, sex: 'male' }
+
+//// for in 문의 문법
+// for (변수 in 객체식) {
+//     // 문장 console.log(변수 , 객체[변수]) >> 키 , 키에 해당하는 값
+// }
+
+type Keys = 'option1' | 'option2';
+type Flags = { [K in Keys]: boolean };
+
+// interface from mapped types 언래핑 하는 방법!!
+
+function unwrapReadonly<T>(t:Readonly_1<T>) : T {
+    let result = {} as T;
+    for (const k in t) {
+        result[k] = t[k];
+    }
+    console.log(result);
+    return result;
+}
+
+let person_2 : PersonPartial = { name: "John", age: 23 };
+let person_3 : ReadonlyPerson = { name: "Henry", age: 32, sex: "male" };
+
+let unwrappedPartial : Person_1 = unwrapReadonly(person_2)
+let unwrappedReadonly : Person_1 = unwrapReadonly(person_3);
 
 
+type TypeName <T> = 
+    T extends string ? "string":
+    T extends number ? "number":
+    T extends boolean ? "boolean":
+    T extends undefined ? "undefined":
+    T extends Function ? "Function": 
+    "object";
 
-
-
-
-
-
+type T0 = TypeName<string>;
+type T1 = TypeName<"a">;
+type T2 = TypeName<true>;
+    
+    
 
 
 

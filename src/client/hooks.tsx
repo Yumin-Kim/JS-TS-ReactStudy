@@ -1,11 +1,42 @@
+import "@babel/polyfill";
+
 import * as React from 'react';
+import { useState , useEffect} from 'react';
+
 import { HooksProps } from './models/type_props_state';
+import {axiosData} from './service/api';
+//골때림!! fetch한 데이터 타이핑도 필요!!
+interface IaxiosFetchData {
+    name:string
+}
 
 const Hooks = (props : HooksProps) => {
+    const [state , setState ] = useState([]);
+// axios로 받은 데이터 state로 넘기는 방법
+    const axiosFunc = async () =>{
+        const axios = await axiosData("java");
+        setState(axios)
+    }
+    
+    useEffect(()=>{
+        console.log("HooksComponent ComponentDidMount")
+        if(state.length === 0){
+            axiosFunc();
+            console.log("실해")
+        }
+        // if(state.length !== 0){
+        //     console.log("Hello")
+        // }
+    },[state])
+    console.log("Execute Api" ,state);
     return (
         <>
             <div>{props.value}</div>
             <div>{props.text}</div>
+            <ul>
+            {state.length !== 0 && (state as IaxiosFetchData[]).map((v)=>
+            <li>{v.name}</li>) }
+            </ul>
             <h2>구현 하고 싶은 기능</h2>
             <ul>
                 <li>comment 추가/ 수정 / 삭제 </li>

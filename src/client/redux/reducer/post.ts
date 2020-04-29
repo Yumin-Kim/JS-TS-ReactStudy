@@ -21,7 +21,6 @@ interface AddPostAction {
 }
 
 const postReducer = (state = initialState, action: AddPostAction) => {
-    console.log("postReducer")
     switch (action.type) {
         case ADD_POST_ID: {
             return {
@@ -66,11 +65,29 @@ const postReducer = (state = initialState, action: AddPostAction) => {
         }
         case POST_DELETE[SUCCESS]:{
             const deleteIndex = action.data as unknown as PostState["id"];
-            const post = [...state.post];
-            post.splice(deleteIndex,1);
+            let post = [...state.post];
+            if(deleteIndex === 0){
+                post.splice(deleteIndex,1);
+                if(post.length !== 0 ){
+                    post = post.reduce((prev : PostState[] , value,id:number) : PostState[]=>{
+                        value["id"] = id;
+                        prev.push(value);
+                        return prev; 
+                    },[])
+                }
+            }else{
+                post.splice(deleteIndex,1);
+                post = post.reduce((prev : PostState[] , value,id:number) : PostState[]=>{
+                    if(deleteIndex <= value.id){
+                        value["id"] = id;
+                    }
+                    prev.push(value);
+                    return prev; 
+                },[])
+        }
             return{
                 ...state,
-                post
+                post,
             }
         }
         default:

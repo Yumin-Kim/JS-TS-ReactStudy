@@ -16,22 +16,14 @@ const DataForm = () => {
         dispatch(logoutAction());
     }
 
-    const onSubmittodo = async ( e : React.FormEvent) =>{
+    const onSubmittodo =  ( e : React.FormEvent) =>{
         e.preventDefault();
         console.log()
-        //dispatch
         if(name && text){
             dispatch(addPostAction({id : post.length,name, text , todo}));
             
         }
     }
-
-    React.useEffect(()=>{
-        console.log("ComponenetDidmount");
-        if(updatePost){
-            console.log("ComponentDidUpdate")
-        }
-    },[updatePost])
 
     return (
         <>
@@ -53,4 +45,4 @@ const DataForm = () => {
     );
 }
 
-export default DataForm;
+export default React.memo(DataForm);
