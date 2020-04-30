@@ -28,7 +28,22 @@
 ###### TypeScript 몰랐던점 정리
 * declare        
     declare 타입이 없을때 정의 하는것으로 사용함            
-    stack overflow 에서 찾은정보           
+    stack overflow 에서 찾은정보   
+    webpack Hot Middleware를 타입스크립트를 붙여서 사용중인데     
+    module.hot이라는 메소드 활용하였지만 property에서 hot does not exist에러 발생       
+    하지만 실행되었다는 것을 개발자는 알고 있다 이문제를 해결하기 위해서는  declare let module :any 선언이 필요하다        
+    만약 declare를 제거하고 선언하게 된디면 module already exist로 발생!!    
+```
+declare global{
+//error Augmentations for the global scope can only be directly nested in external modules or ambient module declarations.ts(2669)    
+//external module :import,export 를 사용하는 모듈(외부모듈) namepace (내부모듈)
+//type이 정의 되있지 않을때 직접 정의 하는 모듈 
+    interface Window{
+        //Window 객체의 타입 확장!!
+        hello:string;
+    }
+}
+```
 ###### README.md 기초 작성법
 ```
 기본적인 작성 하는 방법!!
