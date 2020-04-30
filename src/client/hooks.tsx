@@ -4,14 +4,11 @@ import * as React from 'react';
 import { useState , useEffect} from 'react';
 
 import { HooksProps } from './models/type_props_state';
-import {axiosData} from './service/api';
+import {axiosData , IgithubFetchDataType} from './service/api';
 //골때림!! fetch한 데이터 타이핑도 필요!!
-interface IaxiosFetchData {
-    name:string
-}
 
 const Hooks = (props : HooksProps) => {
-    const [state , setState ] = useState([]);
+    const [state , setState ] = useState<IgithubFetchDataType[]>([]);
 // axios로 받은 데이터 state로 넘기는 방법
     const axiosFunc = async () =>{
         const axios = await axiosData("java");
@@ -24,18 +21,16 @@ const Hooks = (props : HooksProps) => {
             axiosFunc();
             console.log("실해")
         }
-        // if(state.length !== 0){
-        //     console.log("Hello")
-        // }
     },[state])
     console.log("Execute Api" ,state);
     return (
         <>
             <div>{props.value}</div>
             <div>{props.text}</div>
+            <h2>Axios Data</h2>
             <ul>
-            {state.length !== 0 && (state as IaxiosFetchData[]).map((v)=>
-            <li>{v.name}</li>) }
+            {state.length !== 0 && (state as IgithubFetchDataType[]).map((v,id)=>
+            <li key= {`${id}${v.name}`}>{v.name}</li>) }
             </ul>
             <h2>구현 하고 싶은 기능</h2>
             <ul>

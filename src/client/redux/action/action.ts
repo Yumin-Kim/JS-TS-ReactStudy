@@ -39,7 +39,6 @@ export interface LogoutFailure {
     type: typeof LOG_OUT_FAILURE,
     data: UserState,
 }
-
 export const loginRequest = (data: { name: string, text: string }): LoginRequest => {
     return {
         type: LOG_IN_REQUEST,

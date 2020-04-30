@@ -25,7 +25,10 @@
     * webpack.dev.js
     * webpack.prod.js
 * babel.config.js || .babelrc
-
+###### TypeScript 몰랐던점 정리
+* declare        
+    declare 타입이 없을때 정의 하는것으로 사용함            
+    stack overflow 에서 찾은정보           
 ###### README.md 기초 작성법
 ```
 기본적인 작성 하는 방법!!

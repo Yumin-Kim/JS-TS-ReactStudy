@@ -10,7 +10,6 @@ export const counterActions = {
 
 type IncrementAction = ReturnType<typeof counterActions.increment>
 type DecrementAction = ReturnType<typeof counterActions.decrement>
-
 type Action = IncrementAction | DecrementAction;
 
 const counterReducer = () => {
