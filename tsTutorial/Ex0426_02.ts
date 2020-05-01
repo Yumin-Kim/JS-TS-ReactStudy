@@ -1,9 +1,26 @@
 //이해 했거나 사용해본건 표시!!!!
 
 
-// 첫번째는 교차타입입니다!
+// 첫번째는 교차타입입니다! >> intersection type 간혹 프로그래밍 하다가 중복되는 선언을 방지 하기 위해서!!
 // 다양한 타입을 하나로 결합해서 모든 기능을 갖춘 단일 타입을 얻는 방식입니다.
 // 예를 들어, Person & Serializable & Loggable은 Person,Serializable,Loggable의 모든 멤버를 가집니다.
+interface A_1 {
+    java:string;
+}
+interface B_1 {
+    javascript : string;
+}
+
+interface C_1 {
+    Phython :number;
+}
+//세가지 인터페이스를 하나로 뭉쳐서 가지고옴!!
+const intersection_1 : A_1 & B_1 & C_1 = {
+    java: "stin",
+    javascript:"stirng",
+    Phython:123,
+}
+
 function extend<First, Second>(first: First, second: Second): First & Second {
     const result: Partial<First & Second> = {};
     for (const prop in first) {

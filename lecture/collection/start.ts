@@ -371,7 +371,7 @@ class sizeL implements Big{
 //큰 클래스 에서 is를 사용하여 타입 가드 인터페이스 상속?? 받은 class에 요소가 있는지 없는지 확인 가능!!
 //넓은 타입을 좁은 타입으로 변경 가능!!>> as 안쓰는 방버!!
 function isSmall(data : Big): data is sizeL{
-  const aaa = (data as sizeL).b;//>>타입가드 안쓸거면 이렇게 해야함!!
+  const aaa = data.b;//>>타입가드 안쓸거면 이렇게 해야함!!
   console.log(aaa);
   if(data.b){
     return true;

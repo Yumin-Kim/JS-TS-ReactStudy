@@ -7,7 +7,7 @@ import { post_add, REQEUST, addPostAction, ADD_POST_ID } from '../redux/action/a
 
 const DataForm = () => {
     const { name, text, loginning } = useSelector((state: InitialState) => state.user);
-    const {post ,updatePost ,updating } = useSelector((state:InitialState)=>state.post);
+    const { post, updatePost, updating } = useSelector((state: InitialState) => state.post);
     const [todo, onChangeTodo] = inputHooks("");
     const dispatch = useDispatch();
 
@@ -16,12 +16,12 @@ const DataForm = () => {
         dispatch(logoutAction());
     }
 
-    const onSubmittodo =  ( e : React.FormEvent) =>{
+    const onSubmittodo = (e: React.FormEvent) => {
         e.preventDefault();
         console.log()
-        if(name && text){
-            dispatch(addPostAction({id : post.length,name, text , todo}));
-            
+        if (name && text) {
+            dispatch(addPostAction({ id: post.length, name, text, todo }));
+
         }
     }
 
@@ -35,7 +35,7 @@ const DataForm = () => {
             <form onSubmit={onSubmittodo}>
                 <input value={todo} onChange={onChangeTodo} placeholder="todo기능" />
                 <p>
-                    <button type="submit" >Add todo list</button> 
+                    <button type="submit" >Add todo list</button>
                 </p>
             </form>
             <p>

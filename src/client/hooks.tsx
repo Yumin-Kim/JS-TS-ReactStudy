@@ -1,36 +1,36 @@
 import "@babel/polyfill";
 
 import * as React from 'react';
-import { useState , useEffect} from 'react';
+import { useState, useEffect } from 'react';
 
 import { HooksProps } from './models/type_props_state';
-import {axiosData , IgithubFetchDataType} from './service/api';
+import { axiosData, UndefinedDataType } from './service/api';
 //골때림!! fetch한 데이터 타이핑도 필요!!
 
-const Hooks = (props : HooksProps) => {
-    const [state , setState ] = useState<IgithubFetchDataType[]>([]);
-// axios로 받은 데이터 state로 넘기는 방법
-    const axiosFunc = async () =>{
-        const axios = await axiosData("java");
-        setState(axios)
+const Hooks = (props: HooksProps) => {
+    const [state, setState] = useState<UndefinedDataType[]>([]);
+    // axios로 받은 데이터 state로 넘기는 방법
+    const axiosFunc = async () => {
+        // const axios = await axiosData("java");
+        // setState(axios)
     }
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         console.log("HooksComponent ComponentDidMount")
-        if(state.length === 0){
+        if (state.length === 0) {
             axiosFunc();
-            console.log("실해")
+            console.log("실행")
         }
-    },[state])
-    console.log("Execute Api" ,state);
+    }, [state])
+    console.log("Execute Api", state);
     return (
         <>
             <div>{props.value}</div>
             <div>{props.text}</div>
-            <h2>Axios Data</h2>
+            
             <ul>
-            {state.length !== 0 && (state as IgithubFetchDataType[]).map((v,id)=>
-            <li key= {`${id}${v.name}`}>{v.name}</li>) }
+                {state.length !== 0 && state.map((v, id) =>
+                    <li key={`${id}${v.name}`}>{v.name}</li>)}
             </ul>
             <h2>구현 하고 싶은 기능</h2>
             <ul>

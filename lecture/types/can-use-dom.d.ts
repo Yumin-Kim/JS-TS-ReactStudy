@@ -1,4 +1,7 @@
-declare module "can-use-dom"{
-    const canUseDOM : boolean;
-    export default canUseDOM;
-}
+// declare module "can-use-dom"{
+//     const canUseDOM : boolean;
+//     export default canUseDOM;
+// }
+
+
+

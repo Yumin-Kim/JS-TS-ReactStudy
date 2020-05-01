@@ -33,6 +33,12 @@
     module.hot이라는 메소드 활용하였지만 property에서 hot does not exist에러 발생       
     하지만 실행되었다는 것을 개발자는 알고 있다 이문제를 해결하기 위해서는  declare let module :any 선언이 필요하다        
     만약 declare를 제거하고 선언하게 된디면 module already exist로 발생!!    
+* namespace
+    공식 문서 참조       
+    타입을 추적하고 다른 객체와 이름 충돌을 방지하기 위해 구조 체계가 필요      
+    네임 스페이스에 다른 이름을 많이 넣는 대신 , 객체들을 하나의 네임 스페이스로 병합        
+    d.ts파일 에서 수 많은 export 들을 한번에 묶을때 export as namespace 변수명 이렇게 하면 import * as 변수명 './파일명' 이렇게 한것과 똑같다                
+    
 ```
 declare global{
 //error Augmentations for the global scope can only be directly nested in external modules or ambient module declarations.ts(2669)    
@@ -43,6 +49,10 @@ declare global{
         hello:string;
     }
 }
+
+declare module "passport-local" //사용할때 import ___ from "passport-local"이런식으로 맞춰 적어야 한다!!
+
+
 ```
 ###### README.md 기초 작성법
 ```

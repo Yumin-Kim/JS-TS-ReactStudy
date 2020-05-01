@@ -1,3 +1,4 @@
+
 export interface UserState{
     name:string | null;
     loginning : boolean;
@@ -21,7 +22,24 @@ export interface CollectPost {
     updating:boolean;
     postId:number|null;
 }
+
+export interface IComments{
+    id:number;
+    name:string;
+    text:string;
+}
+
+export interface PostToComments extends PostState {
+    comments:IComments[];
+} 
+
+export interface ICommentsData {
+    comments:Array<PostToComments>;
+    timeStamp : number | null;
+}
+
 export interface InitialState{
     user: UserState;
-    post:CollectPost;    
+    post:CollectPost; 
+    comments:ICommentsData;   
 }
