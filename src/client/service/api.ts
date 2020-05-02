@@ -36,4 +36,3 @@ export const axiosData = async (language: Language): Promise<UndefinedDataType[]
     return api.data.items;
 }
 // real-world해서 하는 api구현해보기!!
-

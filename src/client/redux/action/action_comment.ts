@@ -46,18 +46,21 @@ export interface IActionObject<T, U> {
     request: (data: U) => { type: T, data: U };
     success: (data: U) => { type: T, data: U };
     failure: (data: Error) => { type: T, data: Error };
+};
+
+interface IComments_ex extends IComments{
+    comment:string;
 }
 
-
-export const add_comment: IActionObject<string, IComments> = {
+export const add_comment: IActionObject<string, IComments_ex> = {
     request: (data) => ({ type: ADD_COMMENT.REQEUST, data }),
     success: (data) => ({ type: ADD_COMMENT.SUCCESS, data }),
     failure: (data) => ({ type: ADD_COMMENT.FAILURE, data }),
 }
 
-export const addCommentAction = (data : IComments) :ThunkAction =>{
+export const addCommentAction = (data : IComments_ex) :ThunkAction =>{
     return(dispatch) => {
-        dispatch(add_comment.request(data));
+        dispatch(add_comment.request(data ));
         try{
             setTimeout(()=>{
                 dispatch(add_comment.success(data));

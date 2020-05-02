@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { PostState } from '../redux/IStore';
 import { updateAction, deletePostAction } from '../redux/action/action_post';
 import { inputHooks } from '../container/LoginForm';
-import { ADD_COMMENT } from '../redux/action/action_comment';
+import { ADD_COMMENT, addCommentAction } from '../redux/action/action_comment';
 
 interface Props extends PostState {
     value: string[]
@@ -25,8 +25,8 @@ const TodoList = (props: Props) => {
     const { value } = props;
 
     const addComment = () =>{
-        const { id , name } = props; 
-        dispatch({type:ADD_COMMENT.REQEUST,data:{id,name,text:comment}});
+        const { id , name , text} = props; 
+        // dispatch(addCommentAction({id,name ,text,comment}));
     }
 
     //수정 삭제 dispatch 만들기 >> 대댓글 dispatch 만들기!!!!!!

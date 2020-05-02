@@ -24,9 +24,9 @@ export interface CollectPost {
 }
 
 export interface IComments{
-    id:number;
+    todoListId:number;
     name:string;
-    text:string;
+    comment:string;
 }
 
 export interface PostToComments extends PostState {
