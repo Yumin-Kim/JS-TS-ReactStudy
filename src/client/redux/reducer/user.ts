@@ -12,6 +12,7 @@ type UserAction = LoginSuccess | LoginFailure | LoginRequest | LogoutRequest | L
 
 
 const userReducer = (state = initialState, action: UserAction )  => {
+    // console.log("UserReducer")
     switch (action.type) {
         case LOG_IN_REQUEST :
             return {
