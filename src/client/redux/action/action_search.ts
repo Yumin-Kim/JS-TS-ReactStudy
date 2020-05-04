@@ -1,8 +1,9 @@
 import Axios from "axios";
+import { fetchSearchData } from '../../service/api';
 import { call , put } from 'redux-saga/effects';
 //action name
 export const SEARCH_DATA = "SEARCH_DATA" as const;
-const SEARCH = {
+export const SEARCH = {
     REQUEST: "SEARCH_DATA_REQUEST",
     SUCCESS: "SEARCH_DATA_SUCCESS",
     FAILURE: "SEARCH_DATA_FAILURE",
@@ -16,20 +17,6 @@ interface IEntity<R, S, F> {
     SUCCESS: S;
     FAILURE: F;
 
-}
-
-//api
-//axios도 여기다가 선언?? zerocho는 일단 
-const fetchSearchData = async (query: string) => {
-    const searchData = encodeURI(query);
-    console.log(query)
-    return await Axios.get(`https://dapi.kakao.com/v2/search/cafe?query=${searchData}sort=accuracy&page=1&size=50`,
-        {
-            headers:
-            {
-                Authorization: "KakaoAK 63fdc122d9df23339113f6a040a02afd"
-            }
-        })
 }
 
 //Assign action type and data >> accumulating action(request , success , failure)
@@ -64,7 +51,7 @@ export type Search_data = ReturnType<typeof search_data>;
 export const searchEntity = createEntity(SEARCH,fetchSearchData);
 
 //action type!! reducer >> (state , action : SearchAction 하면돰!!)
-type SearchAction = EntityAction<typeof searchEntity>;
+export type SearchAction = EntityAction<typeof searchEntity>;
 
 export function fetchEntity<T extends IEntityAction>({ACTION ,API} : T){
     return function* (...p : Parameters<T["API"]>){
