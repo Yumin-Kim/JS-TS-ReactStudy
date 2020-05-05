@@ -38,9 +38,10 @@ interface category_Obj {
     health: "health",
     science: "science",
     sports: "sports"
+    headLine:null
 };
 
-type CategoryType = keyof category_Obj;
+export  type CategoryType = keyof category_Obj;
 
 export const axiosData = async (language: Language): Promise<UndefinedDataType[]> => {
     const api = await Axios.get(`https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`)
@@ -60,9 +61,9 @@ export const fetchSearchData = async (query: string) => {
             }
         })
 }
-//newsAPI
-export const fetchNewsData = async (category: CategoryType | null) => {
-    return await Axios.get(`http://newsapi.org/v2/top-headlines?country=kr${category !==null ? `&category=${category}` : '' }&apiKey=bde26f5d5c254b03928f44cbe1ec7c67`)
+//newsAPI >> API에 redux saga를 추가하는 이유는 api 요청하는 동안 다른 데이터변회을 위해서
+export const fetchNewsData = async (category: CategoryType) => {
+    return await Axios.get(`http://newsapi.org/v2/top-headlines?country=kr${category !== "headLine" ? `&category=${category}` : '' }&apiKey=bde26f5d5c254b03928f44cbe1ec7c67`)
     // return await Axios.get("http://newsapi.org/v2/top-headlines?country=kr&category=technology&apiKey=bde26f5d5c254b03928f44cbe1ec7c67")
 }
 
