@@ -25,15 +25,15 @@ exports.validateSignupData = (data) => {
 
     return {
         errors,
-        vaild:Object.keys(errors).length === 0 ? true : false,
+        vaild: Object.keys(errors).length === 0 ? true : false,
     }
 
 }
 
-exports.validateLoginData = (userData)=>{
-    
+exports.validateLoginData = (userData) => {
+
     let errors = {};
-    
+
     if (isEmpty(userData.email)) { errors.email = "Must not be empty "; }
     if (isEmpty(userData.password)) errors.password = "Must not be empty";
 
@@ -41,12 +41,26 @@ exports.validateLoginData = (userData)=>{
 
     return {
         errors,
-        vaild:Object.keys(errors).length === 0 ? true : false,
+        vaild: Object.keys(errors).length === 0 ? true : false,
     }
 
 }
 
+exports.reduceUserDetails = (data) => {
+    let userDetails = {};
 
+    if (!isEmpty(data.bio.trim())) userDetails.bio = data.bio;
+    
+    if (!isEmpty(data.website.trim())) {
+        if (data.website.trim().substring !== "http") {
+            userDetails.website = `http://${data.website.trim()}`;
+        } else userDetails.website = data.website;
+    }
+    
+    if (!isEmpty(data.location.trim())) userDetails.location = data.location;
+    
+    return userDetails;
+}
 
 
 

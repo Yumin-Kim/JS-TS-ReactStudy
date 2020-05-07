@@ -12,14 +12,14 @@ module.exports = (req, res, next) => {
     admin.auth().verifyIdToken(idToken)
         .then(decodeToken => {
             req.user = decodeToken;
-            console.log(decodeToken);
             return db.collection("users")
                 .where("userId", "==", req.user.uid)
                 .limit(1)
                 .get();
         })
         .then(data => {
-            req.user.handle = data.docs[0].data().handle
+            req.user.handle = data.docs[0].data().handle;
+            req.user.imageUrl = data.docs[0].data().imageUrl;
             return next();
         })
         .catch(error => {
