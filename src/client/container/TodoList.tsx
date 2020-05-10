@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { PostState } from '../redux/IStore';
 import { updateAction, deletePostAction } from '../redux/action/action_post';
-import { inputHooks } from '../container/LoginForm';
+import { inputHooks } from './LoginForm';
 import { ADD_COMMENT, addCommentAction } from '../redux/action/action_comment';
 
 interface Props extends PostState {

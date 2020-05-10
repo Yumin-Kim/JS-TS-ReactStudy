@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { InitialState } from './redux/IStore';
 import LoginForm from './container/LoginForm';
 import DataForm from './container/DataForm';
-import PostComponent from './PostComponent';
+import PostComponent from './components/PostComponent';
 
 const LoginComponent = () => {
     const { loggined  }= useSelector((state : InitialState) => state.user);

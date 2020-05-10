@@ -4,7 +4,7 @@ import * as express from 'express';
 //React 
 import * as React from  'react';
 import {renderToString} from 'react-dom/server'
-import App from '../client/App';
+import App from '../client/page/App';
 
 const dev = process.env.NODE_ENV !== "production";
 

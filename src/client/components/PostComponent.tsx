@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { PureComponent } from 'react';
 import { connect } from 'react-redux'
-import { InitialState, PostState, CollectPost } from './redux/IStore';
+import { InitialState, PostState, CollectPost } from '../redux/IStore';
 import { Dispatch } from 'redux';
-import TodoList from './components/TodoList';
+import TodoList from '../container/TodoList';
 
 interface PostProps{
     post: CollectPost;    

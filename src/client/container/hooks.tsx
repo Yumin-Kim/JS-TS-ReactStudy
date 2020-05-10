@@ -4,12 +4,12 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Axios from 'axios';
 
-import { HooksProps } from './models/type_props_state';
-import { axiosData, UndefinedDataType, fetchNewsData, CategoryType } from './service/api';
-import { inputHooks } from "./container/LoginForm";
+import { HooksProps } from '../models/type_props_state';
+import { axiosData, UndefinedDataType, fetchNewsData, CategoryType } from '../service/api';
+import { inputHooks } from "./LoginForm";
 import { useDispatch, useSelector } from "react-redux";
-import { search_data } from "./redux/action/action_search";
-import { InitialState } from "./redux/IStore";
+import { search_data } from "../redux/action/action_search";
+import { InitialState } from "../redux/IStore";
 //골때림!! fetch한 데이터 타이핑도 필요!!
 
 const Hooks = (props: HooksProps) => {
