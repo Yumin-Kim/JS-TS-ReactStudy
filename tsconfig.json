@@ -17,25 +17,52 @@
 //     "exclude": ["*.js","./module","./collection","./types","./jscollector","./tutorial-ts","./tutorial-react/start.ts"]
 // }
 //React Config
+// {
+//   "compilerOptions": {
+//     "strict": true,
+//     "noImplicitAny": true, //false할시 any관련 에러 무시!!
+//     "strictNullChecks": true, // false 할시 null관련 무시!! 
+//     "moduleResolution": "node",//모듈에서 부터 찾도록 해주는 설정인데 기본 값은 classic으로 상대경로 보다 확장하는 "node"를 사용해준다!!
+//     "lib": [
+//       "es5",
+//       "es2015",
+//       "ES2016",
+//       "dom"
+//     ],
+//     "target": "ES6",
+//     "jsx": "react",
+//   },
+//   "exclude": [
+//     "*.js",
+//     "./lecture",
+//     "./src",
+//     "./tsTutorial",
+//   ]
+// }
 {
+  "compileOnSave": false, //IDE에 설정하면 저장시 지정된 tsconfig,json에 대한 모든 파일을 생성한다 
   "compilerOptions": {
     "strict": true,
-    "noImplicitAny": true, //false할시 any관련 에러 무시!!
-    "strictNullChecks": true, // false 할시 null관련 무시!! 
-    "moduleResolution": "node",//모듈에서 부터 찾도록 해주는 설정인데 기본 값은 classic으로 상대경로 보다 확장하는 "node"를 사용해준다!!
-    "lib": [
-      "es5",
-      "es2015",
-      "ES2016",
-      "dom"
-    ],
-    "target": "ES6",
+    "target": "ES5",
+    "module": "commonjs",
+    "sourceMap": false,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressExcessPropertyErrors": true,
+    "outDir": "wwwroot/js",
     "jsx": "react",
+    "lib": [
+      "ES2015",
+      "ES2016",
+      "ES2017",
+      "DOM"
+    ],
   },
   "exclude": [
-    "*.js",
+    "./node_modules",
     "./lecture",
-    // "./src"
-    "./tsTutorial",
+    "./src",
+    "./tsTutorial"
   ]
 }
