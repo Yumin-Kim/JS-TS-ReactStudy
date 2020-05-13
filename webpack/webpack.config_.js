@@ -69,7 +69,7 @@ const optimization = {
 
 const output = {
     filename: "[name].bundle.js",
-    path: path.resolve(__dirname + "../wwroot/js/"),
+    path: path.resolve( "wwroot"),
     pathinfo: true,
 }
 
