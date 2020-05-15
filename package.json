@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon dist/server",
     "webpack": "cross-env NODE_ENV=development webpack-dev-server --hot --progress",
-    "build": "cross-env NODE_ENV=development  webpack --config webpack/webpack.config_.js"
+    "build": "cross-env NODE_ENV=development  webpack --config config/webpack.config_.js",
+    "build:anlayze": "cross-env NODE_ENV=production BUNDLE_AMALYZE=true webpack --config config/webpack.config_.js",
+    "dev": "webpack-dev-server --config config/webpack.config_.js --hot"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "@babel/preset-env": "^7.9.6",
     "@redux-saga/types": "^1.1.0",
     "@types/express": "^4.17.6",
+    "@types/lodash": "^4.14.150",
     "@types/node": "^13.13.5",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
@@ -28,6 +30,7 @@
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "immer": "^5.3.6",
+    "lodash": "^4.17.15",
     "pm2": "^4.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -54,7 +57,9 @@
     "raw-loader": "^4.0.1",
     "react-hot-loader": "^4.12.21",
     "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
     "webpack": "^4.43.0",
+    "webpack-bundle-analyzer": "^3.7.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0",
     "webpack-node-externals": "^1.7.2"

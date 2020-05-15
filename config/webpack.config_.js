@@ -1,9 +1,12 @@
 //Resolve environment and import
 const environment = process.env.NODE_ENV;
+const isAnalyze = process.env.BUNDLE_AMALYZE !== "undefined";
+
 const autoprefixer = require("autoprefixer");
 const webpack = require("webpack");
 const MiniCssExtractplugin = require("mini-css-extract-plugin");
 const htmlPlugin = require("html-webpack-plugin");
+const BundelAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 const path = require("path");
 //Entry
@@ -11,7 +14,7 @@ const entry = {
     "main": ["./source/main.site.scss","./source/main.site.ts"]
 }
 
-
+const devEnv = environment !== "production";
 //why need to exclude node_modules in webpack
 //First
 //Nearly all packages are written in js not in ts, it is not going to harm if we include node_modules
@@ -42,12 +45,13 @@ const _module = {
             test: /\.site.scss$/,
             // exclude: ["node_modules", "0-bourbon", "1-neat", "2-base"],
             use: [
+                devEnv ? "style-loader":
                 {
                     loader: MiniCssExtractplugin.loader,
                     options: {
                         hmr: environment === "development" ? true : false,
                     }
-                }, "css-loader", "sass-loader"
+                },"css-loader", "sass-loader"
             ]
         }
     ]
@@ -69,7 +73,7 @@ const optimization = {
 
 const output = {
     filename: "[name].bundle.js",
-    path: path.resolve( "wwroot"),
+    path: path.resolve( "public"),
     pathinfo: true,
 }
 
@@ -86,8 +90,15 @@ const plugins = [
         chunkname: '[id].css',
         ignoreOrder: false,
     }),
-    new htmlPlugin(),
+    new htmlPlugin({
+        template:'./index.html'
+    }),
+    
 ]
+
+if(!devEnv && isAnalyze ){
+    plugins.push(new BundelAnalyzerPlugin())
+}
 
 const resolve = {
     extensions: [".ts", ".js", ".jsx", ".tsx", ".css", "scss"]
