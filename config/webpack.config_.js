@@ -7,11 +7,13 @@ const webpack = require("webpack");
 const MiniCssExtractplugin = require("mini-css-extract-plugin");
 const htmlPlugin = require("html-webpack-plugin");
 const BundelAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const LoadablePlugin = require("@loadable/webpack-plugin");
 
 const path = require("path");
 //Entry
 const entry = {
-    "main": ["./source/main.site.scss","./source/main.site.ts"]
+    index: "./source/example/index.tsx",
+    another: "./source/example/App.tsx"
 }
 
 const devEnv = environment !== "production";
@@ -27,6 +29,7 @@ const _module = {
         {
             test: /\.(tsx||ts)?$/,
             loader: 'awesome-typescript-loader',
+            exclude:/node_modules/,
             options: {
                 useBabel: true,
                 babelCore: "@babel/core",
@@ -36,14 +39,14 @@ const _module = {
             }
         }, {
             test: /\.component.scss$/,
-            // exclude: ["node_modules", "0-bourbon", "1-neat", "2-base"],\ㅊ
+            exclude:/node_modules/,
             use: [
                 "raw-loader",//this module can import   to the transforming txt file
                 "sass-loader"
             ]
         }, {
             test: /\.site.scss$/,
-            // exclude: ["node_modules", "0-bourbon", "1-neat", "2-base"],
+            exclude:/node_modules/,
             use: [
                 devEnv ? "style-loader":
                 {
@@ -60,29 +63,23 @@ const _module = {
 const optimization = {
     splitChunks: {
         cacheGroups: {
-            commons: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: "common",
-                    chunks: "all"
-               }
-            }
+            react: { test: /[\\/]node_modules[\\/]((react).*)[\\/]/, name: "react", chunks: "all" },
+            commons: { test: /[\\/]node_modules[\\/]((?!react).*)[\\/]/, name: "common", chunks: "all" }
         }
     }
-
+}
 
 
 const output = {
     filename: "[name].bundle.js",
     path: path.resolve( "public"),
-    pathinfo: true,
 }
 
-if (environment === "production") {
-    output.filename = "[name].bundle.min.js";
-    output.pathinfo = false;
-} else if (environment === "development") {
-    output.publicPath = "/js/";
-}
+// if (environment === "production") {
+//     output.filename = "[name].bundle.min.js";
+//     output.pathinfo = false;
+// } else if (environment === "development") {
+// }
 
 const plugins = [
     new MiniCssExtractplugin({
@@ -91,9 +88,9 @@ const plugins = [
         ignoreOrder: false,
     }),
     new htmlPlugin({
-        template:'./index.html'
+        template:'./config/index.html'
     }),
-    
+    new LoadablePlugin()
 ]
 
 if(!devEnv && isAnalyze ){
@@ -105,11 +102,14 @@ const resolve = {
 }
 
 module.exports = {
-    mode: environment === "development" ? "development" : "production",
+    mode: environment ,
     entry,
     output,
     resolve,
     plugins,
     optimization,
+    performance:{
+        hints:false
+    },
     module: _module,
 }

@@ -7,20 +7,20 @@ const exampleFilter = filter(example,(e)=>{
     return e === "one"
 })
 
-ReactDOM.render<any>(<App/>,document.querySelector("root"));
+ReactDOM.render(<App/>,document.querySelector("root"));
 
 
-function App{
+function App(){
     return (
         <>
             <h1>Page 1 </h1>
-
+            <Home value={exampleFilter} />
         </>
     );
 }
 
 
-const Home = () =>{
+const Home : React.FC<{value:string[]}> = (props) => {
     return (
         <div>Hello</div>
     );
