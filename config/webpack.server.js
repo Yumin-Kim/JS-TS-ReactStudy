@@ -15,17 +15,20 @@ const devServer = {
 };
 //code spliting variable
 const optimization = {
-        splitChunks: {
-            cacheGroups: {
-                react: { test: /[\\/]node_modules[\\/]((react).*)[\\/]/, name: "react", chunks: "all" },
-                commons: { test: /[\\/]node_modules[\\/]((?!react).*)[\\/]/, name: "common", chunks: "all" }
-            }
+    splitChunks: {
+        cacheGroups: {
+            react: { test: /[\\/]node_modules[\\/]((react).*)[\\/]/, name: "react", chunks: "all" },
+            commons: { test: /[\\/]node_modules[\\/]((?!react).*)[\\/]/, name: "common", chunks: "all" }
         }
     }
+}
 
 module.exports = {
     mode: environment,
-    entry: "./React_Project_Templete/src/server/server.tsx",
+    entry: { 
+        server: "./React_Project_Templete/src/server/server.tsx" 
+    },
+    node:false,
     target: "node",
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx"],
@@ -36,17 +39,10 @@ module.exports = {
             use: ['babel-loader', "ts-loader"],
         }]
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new HTMLWebpackPlugin({
-            filename: 'index.html',
-            template: "./React_Project_Templete/public/index.dev_.html"
-        })
-    ],
-    ouput:{
-        path:path.resolve(__dirname,'../React_Project_Templete/build'),
-        filename:"[name].js",
-        chunckFilename:"[name].js",
+    output: {
+        path: path.resolve(__dirname, 'build'),
+        filename: "[name].js",
+        chunkFilename: "[name].bundle.js",
     },
-    external:[nodeExternals()],
+    externals: [nodeExternals()],
 }

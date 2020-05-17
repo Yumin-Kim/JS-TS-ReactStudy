@@ -19,13 +19,13 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new HTMLWebpackPlugin({
-            filename: 'index.html',
-            template: "./React_Project_Templete/public/index.dev_.html"
-        })
+        // new HTMLWebpackPlugin({
+        //     filename: 'index.html',
+        //     template: "./React_Project_Templete/public/index.dev_.html"
+        // })
     ],
     output:{
-        path:path.resolve(__dirname,'../React_Project_Templete/build'),
+        path:path.resolve(__dirname,'build'),
         filename:'[name].js',
         publicPath:'/',
     }

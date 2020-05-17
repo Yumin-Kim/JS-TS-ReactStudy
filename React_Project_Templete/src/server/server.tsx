@@ -1,63 +1,87 @@
-import * as path from 'path';
-
+require("@loadable/babel-plugin")
+import * as path from "path";
 import * as express from 'express';
-
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { ChunkExtractor } from '@loadable/server';
 
 import App from '../client/App';
 
 const app = express();
 
 if (process.env.NODE_ENV !== "production") {
-    const webpack = require("webpack");
-    const webpackconfig = require("../../../config/webpack.client.js");
+  const webpack = require("webpack");
+  const webpackConfig = require('../../../config/webpack.dev.js')[0]
 
-    const webpackDevMiddleware = require('webpack-dev-middleware');
-    const webpackHotMiddleware = require("webpack-hot-middleware");
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require("webpack-hot-middleware");
 
-    const compiler = webpack(webpackconfig);
+  const compiler = webpack(webpackConfig);
 
-    app.use(
-        webpackDevMiddleware(compiler)
-    );
+  app.use(
+    webpackDevMiddleware(compiler)
+  );
 
-    app.use(webpackHotMiddleware(compiler));
+  app.use(webpackHotMiddleware(compiler));
 
 }
 
-app.use(express.static(path.resolve(__dirname)));
+app.use(express.static("build"));
+const pathR = path.resolve(__dirname);
+const pathR1 = path.resolve(__dirname,"build");
+const pathR2 = path.resolve(__dirname,"/build");
+const path123 = path.resolve("config/build")
+
 
 app.get('*', (req, res, next) => {
+  const nodeStats = path.join(path123, './node/loadable-stats.json');
+  const webStats = path.join(path123, './web/loadable-stats.json');
+  const nodeExtractor = new ChunkExtractor({ statsFile: nodeStats });
+  const { default: App } = nodeExtractor.requireEntrypoint();
+  const webExtractor = new ChunkExtractor({ statsFile: webStats });
 
-    const context = {};
-    const helmet = Helmet.renderStatic();
-    const html = renderToString(
-        <StaticRouter location={req.url} context={context} >
-            <App />
-        </StaticRouter>
-    )
+  // const store = createStore();
+  console.log(webExtractor.getLinkTags());
+  console.log(webExtractor.getStyleTags());
+  console.log(webExtractor.getScriptTags());
 
-    res.set('content-type', 'text/html');
-    res.send(`
+  const context = {};
+  const jsxTag = webExtractor.collectChunks(
+    // <Provider>
+    <StaticRouter location={req.url} context={context} >
+      <App />
+    </StaticRouter>
+    // </Provider>
+  )
+  const html = renderToString(jsxTag);
+  const helmet = Helmet.renderStatic();
+    console.log(helmet.title.toString());
+   
+
+  res.set('content-type', 'text/html');
+  res.send(`
     <!DOCTYPE html>
       <html lang="en">
         <head>
           <meta name="viewport" content="width=device-width, user-scalable=no">
           <meta name="google" content="notranslate">
           ${helmet.title.toString()}
+          ${webExtractor.getLinkTags()}
+          ${webExtractor.getStyleTags()}
         </head>
         <body>
           <div id="root">${html}</div>
-          <script type="text/javascript" src="main.js"></script>
+          ${webExtractor.getScriptTags()}
         </body>
       </html>
   `);
 })
 
-app.listen(3003,()=>{
-    console.log("Server started http://localhost:3003");
+app.listen(3000, () => {
+  console.log("Server started http://localhost:3003");
 })
 

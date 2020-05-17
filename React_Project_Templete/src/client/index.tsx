@@ -1,12 +1,24 @@
 import * as React from 'react';
 import { hydrate } from 'react-dom';
-import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import { loadableReady } from '@loadable/component';
+import { Provider } from 'react-redux';
 
-const rootElement = document.querySelector("#root");
+import GlobalStyle from './style/GlobalStyle';
+import App from './App';
 
-hydrate(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
-    , rootElement);
+loadableReady(()=>{
+    const rootElement = document.querySelector("#root");
+    hydrate(
+        <BrowserRouter>
+        <>
+            <GlobalStyle/>
+            <App />
+        </>
+        </BrowserRouter>
+        , rootElement);    
+});
+
+if (module.hot) {
+    module.hot.accept();
+  }
