@@ -15,7 +15,7 @@ const app = express();
 
 if (process.env.NODE_ENV !== "production") {
   const webpack = require("webpack");
-  const webpackConfig = require('../../../config/webpack.dev.js')[0]
+  const webpackConfig = require('../../../config/webpack.client.js')[0]
 
   const webpackDevMiddleware = require('webpack-dev-middleware');
   const webpackHotMiddleware = require("webpack-hot-middleware");
@@ -30,16 +30,17 @@ if (process.env.NODE_ENV !== "production") {
 
 }
 
-app.use(express.static("build"));
+app.use(express.static(path.resolve(__dirname)));
 const pathR = path.resolve(__dirname);
-const pathR1 = path.resolve(__dirname,"build");
-const pathR2 = path.resolve(__dirname,"/build");
+const pathR1 = path.resolve(__dirname, "build");
+const pathR2 = path.resolve(__dirname, "/build");
 const path123 = path.resolve("config/build")
 
+console.log(pathR);
 
 app.get('*', (req, res, next) => {
-  const nodeStats = path.join(path123, './node/loadable-stats.json');
-  const webStats = path.join(path123, './web/loadable-stats.json');
+  const nodeStats = path.resolve(__dirname, './node/loadable-stats.json');
+  const webStats = path.resolve(__dirname, './web/loadable-stats.json');
   const nodeExtractor = new ChunkExtractor({ statsFile: nodeStats });
   const { default: App } = nodeExtractor.requireEntrypoint();
   const webExtractor = new ChunkExtractor({ statsFile: webStats });
@@ -59,8 +60,8 @@ app.get('*', (req, res, next) => {
   )
   const html = renderToString(jsxTag);
   const helmet = Helmet.renderStatic();
-    console.log(helmet.title.toString());
-   
+  console.log(helmet.title.toString());
+
 
   res.set('content-type', 'text/html');
   res.send(`

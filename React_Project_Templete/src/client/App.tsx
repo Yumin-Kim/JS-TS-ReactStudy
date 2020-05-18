@@ -3,17 +3,12 @@ import { PureComponent } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
 
-import Loadable from '@loadable/component';
+import loadable from '@loadable/component';
 
-// import Header from './components/Header';
-// import News from './components/News'
-// import Home from './page/Home';
-// import Footer from './page/Footer';
-
-const Header = Loadable(()=> import(/* webpackChunkName: "Header" */ './components/Header') );
-const News = Loadable(()=> import(/* webpackChunkName: "News" */ './components/News') );
-const Home = Loadable(()=> import(/* webpackChunkName: "Home" */ './page/Home') );
-const Footer = Loadable(()=> import(/* webpackChunkName: "Footer" */ './page/Footer') );
+const Header = loadable(()=> import( './components/Header') );
+const News = loadable(()=> import( './components/News') );
+const Home = loadable(()=> import( './page/Home') );
+const Footer = loadable(()=> import( './page/Footer') );
 
 class App extends PureComponent {
     render() {
@@ -37,3 +32,6 @@ class App extends PureComponent {
 }
 
 export default App;
+
+
+

@@ -8,12 +8,13 @@
     "build": "cross-env NODE_ENV=development  webpack --config config/webpack.config_.js",
     "build:anlayze": "cross-env NODE_ENV=development BUNDLE_AMALYZE=true webpack --config config/webpack.config_.js",
     "dev": " cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config_.js --hot",
-    "start": "npm run build:dev && node ./config/build/server.js",
+    "start": "npm run build:prod && node ./config/build/server.js",
     "start:webpack": "webpack --config config/webpack.dev.js && node config/build/node/main",
     "start:wds": "webpack-dev-server --env=dev --profile --colors",
     "build:dev": "cross-env NODE_ENV=development npm run build:client && cross-env NODE_ENV=development npm run build:server",
     "build:server": "webpack --config config/webpack.server.js --progress --profile --colors",
-    "build:client": "webpack --config config/webpack.client.js --progress --profile --colors"
+    "build:client": "webpack --config config/webpack.client.js --progress --profile --colors",
+    "build:prod": "cross-env NODE_ENV=production webpack --config config/webpack.client.js && cross-env NODE_ENV=production webpack --config config/webpack.server.js"
   },
   "author": "",
   "license": "ISC",
