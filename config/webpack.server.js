@@ -13,15 +13,6 @@ const devServer = {
     // publicPath: "/",
     historyApiFallback: true
 };
-//code spliting variable
-const optimization = {
-    splitChunks: {
-        cacheGroups: {
-            react: { test: /[\\/]node_modules[\\/]((react).*)[\\/]/, name: "react", chunks: "all" },
-            commons: { test: /[\\/]node_modules[\\/]((?!react).*)[\\/]/, name: "common", chunks: "all" }
-        }
-    }
-}
 
 module.exports = {
     mode: environment,

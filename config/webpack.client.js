@@ -3,10 +3,10 @@ const webpack = require("webpack");
 const nodeExternals = require("webpack-node-externals");
 const LoadablePlugins = require("@loadable/webpack-plugin");
 const MiniCssExtractPlugins = require("mini-css-extract-plugin");
-const createStyledComponentsTransformer = require("typescript-plugin-styled-components").default
+const createStyledComponentsTransformer = require("typescript-plugin-styled-components").default//
 
 const devMode = process.env.NODE_ENV !== "production";
-const styledComponentsTransformer = createStyledComponentsTransformer();
+const styledComponentsTransformer = createStyledComponentsTransformer();//
 const hotMiddlewareScript = 'webpack-hot-middleware/client?name=web&path=/__webpack_hmr&timeout=20000&reload=true';
 
 const getEntryPoint = target => {
@@ -16,7 +16,7 @@ const getEntryPoint = target => {
 
 const getConfig = target => ({
     mode: devMode ? 'development' : "production",
-    name: target,
+    name: target,// Used when loading multiple configurations.
     target,
     entry: getEntryPoint(target),
     output: {
