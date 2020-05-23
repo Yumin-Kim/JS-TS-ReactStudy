@@ -9,14 +9,14 @@ function isWebTarget(caller) {
   module.exports = api => {
     const web = api.caller(isWebTarget);
     const webpack = api.caller(isWebpack);
-  
+    console.log("Babel-conig-js")
     return {
       presets: [
         '@babel/preset-react',
         [
           '@babel/preset-env',
           {
-            useBuiltIns: web ? 'entry' : undefined, //polyfill을 쓰는 여부 "usage"사용시 polyfil 자동으로 추가
+            useBuiltIns: web ? 'usage' : undefined, //polyfill을 쓰는 여부 "usage"사용시 polyfil 자동으로 추가
             targets: !web ? { node: 'current' } : undefined, //웹 브라우저 환경(ie,chrome) 이나 node 환경에 따라 최적화 다르게 
             modules: webpack ? false : 'commonjs',
           },

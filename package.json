@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "webpack": "cross-env NODE_ENV=development webpack-dev-server --hot --progress",
+    "webpack:client": "webpack-dev-server --env.dev --env.client --config webpack/webpack.config.js --hot",
+    "webpack:server": "webpack --env.dev --env.server --config webpack/webpack.config.js",
     "build": "cross-env NODE_ENV=development  webpack --config config/webpack.config_.js",
     "build:anlayze": "cross-env NODE_ENV=development BUNDLE_AMALYZE=true webpack --config config/webpack.config_.js",
     "dev": " cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config_.js --hot",
@@ -73,6 +74,7 @@
     "@types/webpack-hot-middleware": "^2.25.3",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.1.0",
+    "core-js": "^2.6.11",
     "css-loader": "^3.5.3",
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",
