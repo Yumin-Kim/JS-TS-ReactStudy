@@ -1,10 +1,14 @@
 import { RouteProps, LinkProps } from 'react-router-dom';
-import Home from '../pages/Home';
-import Contents from '../pages/Contents';
-import ContentMemo from '../components/ContentMemo';
-import ContentMovie from '../components/ContentMovie';
-import ContentCalendar from '../components/ContentCalendar';
-import ContentService from '../components/ContentService';
+import loadable from '@loadable/component';
+//loadable/component는 종속적인 관계를 이루는 파일 내에서 import가 필요함!!
+//@loadable/component need to be imported in a file that has dependent relationship. 
+const Home = loadable(()=>import(/* webpackChunkName: "HEllo" */'../pages/Home'));
+const Contents = loadable(()=>import('../pages/Contents'));
+const ContentMemo = loadable(()=>import("../components/ContentMemo"));
+const ContentMovie = loadable(()=>import("../components/ContentMovie"));
+const ContentCalendar = loadable(()=>import("../components/ContentCalendar"));
+const ContentService = loadable(()=>import("../components/ContentService"));
+
 
 type routesType = RouteProps & { name:string}; 
 

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "webpack": "webpack --env.dev --env.client --config webpack/webpack.config.js ",
     "webpack:client": "webpack-dev-server --env.dev --env.client --config webpack/webpack.config.js --hot",
     "webpack:server": "webpack --env.dev --env.server --config webpack/webpack.config.js",
     "build": "cross-env NODE_ENV=development  webpack --config config/webpack.config_.js",
