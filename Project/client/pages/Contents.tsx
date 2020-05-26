@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ContentRoutes, IRouteType } from '../utils/routes';
+import { Helmet } from 'react-helmet';
 
 export const Custom_Link = styled(Link)`
     border:1px solid aqua;
@@ -18,6 +19,9 @@ const Contents: FC<RouteProps> = (props) => {
 
     return (
         <>
+        <Helmet>
+            <title>Contents</title>
+        </Helmet>
             <h1>Contents Component</h1>
             {ContentRoutes.map(({ to, name }, idx) =>
                 <Custom_Link key={`${idx}_${name}`} to={`${url}${to}`}>{name}</Custom_Link>

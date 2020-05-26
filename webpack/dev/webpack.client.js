@@ -19,6 +19,13 @@ const getEntry = (target) => {
     return [hotMiddlewareScript,"./Project/client/index.tsx"]
 }
 
+//what does "publicPath" in webpack
+//example : "/assets/" >> server root : http://server/ 
+//By using /assets/, the app will find webapack assets at: http//server/assets.
+//Under the hood , every urls that webpack encounter will be re-written to begin with "/assets".
+// src ="picture.jpg" >> http://server/assets/picture.jpg
+//src = "/img/picture.jpg" >> http://server/assets/img/picture.jpg
+
 const getConfig = (target) => ({
     mode: 'development',
     entry: getEntry(target),
@@ -58,7 +65,7 @@ const getConfig = (target) => ({
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, `build/${target}`),
-        publicPath: "http://localhost:3000/web/",
+        publicPath: "/web/",
         libraryTarget: target === "node"  ? "commonjs2" : undefined
     }
 })

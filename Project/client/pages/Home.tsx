@@ -1,5 +1,6 @@
 import * as React from 'react'
 import HomeSection from '../components/HomeSection'
+import {Helmet} from 'react-helmet';
 
 export interface SectionDataType {
     contentTitle: string;
@@ -25,7 +26,10 @@ const sectionData :SectionDataType[]  = [
 const Home = () => {
     return (
         <>
-            <h1>Home Component!</h1>
+            <Helmet>
+                <title>Home</title>
+            </Helmet>
+            <h1>Home Component!!!!</h1>
             {sectionData.map((v, idx)=>
                 <section key={`${idx}_${v.contentTitle}`} >
                     <HomeSection {...v} />

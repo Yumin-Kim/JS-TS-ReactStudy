@@ -1,0 +1,206 @@
+{
+  "errors": [
+    "[at-loader] \u001b[31m./node_modules/@types/react-native/globals.d.ts\u001b[39m:40:15 \n    TS2300: \u001b[31mDuplicate identifier 'FormData'.\u001b[39m",
+    "[at-loader] \u001b[31m./node_modules/@types/react-native/globals.d.ts\u001b[39m:112:14 \n    TS2300: \u001b[31mDuplicate identifier 'RequestInfo'.\u001b[39m",
+    "[at-loader] \u001b[31m./node_modules/@types/react-native/globals.d.ts\u001b[39m:254:14 \n    TS2300: \u001b[31mDuplicate identifier 'XMLHttpRequestResponseType'.\u001b[39m",
+    "[at-loader] \u001b[31m./node_modules/@types/react-native/globals.d.ts\u001b[39m:259:15 \n    TS2300: \u001b[31mDuplicate identifier 'URLSearchParams'.\u001b[39m",
+    "[at-loader] \u001b[31m./node_modules/@types/react-native/globals.d.ts\u001b[39m:323:15 \n    TS2300: \u001b[31mDuplicate identifier 'AbortSignal'.\u001b[39m",
+    "[at-loader] \u001b[31m./node_modules/@types/react-native/globals.d.ts\u001b[39m:336:15 \n    TS2300: \u001b[31mDuplicate identifier 'AbortController'.\u001b[39m"
+  ],
+  "warnings": [],
+  "version": "4.43.0",
+  "hash": "283106a8945d3ba68963",
+  "publicPath": "",
+  "outputPath": "C:\\WebProject\\lecture\\TSlecture\\public",
+  "assetsByChunkName": {
+    "another": "another.bundle.js",
+    "common": "common.bundle.js",
+    "index": "index.bundle.js",
+    "react": "react.bundle.js"
+  },
+  "assets": [
+    {
+      "name": "another.bundle.js",
+      "size": 15375,
+      "chunks": [
+        "another"
+      ],
+      "chunkNames": [
+        "another"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "common.bundle.js",
+      "size": 137480,
+      "chunks": [
+        "common"
+      ],
+      "chunkNames": [
+        "common"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "index.bundle.js",
+      "size": 17368,
+      "chunks": [
+        "index"
+      ],
+      "chunkNames": [
+        "index"
+      ],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "index.html",
+      "size": 385,
+      "chunks": [],
+      "chunkNames": [],
+      "info": {},
+      "emitted": false
+    },
+    {
+      "name": "react.bundle.js",
+      "size": 1027301,
+      "chunks": [
+        "react"
+      ],
+      "chunkNames": [
+        "react"
+      ],
+      "info": {},
+      "emitted": false
+    }
+  ],
+  "filteredAssets": 0,
+  "entrypoints": {
+    "index": {
+      "chunks": [
+        "react",
+        "common",
+        "index"
+      ],
+      "assets": [
+        "react.bundle.js",
+        "common.bundle.js",
+        "index.bundle.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "another": {
+      "chunks": [
+        "react",
+        "common",
+        "another"
+      ],
+      "assets": [
+        "react.bundle.js",
+        "common.bundle.js",
+        "another.bundle.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "namedChunkGroups": {
+    "index": {
+      "chunks": [
+        "react",
+        "common",
+        "index"
+      ],
+      "assets": [
+        "react.bundle.js",
+        "common.bundle.js",
+        "index.bundle.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    },
+    "another": {
+      "chunks": [
+        "react",
+        "common",
+        "another"
+      ],
+      "assets": [
+        "react.bundle.js",
+        "common.bundle.js",
+        "another.bundle.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "logging": {
+    "webpack.buildChunkGraph.visitModules": {
+      "entries": [],
+      "filteredEntries": 2,
+      "debug": false
+    }
+  },
+  "children": [
+    {
+      "errors": [],
+      "warnings": [],
+      "publicPath": "",
+      "outputPath": "C:\\WebProject\\lecture\\TSlecture\\public",
+      "assetsByChunkName": {
+        "HtmlWebpackPlugin_0": "__child-HtmlWebpackPlugin_0"
+      },
+      "assets": [
+        {
+          "name": "__child-HtmlWebpackPlugin_0",
+          "size": 4731,
+          "chunks": [
+            "HtmlWebpackPlugin_0"
+          ],
+          "chunkNames": [
+            "HtmlWebpackPlugin_0"
+          ],
+          "info": {},
+          "emitted": false
+        }
+      ],
+      "filteredAssets": 0,
+      "entrypoints": {
+        "HtmlWebpackPlugin_0": {
+          "chunks": [
+            "HtmlWebpackPlugin_0"
+          ],
+          "assets": [
+            "__child-HtmlWebpackPlugin_0"
+          ],
+          "children": {},
+          "childAssets": {}
+        }
+      },
+      "namedChunkGroups": {
+        "HtmlWebpackPlugin_0": {
+          "chunks": [
+            "HtmlWebpackPlugin_0"
+          ],
+          "assets": [
+            "__child-HtmlWebpackPlugin_0"
+          ],
+          "children": {},
+          "childAssets": {}
+        }
+      },
+      "logging": {
+        "webpack.buildChunkGraph.visitModules": {
+          "entries": [],
+          "filteredEntries": 2,
+          "debug": false
+        }
+      },
+      "children": [],
+      "name": "HtmlWebpackCompiler"
+    }
+  ]
+}

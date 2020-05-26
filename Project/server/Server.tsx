@@ -22,7 +22,9 @@ if (process.env.NODE_ENV !== "production") {
     const WDM = require("webpack-dev-middleware");
     const WHM = require("webpack-hot-middleware");
 
-    app.use(WDM(compiler));
+    app.use(WDM(compiler,{
+      publicPath:webpackConfig.output.publicPath
+    }));
     app.use(WHM(compiler));
 
 }

@@ -5,6 +5,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { loadableReady } from '@loadable/component';
 
+
 const rootElements = document.querySelector("#root");
 loadableReady(()=>{
     ReactDOM.render(
