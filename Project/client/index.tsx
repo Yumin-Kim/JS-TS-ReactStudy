@@ -3,11 +3,13 @@ import * as ReactDOM from 'react-dom';
 
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import { loadableReady } from '@loadable/component';
 
 const rootElements = document.querySelector("#root");
-
-ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
-    , rootElements);
+loadableReady(()=>{
+    ReactDOM.render(
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+        , rootElements);
+})

@@ -7,6 +7,7 @@
     "webpack": "webpack --env.dev --env.client --config webpack/webpack.config.js ",
     "webpack:client": "webpack-dev-server --env.dev --env.client --config webpack/webpack.config.js --hot",
     "webpack:server": "webpack --env.dev --env.server --config webpack/webpack.config.js",
+    "webpack:finally": "npm run webpack && npm run webpack:server && node webpack/dev/build/server",
     "build": "cross-env NODE_ENV=development  webpack --config config/webpack.config_.js",
     "build:anlayze": "cross-env NODE_ENV=development BUNDLE_AMALYZE=true webpack --config config/webpack.config_.js",
     "dev": " cross-env NODE_ENV=development webpack-dev-server --config config/webpack.config_.js --hot",

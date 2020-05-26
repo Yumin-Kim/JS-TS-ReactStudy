@@ -25,7 +25,7 @@ const sectionData :SectionDataType[]  = [
 const Home = () => {
     return (
         <>
-            <h1>Home Component</h1>
+            <h1>Home Component!</h1>
             {sectionData.map((v, idx)=>
                 <section key={`${idx}_${v.contentTitle}`} >
                     <HomeSection {...v} />

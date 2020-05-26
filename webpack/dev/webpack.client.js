@@ -16,14 +16,7 @@ const hotMiddlewareScript = 'webpack-hot-middleware/client?name=web&path=/__webp
 
 const getEntry = (target) => {
     if (target === "node") return ["./Project/client/App.tsx"];
-    else return ["./Project/client/index.tsx"]
-}
-
-const validConfigPlugins = (target) => {
-    return target === "web" ? [new LoadablePlugins(), new HTMLWebpackPlugin({
-        filename:"index.html",
-        template:path.resolve(__dirname,"../public/index.html"),
-    })] : [new LoadablePlugins()]
+    return [hotMiddlewareScript,"./Project/client/index.tsx"]
 }
 
 const getConfig = (target) => ({
@@ -49,7 +42,7 @@ const getConfig = (target) => ({
             ]
         }]
     },
-    plugins: validConfigPlugins(target),
+    plugins:target === "web" ? [new webpack.HotModuleReplacementPlugin(),new LoadablePlugins()] : [new LoadablePlugins()],
     optimization: {
         splitChunks: {
             cacheGroups: {
@@ -64,9 +57,9 @@ const getConfig = (target) => ({
     },
     output: {
         filename: "[name].js",
-        chunkFilename: '[id].js',
         path: path.resolve(__dirname, `build/${target}`),
-        publicPath: "/web/",
+        publicPath: "http://localhost:3000/web/",
+        libraryTarget: target === "node"  ? "commonjs2" : undefined
     }
 })
 
