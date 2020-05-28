@@ -70,3 +70,4 @@ const frontConfig ={
 }
 
 module.exports = [frontConfig];
+
