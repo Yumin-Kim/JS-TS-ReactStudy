@@ -26,6 +26,7 @@
             purpose: 'maskable'
         }
     ]
-}```
+}
+```
 
 ## connect PWA Firebase 
