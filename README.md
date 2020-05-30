@@ -27,6 +27,6 @@
         }
     ]
 }
-    ```
+```
 
 ## connect PWA Firebase 
