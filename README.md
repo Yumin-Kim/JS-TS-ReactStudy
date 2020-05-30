@@ -37,7 +37,8 @@
     * navigator의 내장 객체인것을 확인할 수 있다(navigator라는 전역 객체를 통해 사용자의 브라우저 정보를 확인 할 수 있다)   
     * if( 'ServiceWorker' in navigator) {  } 를 활용하여 사용자의 브라우저 전역 객체인 navigator 안에 'ServiceWorker'있는지 확인하여 로직이 작동 되도록 한다 ( 아직까지는 크롬 브라우저에서만 작동한다 ) >> ServiceWorker는 Promise를 callBack 하는것을 기억!! 
     * ServiceWorker 의 수면 주기 install >> Activated >> Idel >> Fetch,message
-    * SSR환경시 process.browser을 활용하여 browser에서 작동하도록 로직을 구성해야한다    
+    * SSR환경시 process.browser을 활용하여 browser에서 작동하도록 로직을 구성해야한다 
+    * sw.js >> register 할 파일 구성이 필요하다(workbox-webpack-plugin)   
 * PushManager
     *
 ## connect PWA Firebase 
