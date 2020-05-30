@@ -3,8 +3,8 @@
 * HTTPS 사용
 * Mainfest.json 작성
     * 작성 하는 방법      
-    ```
-        {
+```
+{
     name: 'My Progressive Web App',
     short_name: 'MyPWA',
     description: 'My awesome Progressive Web App!',
@@ -26,7 +26,6 @@
             purpose: 'maskable'
         }
     ]
-}
-```
+}```
 
 ## connect PWA Firebase 
