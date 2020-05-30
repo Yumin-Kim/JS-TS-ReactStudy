@@ -2,6 +2,7 @@
 ## PWA 정리
 * HTTPS 사용
 * Mainfest.json 작성
+    * asd
     * 작성 하는 방법      
 ```
 {
@@ -10,7 +11,7 @@
     description: 'My awesome Progressive Web App!',
     background_color: '#ffffff',
     crossorigin: 'use-credentials', //can be null, use-credentials or anonymous
-    gcm_sender_id :"592650319409", 
+    gcm_sender_id :"firebase >> cloud messaging >> sendler ID", 
     icons: [
         {
             src: path.resolve('src/image/Icon.png'),
@@ -27,6 +28,6 @@
         }
     ]
 }
-```
-
+```  
+* asd
 ## connect PWA Firebase 
