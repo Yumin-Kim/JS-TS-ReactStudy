@@ -40,5 +40,5 @@
     * SSR환경시 process.browser을 활용하여 browser에서 작동하도록 로직을 구성해야한다 
     * sw.js >> register 할 파일 구성이 필요하다(workbox-webpack-plugin)   
 * PushManager
-    *
+    * 
 ## connect PWA Firebase 

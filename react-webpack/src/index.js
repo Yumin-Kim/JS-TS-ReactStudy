@@ -17,8 +17,16 @@ var firebaseConfig = {
   };
   firebase.initializeApp(firebaseConfig);
 
-
-
+var options = {
+    body: 'This notification has data attached to it that is printed ' +
+      'to the console when it\'s clicked.',
+    tag: 'data-notification',
+    data: {
+      time: new Date(Date.now()).toString(),
+      message: 'Hello, World!'
+    }
+  };
+  
 ReactDOM.render(<Root />, document.getElementById('root'))
 
 if ('serviceWorker' in navigator) {
@@ -49,6 +57,7 @@ if ('serviceWorker' in navigator) {
                 Notification.requestPermission().then(p => {
                     console.log(p)
                 })
+                registration.showNotification('Notification with Data', options);
             })
             .catch(e => {
                 console.log('SW registration failed: ', e)
