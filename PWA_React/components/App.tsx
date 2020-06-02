@@ -1,8 +1,12 @@
 import * as  React from 'react'
+import { initPush, validate } from '../utils/serviceWorkerConfig';
 
 const App = () =>{
+
+    
     return(
         <>
+        <button onClick={initPush} >subscribe</button>
         <h1>
             Hello
         </h1>

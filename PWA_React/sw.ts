@@ -11,53 +11,76 @@ const cacheList = [
 
 type SelfReturnType = "INSTALL" | "Activate" | any;
 
-const log = (msg : SelfReturnType) => {
+const log = (msg: SelfReturnType) => {
   console.log(`[ServiceWorker ${_version}] ${msg}`);
 }
 
 
-self.addEventListener('install',()=>{
+self.addEventListener('install', () => {
   (self as any).skipWaiting();
   log("INSTALL");
-  caches.open(cacheName).then((cache)=>{
-    log("Cache app shell");
-    console.log("Caches Parmas",cache);
-    return cache.addAll(cacheList);
-  })
+  // caches.open(cacheName).then((cache) => {
+  //   log("Cache app shell");
+  //   console.log("Caches Parmas", cache);
+  //   return cache.addAll(cacheList);
+  // })
 })
-self.addEventListener("activate",(event:any)=>{
+self.addEventListener("activate", (event: any) => {
 
   log("Activate");
-  event.waitUntil(
-    caches.keys()
-      .then(keyList=>{
-        return Promise.all(keyList.map(key=>{
-          if(key !== cacheName){
-            log("Removing old cache"+key);
-            return caches.delete(key);
-          }
-        }))
-      })
-      .catch((error)=>{
-        console.error(error);
-      })
-  )
-  
+  // event.waitUntil(
+  //   caches.keys()
+  //     .then(keyList => {
+  //       return Promise.all(keyList.map(key => {
+  //         if (key !== cacheName) {
+  //           log("Removing old cache" + key);
+  //           return caches.delete(key);
+  //         }
+  //       }))
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     })
+  // )
+
 })
-self.addEventListener('fetch',(event : any )=>{
+self.addEventListener('fetch', (event:any ) => {
   log("Fetch");
   // if(event.request.url.indexOf('.jpg') !== -1){
   //     event.respondWith(fetch('./image/image2.jpg'))
   // }
-  event.respondWith(
-    caches.match(event.requset).then(response=>{
-      return response || fetch(event.request);
-    })
-  )
+  // event.respondWith(
+  //   caches.match(event.requset).then(response => {
+  //     return response || fetch(event.request);
+  //   })
+  // )
 })
 
+self.addEventListener("push",(event:any)=>{
+  console.log(event.data)
+  log(`Push ${event.data.text()}`);
 
-  precacheAndRoute((self as any).__WB_MANIFEST);
+  const title = "My PMA";
+  const options = {
+    body : event.data.text()
+  };
+
+  event.waitUntil((self as any).registration.showNotification(title, options));
+  
+})
+
+self.addEventListener('notificationclick', function(event : any) {
+  log('Push clicked');
+
+  event.notification.close();
+  console.log(event);
+  
+  // event.waitUntil(
+  //   clients.openWindow('https://github.com/leegeunhyeok/pwa-example')
+  // );
+});
+
+precacheAndRoute((self as any).__WB_MANIFEST);
 
 
 //기존 v1이 등록 되고 설치 된다 그후 skipWaiting되고 클릭하여 풀게되면 activate 실행되고 
