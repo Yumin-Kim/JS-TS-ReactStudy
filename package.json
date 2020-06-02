@@ -9,6 +9,7 @@
     "webpack:server": "webpack --env.dev --env.server --config webpack/webpack.config.js",
     "webpack:finally": "npm run webpack && npm run webpack:server && node webpack/dev/build/server",
     "pwa:build": "webpack-dev-server --env.pwa --env.config --config webpack/webpack.config.js --hot",
+    "pwa:dev": "webpack --env.pwa --env.config --config webpack/webpack.config.js",
     "pwa:start": " cross-env NODE_ENV=production webpack --env.pwa --env.config --config webpack/webpack.config.js",
     "build": "cross-env NODE_ENV=development  webpack --config config/webpack.config_.js",
     "build:anlayze": "cross-env NODE_ENV=development BUNDLE_AMALYZE=true webpack --config config/webpack.config_.js",
@@ -43,6 +44,7 @@
     "@types/redux": "^3.6.0",
     "@types/redux-saga": "^0.10.5",
     "@types/styled-components": "^5.1.0",
+    "@types/workbox-precaching": "^4.3.0",
     "autoprefixer": "^9.7.6",
     "axios": "^0.19.2",
     "can-use-dom": "^0.1.0",
@@ -63,7 +65,8 @@
     "redux-saga": "^1.1.3",
     "styled-components": "^5.1.0",
     "typescript": "^3.9.2",
-    "typescript-plugin-styled-components": "^1.4.4"
+    "typescript-plugin-styled-components": "^1.4.4",
+    "workbox-precaching": "^5.1.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -76,6 +79,7 @@
     "@types/webpack-dev-middleware": "^3.7.1",
     "@types/webpack-env": "^1.15.2",
     "@types/webpack-hot-middleware": "^2.25.3",
+    "@types/workbox-webpack-plugin": "^5.1.1",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.1.0",
     "core-js": "^2.6.11",
@@ -96,6 +100,8 @@
     "webpack-dev-middleware": "^3.7.2",
     "webpack-dev-server": "^3.11.0",
     "webpack-hot-middleware": "^2.25.0",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "webpack-pwa-manifest": "^4.2.0",
+    "workbox-webpack-plugin": "^5.1.3"
   }
 }
