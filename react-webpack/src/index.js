@@ -45,10 +45,17 @@ if ('serviceWorker' in navigator) {
                         // Prevent the mini-infobar from appearing on mobile
                         e.preventDefault();
                         // Stash the event so it can be triggered later.
-                        console.log(e);
-                        deferredPrompt = e;
+                        window.PromptEvent = e;
+                        e.prompt();
+                        e.userChoice.then(x=>{
+                            alert(a);
+                        })
+                        .catch(error=>{
+                            alert(error);
+                        })
+                        alert("Install window.PromptEvent");
                         // Update UI notify the user they can install the PWA
-                        showInstallPromotion();
+                        // showInstallPromotion();
                     });
                     console.log('Subscription successful, Subscription endpoint:', sub.endpoint);
                 }).catch(function (error) {
@@ -57,7 +64,7 @@ if ('serviceWorker' in navigator) {
                 Notification.requestPermission().then(p => {
                     console.log(p)
                 })
-                registration.showNotification('Notification with Data', options);
+                registration.showNotification('Notification with Data', {body:"Hello"});
             })
             .catch(e => {
                 console.log('SW registration failed: ', e)
