@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "react-1fdf4",
+    "ssr": "fir-example-1783e",
+    "ssrapp": "fir-example-1783e"
+  }
+}
