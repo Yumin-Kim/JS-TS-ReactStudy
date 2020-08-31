@@ -42,7 +42,7 @@
 {
   "compileOnSave": false, //IDE에 설정하면 저장시 지정된 tsconfig,json에 대한 모든 파일을 생성한다 
   "compilerOptions": {
-    // "strict": true,
+    "strict": true,
     // "target": "esnext",
     // "module": "esnext",
     // "sourceMap": false,
@@ -54,6 +54,7 @@
     // "moduleResolution": "node",
     // "jsx": "react",
     // "lib": [
+      "module": "commonjs",  
     //   "ES2015",
     //   "ES2016",
     //   "ES2017",
@@ -64,9 +65,8 @@
         "noEmitOnError": true,
         "removeComments": true,
         "sourceMap": false,
-        "target": "es6",
-        "lib": [ "es2015", "webworker" ,"DOM"],
-        "jsx": "react"
+        "moduleResolution": "node", 
+        "lib": [ "es2015"],
   },
   "exclude": [
     "./node_modules",
