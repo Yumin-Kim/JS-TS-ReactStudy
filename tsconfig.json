@@ -36,37 +36,26 @@
 //     "*.js",
 //     "./lecture",
 //     "./src",
-//     "./tsTutorial",
+//     "./webpack",
 //   ]
 // }
 {
   "compileOnSave": false, //IDE에 설정하면 저장시 지정된 tsconfig,json에 대한 모든 파일을 생성한다 
   "compilerOptions": {
     "strict": true,
-    // "target": "esnext",
-    // "module": "esnext",
-    // "sourceMap": false,
-    // "removeComments": true,
-    // "noImplicitAny": true,
-    // "strictNullChecks": true,
-    // "noImplicitThis": false,
-    // "suppressExcessPropertyErrors": true,
-    // "moduleResolution": "node",
-    // "jsx": "react",
-    // "lib": [
-      "module": "commonjs",  
-    //   "ES2015",
-    //   "ES2016",
-    //   "ES2017",
-    //   "WebWorker",
-    //   "DOM"
-    // ],
-        "noImplicitAny": false,
-        "noEmitOnError": true,
-        "removeComments": true,
-        "sourceMap": false,
-        "moduleResolution": "node", 
-        "lib": [ "es2015"],
+    "target": "es5",
+    "module": "commonjs",  
+      "lib": [
+      "ES2015",
+      "ES2016",
+      "ES2017",
+    ],
+    "outDir": "./build",
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": true,
+    "sourceMap": false,
+    "moduleResolution": "node",
   },
   "exclude": [
     "./node_modules",
@@ -79,6 +68,13 @@
     "*.js",
     "./Project",
     "./source",
-    "./React_Project_Templete"
+    "./React_Project_Templete",
+    "./webpack",
+    "./config",
+    "./IOT_Server_Firebase",
+    "./public",
+    "./PWA_React",
+    "./TSSchoolLecture",
+    "./src",
   ]
 }
