@@ -32,7 +32,7 @@
         function CompareScore() {
             let grade, check = false;
             const TotalScore = Array(3).fill("").reduce((prev, curPrompt, curInd) => {
-                curVal = Number(prompt("asd"))
+                curVal = Number(prompt(`${curInd+1}번째 성적을 적어주세요!!`))
                 return prev + curVal;
             }, 0)
             const ResultScore = TotalScore / 3;
@@ -59,7 +59,7 @@
                         grade = "F";
                 }
             }, 0)
-            document.write(`받은 성적의 합계 : ${TotalScore}<br> 받은 평균값은 : ${ResultScore}<br> 받은 성적은 ${grade}`);
+            document.write(`받은 성적의 합계 : ${TotalScore}<br> 받은 평균값은 : ${ResultScore}<br> 받은 성적은 : ${grade}`);
         }
         window.onload = () => {
             CompareNumber();
