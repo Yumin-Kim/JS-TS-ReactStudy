@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>201610309</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+    <script>
+        let data;
+        let DataList = new Array();
+        const IncorrectData = "q";
+        const comment = "테이블에 입력할 데이터를 입력해주세요!! 최소 3글자입니다!!";
+        const ReComment = "세글자만 입력하세요";
+
+        function typeCheckingFunc(target) {
+            return Object.prototype.toString.call(target).slice(8, -1);
+        }
+        function CharFilterFunc(data) {
+            const CheckingData = data.match(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣 | a-z]/g);
+            if (CheckingData !== null)
+                if (CheckingData.length === data.length)
+                    if (CheckingData.length > 2)
+                        return true;
+                    else
+                        return false
+        }
+        function CreateTableReCursiveFunc(text) {
+            data = prompt(text);
+            if (data !== IncorrectData.toUpperCase() && data !== IncorrectData) {
+                if (CharFilterFunc(data)) {
+                    DataList.push(data);
+                    CreateTableFunc(comment);
+                }
+                else
+                    CreateTableFunc(ReComment);
+            }
+            if (data !== IncorrectData.toUpperCase() && data !== IncorrectData)
+                return;
+        }
+        function CreateTableFunc(text) {
+            do {
+                data = prompt(text);
+                if (data !== IncorrectData.toUpperCase() && data !== IncorrectData) {
+                    if (CharFilterFunc(data)) {
+                        DataList.push(data);
+                        CreateTableFunc(comment)
+                    }
+                    else
+                        CreateTableFunc(ReComment);
+                }
+            }
+            while (data !== IncorrectData.toUpperCase() && data !== IncorrectData)
+        }
+
+        // CreateTableFunc("테이블에 입력할 데이터를 입력해주세요!! 최소 3글자입니다!!");
+        CreateTableReCursiveFunc(comment);
+        document.write("<table>")
+        document.write("<tr><th>번호</th> <th>이름</th></tr>")
+        DataList.forEach((value, index) => document.write(`<tr><td>${index+1}</td> <td>${value}</td></tr>`));
+        document.write("</table>")
+    </script>
+   
+</head>
+
+<body>
+</body>
+
+</html>
