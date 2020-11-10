@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>201610309</title>
+    <script>
+        let output;
+        function login({Id,password}){
+            const Collect_UserData = {
+                Id : "admin",
+                password:"1234"
+            };
+            if(Id === Collect_UserData.Id && password === Collect_UserData.password)
+                output.textContent  = `${Collect_UserData.Id}님 안녕하세요`;
+            else
+                output.textContent  = "sorry";
+        }
+    
+            window.onload = () =>{
+                output = document.querySelector(".output");
+                const myForm = document.forms["userComment"];
+                myForm.addEventListener("submit",function(e){
+                    e.preventDefault();
+                    const Data = {
+                        Id : this.elements["newId"].value,
+                        password : this.elements["newPassword"].value,
+                    };
+                    login(Data);
+                    this.elements["newId"].value = "";
+                    this.elements["newPassword"].value = "";
+                });
+            }
+    </script>
+</head>
+<body>
+    <form action="" method="" name ="userComment">
+        <input type="text" placeholder="아이디입력" name ="newId" />
+        <input type="password" placeholder="비밀번호" name="newPassword" />
+        <input type="submit" value="onSubmit">
+    </form>
+    <p class="output"></p>
+    <a href="https://hashcode.co.kr/questions/5692/%EA%B0%95%EC%9D%98-4-11-queryselector%EC%97%90-%EC%84%B1%EB%8A%A5%EB%AC%B8%EC%A0%9C%EC%97%90-%EB%8C%80%ED%95%B4-%EC%A7%88%EB%AC%B8-%EB%93%9C%EB%A6%BD%EB%8B%88%EB%8B%A4">QuerySelector VS getElementsById 선능차이</a>
+</body>
+</html>
