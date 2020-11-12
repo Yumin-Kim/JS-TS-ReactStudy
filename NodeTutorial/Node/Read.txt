@@ -1,1 +1,7 @@
-안녕하세요!!
+HelloWriteFileFunc
+WriteFileFunc
+WriteFileFunc
+WriteFileFunc
+WriteFileFunc
+WriteFileFunc
+WriteFileFunc

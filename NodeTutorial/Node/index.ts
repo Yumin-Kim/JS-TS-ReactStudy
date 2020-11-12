@@ -69,3 +69,4 @@ function Firstch1(){
     })
     console.log(Num);
 }
+console.log("Hello")
