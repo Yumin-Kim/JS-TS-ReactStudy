@@ -12,7 +12,7 @@ const average = Array(3).fill().reduce((prev, cur, idx) => {
 }, [])
 const category = ["student", "eng", "math", "kor", "result", "average"]
 const categoryData = [student, eng, math, kor, result, average];
-
+categoryData.forEach
 console.log(categoryData)
 for (let i = 0; i < student.length; i++) {
     const PersonInfo = category.reduce((prev, cur, curidx, arry) => {

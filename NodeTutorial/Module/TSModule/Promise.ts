@@ -2,7 +2,7 @@ import  {EventEmitter} from "events";
 import * as process from "process";
 import * as fs from "fs";
 import * as path from "path";
-import { createNoSubstitutionTemplateLiteral } from "typescript";
+
 const ReadTxtPath = path.resolve(__dirname,"./Read.txt"); 
 const myCustomEvnet = new EventEmitter();
 export const onCustomFunc = myCustomEvnet.on("AddFunc",(text:string)=>console.log(text,"AddFuncCustomEvent"));
