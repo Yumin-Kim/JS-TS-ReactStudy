@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>로또</title>
+	<style>
+		#lottoBox {
+			width: 350px;
+			padding: 20px;
+			border: solid 3px #dcdcdc;
+			margin: 50px auto;
+			text-align: center;
+		}
+
+		.num {
+			width: 30px;
+			height: 30px;
+			border-radius: 30px;
+			background: #f00;
+			display: inline-block;
+			text-align: center;
+			line-height: 30px;
+			color: #fff;
+			margin: 0 5px;
+		}
+
+		.btnBox {
+			text-align: center;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div id="lottoBox">
+	</div>
+	<div class="btnBox"><button type="button" id="btn">로또번호출력</button></div>
+	<script>
+		const btnTag = document.getElementById("btn");
+		const LottoBox = document.getElementById("lottoBox");
+		let ClearTime;
+		function StartLotto() {
+			const Arr = new Array();
+			let num = 0;
+			while (num < 6) {
+				const random = Math.ceil(Math.random() * 45);
+				if (Arr.indexOf(random) < 0) {
+					num++;
+					Arr.push(random);
+				}
+			}
+			return Arr;
+		}
+		btnTag.addEventListener("click", () => {
+			LottoBox.textContent = "준비중!!";
+			clearTimeout(ClearTime);
+			ClearTime = setTimeout(() => {
+				LottoBox.textContent = "";
+				StartLotto().map((val, idx) => {
+					const createTag = document.createElement("div");
+					createTag.textContent = val;
+					createTag.className = "num";
+					LottoBox.append(createTag)
+				})
+			}, 1000)
+		})
+	</script>
+</body>
+
+</html>
