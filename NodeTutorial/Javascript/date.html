@@ -33,21 +33,16 @@
 </div>
 <body>
 	<script>
-		function DateParseFunc(Year, mouth = 11, day = 24, birth = false) {
-			const date = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
-			const GetDate = new Date(Year, mouth, day).getDay();
-			if (birth)
-				document.getElementById("birthdayBox").textContent = date[GetDate];
-			else
-				document.getElementById("christmasBox").textContent = date[GetDate];
-		}
+		var array = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
 		document.getElementById("christmasBtn").addEventListener("click", () => {
-			const chirmasYear = Number(document.getElementById("christmasYear").value);
-			DateParseFunc(chirmasYear)
+			var year = Number(document.getElementById("christmasYear").value);
+			var day = new Date(year, 11, 24).getDay();
+			document.getElementById("christmasBox").textContent = array[day];
 		});
 		document.getElementById("birthdayBtn").addEventListener("click", () => {
-			const birthday = document.getElementById("birthday").value.match(/[^.]*/g);
-			DateParseFunc(Number(birthday[0]), Number(birthday[2]) - 1, Number(birthday[4]) - 1, true);
+			var day = document.getElementById("birthday").value.split(".");
+			var input = new Date(parseInt(day[0]), parseInt(day[1]) - 1, parseInt(day[2]) - 1).getDay();
+			document.getElementById("birthdayBox").textContent = array[input];
 		});
 	</script>
 </body>

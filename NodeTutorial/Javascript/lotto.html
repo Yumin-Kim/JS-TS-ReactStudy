@@ -38,33 +38,28 @@
 	</div>
 	<div class="btnBox"><button type="button" id="btn">로또번호출력</button></div>
 	<script>
-		const btnTag = document.getElementById("btn");
-		const LottoBox = document.getElementById("lottoBox");
-		let ClearTime;
+		var btn = document.getElementById("btn");
+		var LottoBox = document.getElementById("lottoBox");
 		function StartLotto() {
-			const Arr = new Array();
-			let num = 0;
-			while (num < 6) {
-				const random = Math.ceil(Math.random() * 45);
-				if (Arr.indexOf(random) < 0) {
-					num++;
-					Arr.push(random);
+			var array = new Array();
+			var idx = 0;
+			while (idx < 6) {
+				var random = Math.ceil(Math.random() * 45);
+				if (array.indexOf(random) < 0) {
+					idx++;
+					array.push(random);
 				}
 			}
-			return Arr;
+			return array;
 		}
-		btnTag.addEventListener("click", () => {
-			LottoBox.textContent = "준비중!!";
-			clearTimeout(ClearTime);
-			ClearTime = setTimeout(() => {
-				LottoBox.textContent = "";
-				StartLotto().map((val, idx) => {
-					const createTag = document.createElement("div");
-					createTag.textContent = val;
-					createTag.className = "num";
-					LottoBox.append(createTag)
-				})
-			}, 1000)
+		btn.addEventListener("click", () => {
+			LottoBox.textContent = "";
+			for(var i = 0 ; i < 6 ; i++){
+				var create = document.createElement("div");
+				create.textContent = StartLotto()[i];
+				create.className = "num";
+				LottoBox.append(create)
+			}
 		})
 	</script>
 </body>
