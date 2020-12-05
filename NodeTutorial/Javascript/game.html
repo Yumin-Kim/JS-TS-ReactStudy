@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>가위 바위 보</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		.coinBox {
+			display: inline-block;
+			width: 30%;
+			text-align: center;
+			line-height: 100px;
+			font-size: 30px;
+			border: solid 1px #ccc;
+			margin: 10px 0;
+		}
+
+		#stopBtn {
+			width: 100px;
+			height: 100px;
+			background: #f00;
+			border-radius: 150px;
+			border: solid 3px #000;
+			font-size: 30px;
+			margin: 0 auto;
+			display: block;
+		}
+
+		.checkCoin {
+			width: 50%;
+			margin: 10px auto;
+			font-size: 20px;
+			text-align: center;
+			padding: 20px;
+			background: #efefef;
+
+		}
+
+		#txtBox {
+			height: 50px;
+			margin: 10px;
+			font-size: 20px;
+			background: #000;
+			color: #fff;
+			padding: 10px;
+		}
+	</style>
+	<script>
+		let Machine;
+		let txtBox;
+		let infinte;
+		let timer;
+		let Random;
+		const imgSRC = ["img/rock.png", "img/scissor.png", "img/paper.png"]
+		function game(number) {
+			const CoinBoxes = document.getElementsByClassName("coinBox");
+			Random = Math.floor(Math.random() * 3);
+			Machine = document.getElementById("machine");
+			Machine.children[0].src = imgSRC[Random];
+			clearInterval(infinte);
+			clearTimeout(timer);
+			clearBackground(CoinBoxes);
+			Match({ number, Random });
+		}
+		function Match({ number, Random }) {
+			let valid;
+			let text = "Dead heat";
+			valid = 0;
+			txtBox = document.getElementById("txtBox")
+			if (number !== Random) {
+				if (number === 0) {
+					//vicotory
+					if (Random === 1)
+						valid = 1;
+					else
+						valid = 0;
+				}
+				else if (number == 1) {
+					if (Random === 2)
+						valid = 1;
+					else
+						valid = 0;
+				}
+				else {
+					if (Random === 0)
+						valid = 1;
+					else
+						valid = 0;
+				}
+				if (valid > 0) {
+					rullet();
+					text = "Victory"
+				}
+				else {
+					text = "lose"
+					changeCoin();
+				}
+				txtBox.textContent = text;
+			} else {
+				txtBox.textContent = text;
+			}
+		}
+		function clearBackground([...arr]) {
+			arr.map((value) => {
+				value.style.background = "white";
+			})
+		}
+		function rullet() {
+			const CoinBoxes = document.getElementsByClassName("coinBox");
+			let count = 0;
+			clearInterval(infinte);
+			infinte = setInterval(() => {
+				clearBackground(CoinBoxes);
+				console.log("setInterval")
+				document.getElementsByClassName("coinBox")[count].style.background = "red"
+				count < 2 ? count++ : count = 0;
+				return count;
+			}, 100);
+			timer = setTimeout(() => {
+				console.log("SetTimerout")
+				clearInterval(infinte);
+				console.log(count);
+				if (count === 0) count = 3;
+				changeCoin(count);
+			}, 2000 + Random * 100);
+		}
+		function changeCoin(result = 0) {
+			const txtCoin = document.getElementById("txt_coin");
+			const txtBox = document.getElementById("txtBox");
+			const NumberParse = Number(txtCoin.textContent);
+			let coinResult = 0;
+			result === 0 ? coinResult = NumberParse - 1 : coinResult = NumberParse + result;
+			if(NumberParse === 0){
+				txtBox.textContent = "Empty Coin";
+				coinResult = Number(prompt("Charging Coin >>"));
+			}
+
+			txtCoin.textContent = coinResult;
+		}
+	</script>
+</head>
+
+<body>
+	<div style="width: 380px; margin:100px auto; border:solid 3px #efefef">
+		<div style="text-align: center;" id="rulletBox">
+			<div class="coinBox">1</div>
+			<div class="coinBox">2</div>
+			<div class="coinBox">3</div>
+		</div>
+		<div id="txtBox" style="text-align: center;">아래 가위/바위/보 버튼을 클릭하면<br>게임이 시작됩니다. </div>
+
+		<div id="machine" style="text-align: center;">
+			<img src="img/scissor.png" alt="가위" width="300px">
+		</div>
+		<div style="text-align: center;">
+			<button class="btns" onclick="game(1)"><img src="img/scissor.png" alt="가위" width="100px"></button>
+			<button class="btns" onclick="game(0)"><img src="img/rock.png" alt="바위" width="100px"></button>
+			<button class="btns" onclick="game(2)"><img src="img/paper.png" alt="보" width="100px"></button>
+		</div>
+		<div class="checkCoin">현재 코인 : <span id="txt_coin">3</span></div>
+	</div>
+	<script type="text/javascript">
+		// 1. 가위,바위,보 버튼을 클릭하면 게임시작
+		// 2. #machine 요소에 있는 가위,바위,보 이미지가 랜덤으로 바뀐다.
+		// 3. 이겼을 경우 #txtBox 요소의 글자가 바뀐다. (이겼을 경우 : 이겼습니다, 졌을경우 : 졌습니다, 비겼을 경우 : 비겼습니다. 다시하기)
+		// 4_1. 이겼을 경우 #rulletBox 요소의 .coinBox가 랜덤으로 돌다가 멈춘다. 멈춘 코인의 점수만큼 .checkCoin의 값에서 추가 된다.
+		// 4_2. 졌을 경우 .checkCoin에서 1코인씩 감점이 된다. (비기면 코인 변경 없음.)
+		// 5. 코인이 0일때는 #txtBox 요소에 "코인이 모자랍니다." 출력.
+
+		
+
+	</script>
+</body>
+
+</html>
