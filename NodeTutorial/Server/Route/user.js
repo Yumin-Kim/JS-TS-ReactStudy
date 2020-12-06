@@ -7,7 +7,7 @@ router.get("/login",(req,res)=>{
 })
 router.post("/userData",(req,res)=>{
     const {id,password} = req.body;
-    res.send(`<h1>${id} >> ${password}</h1>`)
+    res.send(`<h1>${id} >> ${password}</h1>`);
 })
 
 module.exports =router;
