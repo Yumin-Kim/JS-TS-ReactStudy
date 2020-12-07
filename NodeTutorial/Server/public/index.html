@@ -11,6 +11,32 @@
         <li>
             <a href="user/login">Login</a>
         </li>
+        <li>
+            <a href="user/MongoDB">MongoDBQueryHTML</a>
+        </li>
+        <li>
+            <form method="post" action="/mongo/readuser">
+                <input type="submit" value="데이터읽기" name="" >
+            </form>
+            
+        </li>
     </ul>
+
+    <h1>
+        Login form[Monogo URl]
+    </h1>
+    <form method="post" action="/mongo/login">
+    <table>
+        <tr>
+            <td><label>아이디</label></td>
+            <td><input type="text" name="id" /></td>
+        </tr>
+        <tr>
+            <td><label>비밀번호</label></td>
+            <td><input type="password" name="password" /></td>
+        </tr>
+    </table>
+    <input type="submit" value="전송" name="" />
+</form>
 </body>
 </html>
