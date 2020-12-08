@@ -60,7 +60,6 @@ exports.addUser = function (db, id, password, name, callback) {
 exports.userRead = function (db, callback) {
     var db = db.db('TestDB');//=>DeprecationWarning 해결하기위한 방안2020.11.18
     var users = db.collection('user');//=>DeprecationWarning
-
     users.find().toArray(function (err, docs) {
         if (err) {
             callback(err, null);

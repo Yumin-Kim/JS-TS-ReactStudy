@@ -1,16 +1,22 @@
+//npm Module
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const monogoClient = require("mongodb").MongoClient;
 
+//CustomFunction
 const { authUser, addUser, userRead } = require("./Config/MongoDB");
+const {pool} =require("./Config/Mysql");
 
+//Router
 const userRouter = require("./Route/user");
+const mysqlDBRouter =require("./Route/mysqlDB");
 
+//
 const app = express();
 const devl = process.env.NODE_ENV !== "prouduction";
 
-//midileware
+//Util midileware
 app.set("port", devl ? 3000 : process.env.PORT);
 app.use(morgan("dev"));
 app.use(cors({
@@ -20,7 +26,8 @@ app.use(cors({
 app.use("/", express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//DBConfig
+
+//MongoDBConfig
 let MongoDB;
 const connectDB = async () => {
     const databaseUrl = "mongodb://localhost:27017/TestDB";
@@ -35,23 +42,29 @@ const connectDB = async () => {
         }
     })
 }
-//router
+
+//Basic router
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/public/index.html");
 })
+//user ??
 app.use("/user", userRouter);
-//MonogoDB route
+//Mysql router
+app.use("/mysql",mysqlDBRouter);
+//Connection MonogoDB and router 
 connectDB();
 app.post('/mongo/:path', async (req, res) => {
     console.log('/user/mongo 호출됨.');
     // const aasd = await connectDB(); 
     const { path } = req.params;
+
     const paramId = req.body.id || req.query.id;
     const paramPassword = req.body.password || req.query.password;
     const paramName = req.body.name || req.query.name;
 
     const SelectAllTableDataBase_test = await MongoDB.db('test').collection("user").find().toArray()
     const SelectAllTableDataBase_TestDB = await MongoDB.db('TestDB').collection("user").find().toArray()
+
     if (MongoDB) {
         if (path === "login") {
             await authUser(MongoDB, paramId, paramPassword, (err, docs) => {
@@ -90,7 +103,7 @@ app.post('/mongo/:path', async (req, res) => {
                 }
             })
         }
-        else
+        else {
             userRead(MongoDB, function (err, result) {
                 console.log(result.length);
                 if (err) { throw err; }
@@ -106,20 +119,12 @@ app.post('/mongo/:path', async (req, res) => {
                     res.end();
                 }
             })
+        }
     }
 
 });
-app.post("/mongo/addUser", function (req, res) {
-    console.log('/process/adduser 호출됨.');
 
-    var paramId = req.body.id || req.query.id;
-    var paramPassword = req.body.password || req.query.password;
-
-    if (database) {
-    }
-});
-
-
+//Start Server
 app.listen(3000, () => {
     console.log("School Lecture Server");
 });
