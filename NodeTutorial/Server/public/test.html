@@ -9,29 +9,43 @@
 
 <body>
     화면 표사<br>
-    <form method="get">
-        아이디<input type="text" name="iddddd" />
-        비밀번호<input type="test" name="pwwwwww" />
-        <input type="submit" value="전송" />
-    </form>
-
+    이미지 만들기!! 장수 입력 하고 원하는 사진 보여주기<br>
     <form method="post" action="/hemimage">
+        <input type="number" name="number">
+        <p>
+        <input type="text"  name="picture" placeholder="원하는 사진 영문으로 입력">
+        <p>
         <input type="submit" value="햄스터보기" />
     </form>
-
-    데이터베이스읽기<br>
-    <form method="post" action="/mysqlRead">
+    테이블 만들기!!<br>
+    <form method="post" action="/addDBtable">
+        <input type="text" name="tablename">
+        <input type="submit" value="테이블 만들기" />
+    </form>
+    데이터베이스읽기 id 입력없으면 테이블 전체 보여주기<br>
+    <form method="post" action="/selectAlltable">
+        <input type="text" name="id">
         <input type="submit" value="데이터베이스보기" />
     </form>
-
     데이터베이스에 데이터 삽입하기<br>
-    <form method="post" action="/mysqlInsert">
+    <form method="post" action="/insertColum">
         아이디<input type="text" name="id" />
-        비밀번호<input type="test" name="pw" />
+        비밀번호<input type="test" name="password" />
+        주소<input type="text" name="address" />
+        age<input type="number" name="age" />
         <input type="submit" value="전송" />
     </form>
-
-
+    데이터베이스에 데이터 수정하기 >> 이름 변경<br>
+    <form method="post" action="/updateColum">
+        해당 아이디<input type="text" name="id" />
+        변경 아이디<input type="text" name="changeid" />
+        <input type="submit" value="전송" />
+    </form>
+    데이터베이스에 데이터 삭제하기<br>
+    <form method="get" action="/deletColum">
+        아이디<input type="text" name="id" />
+        <input type="submit" value="전송" />
+    </form>
 </body>
 
 </html>
