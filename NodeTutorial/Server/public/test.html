@@ -8,43 +8,30 @@
 </head>
 
 <body>
-    화면 표사<br>
-    이미지 만들기!! 장수 입력 하고 원하는 사진 보여주기<br>
-    <form method="post" action="/hemimage">
-        <input type="number" name="number">
-        <p>
-        <input type="text"  name="picture" placeholder="원하는 사진 영문으로 입력">
-        <p>
-        <input type="submit" value="햄스터보기" />
+    <h1>201610309_김유민</h1>
+    <form action="/printData" method="post">
+       이름: <input type="text" name ="id"><br>
+       학년: <input type="text" name ="password"><br>
+       나이: <input type="text" name ="age"><br>
+       주소: <input type="text" name ="address"><br>
+        <input type="submit" value="입력">
     </form>
-    테이블 만들기!!<br>
-    <form method="post" action="/addDBtable">
-        <input type="text" name="tablename">
-        <input type="submit" value="테이블 만들기" />
+
+    <h1>코로나 19이미지</h1>   
+    <form action="/covid19" method="post">
+        <input type="submit" value="이미지 보여주세요">
     </form>
-    데이터베이스읽기 id 입력없으면 테이블 전체 보여주기<br>
-    <form method="post" action="/selectAlltable">
-        <input type="text" name="id">
-        <input type="submit" value="데이터베이스보기" />
+    <h1>201610309_김유민 정보</h1>   
+    <form action="/mysqlRead" method="post">
+        <input type="submit" value="김유민">
     </form>
-    데이터베이스에 데이터 삽입하기<br>
-    <form method="post" action="/insertColum">
-        아이디<input type="text" name="id" />
-        비밀번호<input type="test" name="password" />
-        주소<input type="text" name="address" />
-        age<input type="number" name="age" />
-        <input type="submit" value="전송" />
-    </form>
-    데이터베이스에 데이터 수정하기 >> 이름 변경<br>
-    <form method="post" action="/updateColum">
-        해당 아이디<input type="text" name="id" />
-        변경 아이디<input type="text" name="changeid" />
-        <input type="submit" value="전송" />
-    </form>
-    데이터베이스에 데이터 삭제하기<br>
-    <form method="get" action="/deletColum">
-        아이디<input type="text" name="id" />
-        <input type="submit" value="전송" />
+    <h1>사용자 추가</h1>   
+    <form action="/MysqlInsert" method="post">
+        이름: <input type="text" name ="name"><br>
+       학년: <input type="text" name ="grade"><br>
+       나이: <input type="text" name ="age"><br>
+       주소: <input type="text" name ="address"><br>
+        <input type="submit" value="입력">
     </form>
 </body>
 
