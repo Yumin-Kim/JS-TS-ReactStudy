@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>setInterval/setTimeout</title>
+	<style>
+		.num{
+			border:solid 1px #f00;
+			display : inline-block;
+			width : 50px;
+			height: 50px;
+		}
+	</style>
+</head>
+<body>
+	<span class = "num">1</span>
+	<span class = "num">2</span>
+	<span class = "num">3</span>
+	<script>
+		function rullet(){
+		var act = 0;
+		var setTime = setInterval(function(){
+			//반복될 코드
+			if(act > 2){
+				act = 0;
+			}
+			for(var i=0; i<3; i++){
+				if(act == i){
+					document.getElementsByClassName("num")[i].style.backgroundColor = "#f00";
+				}else{
+					document.getElementsByClassName("num")[i].style.backgroundColor = "#fff";
+				}
+			}
+			act++;
+		},100)
+
+        var outTime = Math.floor(Math.random()*3000+500);
+		setTimeout(function(){
+			//지정된 밀리초에 실행 될 코드(한번만 실행됨)
+            clearInterval(setTime);
+		},outTime)
+	}
+	rullet()
+	</script>
+	
+</body>
+</html>
