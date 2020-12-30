@@ -1,5 +1,5 @@
 # Typescript + React + Redux + React-Router + Express 
-* 연습중!!
+* Real world를 통해서 간단하게 구현 해보기
 
 ## 파일 구성!!!
 * src
