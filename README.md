@@ -1,6 +1,6 @@
 # Typescript + React + Redux + React-Router + Express 
 * Real world를 통해서 간단하게 구현 해보기
-
+* 2020.12.31마지막 commit...
 ## 파일 구성!!!
 * src
     * server
