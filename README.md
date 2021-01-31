@@ -81,6 +81,4 @@ declare module "passport-local" //사용할때 import ___ from "passport-local"�
 
 ## React_VR
 * React 360 install
-* issue
-    * (https://github.com/facebookarchive/react-360/issues/778)[윈도우 환경에서 npm run start 할시 실행 불가]
  
