@@ -1,18 +1,52 @@
+import useInput from '@hooks/useInput';
+import { Success, Form, Error, Label, Input, LinkContainer, Button, Header } from '@pages/SignUp/style';
+import fetcher from '@utils/fetcher';
+import axios from 'axios';
 import React, { useCallback, useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import useSWR from 'swr';
 
-import { Form, Header, Label, LinkContainer, Input, Button } from './style';
+const LogIn = () => {
+  const { data, error, revalidate, mutate } = useSWR('http://localhost:3095/api/users', fetcher);
 
-const Login = () => {
-  const [email] = useState('');
-  const [nickname] = useState('');
-  const [password] = useState('');
-  const [passwordCheck] = useState('');
+  const [logInError, setLogInError] = useState(false);
+  const [email, onChangeEmail] = useInput('');
+  const [password, onChangePassword] = useInput('');
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      setLogInError(false);
+      axios
+        .post(
+          'http://localhost:3095/api/users/login',
+          { email, password },
+          {
+            withCredentials: true,
+          },
+        )
+        .then((response) => {
+          mutate(response.data, false);
+        })
+        .catch((error) => {
+          setLogInError(error.response?.data?.statusCode === 401);
+        });
+    },
+    [email, password],
+  );
 
-  const onSubmit = useCallback(() => {}, []);
-  const onChangeEmail = useCallback(() => {}, []);
-  const onChangeNickname = useCallback(() => {}, []);
-  const onChangePassword = useCallback(() => {}, []);
-  const onChangePasswordCheck = useCallback(() => {}, []);
+  // if (data === undefined) {
+  //   return <div>로딩중...</div>;
+  // }
+
+  if (data) {
+    return <Redirect to="/workspace/channel" />;
+  }
+
+  // console.log(error, userData);
+  // if (!error && userData) {
+  //   console.log('로그인됨', userData);
+  //   return <Redirect to="/workspace/sleact/channel/일반" />;
+  // }
 
   return (
     <div id="container">
@@ -24,42 +58,21 @@ const Login = () => {
             <Input type="email" id="email" name="email" value={email} onChange={onChangeEmail} />
           </div>
         </Label>
-        <Label id="nickname-label">
-          <span>닉네임</span>
-          <div>
-            <Input type="text" id="nickname" name="nickname" value={nickname} onChange={onChangeNickname} />
-          </div>
-        </Label>
         <Label id="password-label">
           <span>비밀번호</span>
           <div>
             <Input type="password" id="password" name="password" value={password} onChange={onChangePassword} />
           </div>
+          {logInError && <Error>이메일과 비밀번호 조합이 일치하지 않습니다.</Error>}
         </Label>
-        <Label id="password-check-label">
-          <span>비밀번호 확인</span>
-          <div>
-            <Input
-              type="password"
-              id="password-check"
-              name="password-check"
-              value={passwordCheck}
-              onChange={onChangePasswordCheck}
-            />
-          </div>
-          {/*{mismatchError && <Error>비밀번호가 일치하지 않습니다.</Error>}*/}
-          {/*{!nickname && <Error>닉네임을 입력해주세요.</Error>}*/}
-          {/*{signUpError && <Error>이미 가입된 이메일입니다.</Error>}*/}
-          {/*{signUpSuccess && <Success>회원가입되었습니다! 로그인해주세요.</Success>}*/}
-        </Label>
-        <Button type="submit">회원가입</Button>
+        <Button type="submit">로그인</Button>
       </Form>
       <LinkContainer>
-        이미 회원이신가요?&nbsp;
-        <a href="/login">로그인 하러가기</a>
+        아직 회원이 아니신가요?&nbsp;
+        <Link to="/signup">회원가입 하러가기</Link>
       </LinkContainer>
     </div>
   );
 };
 
-export default Login;
+export default LogIn;
