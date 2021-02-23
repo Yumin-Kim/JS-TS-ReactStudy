@@ -1,12 +1,12 @@
-import WorkSpace from '@layouts/Workspace';
 import React from 'react';
+import { Container, Header } from './style';
 
+// {/* Workspace 매개변수인 Children은 공유 될 수 있다. */}
 const Channel = () => {
   return (
-    <WorkSpace>
-      {/* Workspace 매개변수인 Children은 공유 될 수 있다. */}
-      <div>로그인 성공</div>
-    </WorkSpace>
+    <Container>
+      <Header>Channel</Header>
+    </Container>
   );
 };
 
