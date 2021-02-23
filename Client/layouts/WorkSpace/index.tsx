@@ -1,7 +1,7 @@
 import fetcher from '@utils/fetcher';
 import axios from 'axios';
 import React, { FC, useCallback, useState, VFC } from 'react';
-import { Redirect, Route, Switch } from 'react-router';
+import { Redirect, Route, Switch, useParams } from 'react-router';
 import useSWR from 'swr';
 import gravatar from 'gravatar';
 import loadable from '@loadable/component';
@@ -26,7 +26,7 @@ import { Label } from '@pages/SignUp/style';
 import Menu from '@components/Menu';
 import Modal from '@components/Modal';
 import { Link } from 'react-router-dom';
-import { SWRUserData } from '@typings/db';
+import { IChannel, SWRUserData } from '@typings/db';
 import { Button, Input } from '@pages/SignUp/style';
 import useInput from '@hooks/useInput';
 import CreateChannelModal from '@components/CreateChannelModal';
@@ -42,6 +42,8 @@ const Workspace: VFC = () => {
   const [newWorkspace, onChangeNewWorkspace, setNewWorkspace] = useInput('');
   const [newUrl, onChangeNewUrl, setNewUrl] = useInput('');
 
+  const { workspace } = useParams<{ workspace: string }>();
+
   // {data: userdata >> data라는 변수를 userData로 변경하여 사용 할 수 았다}
   const { data: userData, error, revalidate, mutate } = useSWR<SWRUserData | false>(
     'http://localhost:3095/api/users',
@@ -49,6 +51,10 @@ const Workspace: VFC = () => {
     {
       dedupingInterval: 2000, // 2초
     },
+  );
+  const { data: channelData } = useSWR<IChannel[]>(
+    userData ? `http://localhost:3095/api/workspaces/${workspace}/channels` : null,
+    fetcher,
   );
 
   const onLogout = useCallback(() => {
@@ -145,7 +151,7 @@ const Workspace: VFC = () => {
       </Header>
       <WorkspaceWrapper>
         <Workspaces>
-          {userData.Workspaces.map((ws) => {
+          {userData?.Workspaces.map((ws) => {
             return (
               <Link key={ws.id} to={`/workspace/${123}/channel/일반`}>
                 <WorkspaceButton>{ws.name.slice(0, 1).toUpperCase()}</WorkspaceButton>
@@ -160,17 +166,19 @@ const Workspace: VFC = () => {
             <Menu show={showWorkspaceModal} onCloseModal={toggleWorkspaceModal} style={{ top: 95, left: 80 }}>
               <WorkspaceModal>
                 <h2>Sleact</h2>
-                <button onClick={onClickAddChannel}></button>
-                <button onClick={onLogout}></button>
+                <button onClick={onClickAddChannel}>채팅하기</button>
+                <button onClick={onLogout}>로그아웃</button>
               </WorkspaceModal>
             </Menu>
-            Menu Scroll
+            {channelData?.map((v) => (
+              <div>{v.name}</div>
+            ))}
           </MenuScroll>
         </Channels>
         <Chats>
           <Switch>
-            <Route path="/workspace/channel" component={Channel} />
-            <Route path="/workspace/dm" component={DirectMessage} />
+            <Route path="/workspace/:workspace/channel/:channel" component={Channel} />
+            <Route path="/workspace/:workspace/dm/:id" component={DirectMessage} />
           </Switch>
         </Chats>
       </WorkspaceWrapper>
