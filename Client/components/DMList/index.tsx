@@ -1,4 +1,4 @@
-// import useSocket from '@hooks/useSocket';
+import useSocket from '@hooks/useSocket';
 import { CollapseButton } from '@components/DMList/style';
 import { IDM, SWRUserData, IUser } from '@typings/db';
 import fetcher from '@utils/fetcher';
@@ -9,7 +9,6 @@ import useSWR from 'swr';
 
 const DMList: FC = () => {
   const { workspace } = useParams<{ workspace?: string }>();
-  //   const [socket] = useSocket(workspace);
   const [channelCollapse, setChannelCollapse] = useState(false);
   const [countList, setCountList] = useState<{ [key: string]: number }>({});
   const [onlineList, setOnlineList] = useState<number[]>([]);
@@ -18,6 +17,8 @@ const DMList: FC = () => {
     dedupingInterval: 2000, // 2초
   });
   const { data: memberData } = useSWR<IUser[]>(userData ? `/api/workspaces/${workspace}/members` : null, fetcher);
+
+  const [socket] = useSocket(workspace);
 
   const toggleChannelCollapse = useCallback(() => {
     setChannelCollapse((prev) => !prev);
@@ -51,18 +52,18 @@ const DMList: FC = () => {
     setCountList({});
   }, [workspace]);
 
-  //   useEffect(() => {
-  //     socket?.on('onlineList', (data: number[]) => {
-  //       setOnlineList(data);
-  //     });
-  //     socket?.on('dm', onMessage);
-  //     console.log('socket on dm', socket?.hasListeners('dm'), socket);
-  //     return () => {
-  //       socket?.off('dm', onMessage);
-  //       console.log('socket off dm', socket?.hasListeners('dm'));
-  //       socket?.off('onlineList');
-  //     };
-  //   }, [socket]);
+  useEffect(() => {
+    socket?.on('onlineList', (data: number[]) => {
+      setOnlineList(data);
+    });
+    // socket?.on('dm', onMessage);
+    // console.log('socket on dm', socket?.hasListeners('dm'), socket);
+    return () => {
+      // socket?.off('dm', onMessage);
+      // console.log('socket off dm', socket?.hasListeners('dm'));
+      socket?.off('onlineList');
+    };
+  }, [socket]);
 
   return (
     <>

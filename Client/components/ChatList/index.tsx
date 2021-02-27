@@ -1,10 +1,27 @@
-import React from 'react';
-import { ChatZone, Section } from './style';
+import React, { useCallback, useRef, VFC } from 'react';
+import useSWR from 'swr';
+import fetcher from '@utils/fetcher';
+import Chat from '@components/Chat';
+import { Scrollbars } from 'react-custom-scrollbars';
 
-const ChatList = () => {
+import { ChatZone, Section } from './style';
+import { IDM } from '@typings/db';
+
+interface Props {
+  chatData?: IDM[];
+}
+
+const ChatList: VFC<Props> = ({ chatData }) => {
+  const scrollbarsRef = useRef(null);
+  const onScroll = useCallback(() => {}, []);
+
   return (
     <ChatZone>
-      <Section>Section</Section>
+      <Scrollbars autoHide ref={scrollbarsRef} onScrollFrame={onScroll}>
+        {chatData?.map((chat) => (
+          <Chat key={chat.id} data={chat} />
+        ))}
+      </Scrollbars>
     </ChatZone>
   );
 };
