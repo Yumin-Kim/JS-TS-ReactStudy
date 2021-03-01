@@ -1,4 +1,4 @@
-import { IDM } from '@typings/db';
+import { IDM, IChat } from '@typings/db';
 import React, { VFC, memo, useMemo } from 'react';
 import { ChatWrapper } from '@components/Chat/style';
 import gravatar from 'gravatar';
@@ -7,12 +7,11 @@ import regexifyString from 'regexify-string';
 import { Link, useParams } from 'react-router-dom';
 
 interface Props {
-  data: IDM;
+  data: IDM | IChat;
 }
 
 const Chat: VFC<Props> = ({ data }) => {
-  const user = data.Sender;
-
+  const user = 'Sender' in data ? data.Sender : data.User;
   const { workspace, channel } = useParams<{ workspace: string; channel: string }>();
 
   //자식 컴포넌트의 props변화가 없을때 랜더링 방지 memo
