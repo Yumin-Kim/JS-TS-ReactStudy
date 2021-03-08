@@ -14,6 +14,17 @@
 
 ---
 
+## 프로젝트 진행함에 따라 에러
+
+- Git Add Error(상위 폴더(루트)지만 하위 폴더에서 add 한 경우)
+  - git reset , revert 시도했지만 add가 되지 않았다. >> 하위 폴더에서 rm -rf .git 하니 다시됨 ㄷㄷ
+  ```
+  C:\WebProject\sleact>git add server
+  error: 'server/' does not have a commit checked out
+  fatal: adding files failed
+  ```
+- 테스트
+
 ---
 
 ## TypeScript 문법 및 세팅
