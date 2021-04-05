@@ -1,10 +1,10 @@
 import '@babel/polyfill'
-import express from 'express';
+import * as express from 'express';
 
-import * as MarkUpRouter from './routes/Markup';
+import MarkUpRouter from './routes/Markup';
 
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
+import * as React from 'react';
+import * as ReactDOMServer from 'react-dom/server';
 
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
@@ -12,7 +12,11 @@ import createSagaMiddleware, { END } from 'redux-saga';
 
 import reducer from '../client/redux/reducer/reducers';
 import rootSaga from '../client/redux/saga/sagas';
-import { StaticRouter } from 'react-router';
+import {
+  StaticRouter,
+  StaticRouterProps,
+  StaticRouterContext,
+} from "react-router";
 import Home from '../client/pages/Home';
 import Html from './Html';
 
@@ -32,12 +36,13 @@ if (process.env.DEVELOP_COFIG === "hot") {
 
 app.use('/api/Markup', MarkUpRouter);
 
-app.get("*", async (req, res, next) => {
 
 
-    const sagaMiddleware = createSagaMiddleware();
-    const store = createStore(reducer, applyMiddleware(sagaMiddleware));
-    const sagaPromise = sagaMiddleware.run(rootSaga).toPromise(); //promise로 변형
+// app.get("*", async (req, res, next) => {
+app.get("*", (req, res, next) => {
+    // const sagaMiddleware = createSagaMiddleware();
+    // const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+    // const sagaPromise = sagaMiddleware.run(rootSaga).toPromise(); //promise로 변형
 
     //server에서 window의 데이터를 읽고 redux에 넣는 것은 못하는듯
     //서버에 staicRouter를 사용하고 context안에 데이터를 넣어서 
@@ -47,35 +52,43 @@ app.get("*", async (req, res, next) => {
     //버튼 누르면 쿠키 삭제하여 최근에 본 리스트 삭제 기능
 
     //req.url에따라 각기 다른 dispatch 할 수 있게끔
-    store.dispatch({ type: "AXIOS_FETCH_REQUEST", data: "javascript" })
-    store.dispatch({ type: "INCREMENT_ASYNC" })
-    store.dispatch(END) //END로 dispatch 끊어버림
+    // store.dispatch({ type: "AXIOS_FETCH_REQUEST", data: "javascript" })
+    // store.dispatch({ type: "INCREMENT_ASYNC" })
+    // store.dispatch(END) //END로 dispatch 끊어버림
 
     //redux와 req.url에 따라 분기 처리 필요!!
-    const data = { name: "ServerSide Rendering" }
+    //v2 
+    const data = { name: "ServerSide Rendering" as StaticRouterContext };
 
-    try {
-        await sagaPromise; //promise resolve작업
-        const initialState = store.getState();
-        const renderProps = {
-            preloadState: `window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}`,
-            preloadRedux: `window.__INITIAL_ROUTE__ = ${JSON.stringify(data)}`,
-            script: "/build.js"
-        }
-
+    // try {
+    //     await sagaPromise; //promise resolve작업
+    //     const initialState = store.getState();
+    //     const renderProps = {
+    //         preloadState: `window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}`,
+    //         preloadRedux: `window.__INITIAL_ROUTE__ = ${JSON.stringify(data)}`,
+    //         script: "/build.js"
+    //     }
+type MY_STATIC_CONTEXT = {
+  statusCode?: number; // THIS IS SO YOU EXTEND THE ORIGINAL TYPE,
+  data: string; // THIS IS MY CUSTOM PROP
+};
+const context: MY_STATIC_CONTEXT = {
+  data: "Hello",
+};
         ReactDOMServer.renderToStaticNodeStream(
-            <StaticRouter location={req.url} context={data} >
-                <Provider store={store}>
-                    <Html {...renderProps} >
-                        <Home />
-                    </Html>
-                </Provider>
-            </StaticRouter>
-        ).pipe(res)
-    } catch (e) {
-        console.log(e)
-        res.status(500).send(e);
-    }
+          <StaticRouter location={req.url} context={context}>
+            {/* <Provider store={store}> */}
+            {/* <Html {...renderProps} > */}
+            <Html >
+                <Home />
+            </Html>
+            {/* </Provider> */}
+          </StaticRouter>
+        ).pipe(res);
+    // } catch (e) {
+    //     console.log(e)
+    //     res.status(500).send(e);
+    // }
 })
 
 app.listen(3000, () => {

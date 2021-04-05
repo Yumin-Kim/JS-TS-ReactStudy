@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import Login from '../pages/login'
 import MarkUp from '../pages/MarkUp'
 import ApiCollection from '../pages/apiCollection'

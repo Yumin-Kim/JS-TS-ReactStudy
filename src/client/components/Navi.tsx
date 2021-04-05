@@ -1,8 +1,9 @@
-import React, { memo } from 'react'
+import * as React from 'react'
+import { memo } from 'react'
 import routes from '../routes';
 import { Link, Switch, Route } from 'react-router-dom';
 
-const Navi = (props) => {
+const Navi = (props:any) => {
     return (
         <>
             <div>
