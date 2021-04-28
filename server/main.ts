@@ -5,7 +5,7 @@ import { AppModule } from "./app.module";
 
 (async () => {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-
+  app.enableCors();
   await register(app);
 
   app.setViewEngine("hbs");
