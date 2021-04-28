@@ -10,6 +10,7 @@ import {
   T_BusRouteBodyType,
 } from "../typings/type";
 
+// const REQUESTURL = "http://localhost:5000" as const;
 const REQUESTURL = "https://busappyuminkim.herokuapp.com" as const;
 
 export const getBusBasicInfo = async (

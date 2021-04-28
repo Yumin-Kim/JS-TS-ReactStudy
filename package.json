@@ -12,6 +12,7 @@
     "@nestjs/platform-express": "^7.0.6",
     "@react-ssr/core": "^0.22.0",
     "@react-ssr/nestjs-express": "^0.22.0",
+    "antd": "^4.15.3",
     "axios": "^0.21.1",
     "hbs": "^4.1.0",
     "react": "^16.13.1",

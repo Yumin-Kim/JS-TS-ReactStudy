@@ -17,6 +17,9 @@ import { reducer, T_ActionType } from "../reducer";
 import StationCopoment from "../components/StationCopoment";
 import LocationComponent from "../components/LocationComponent";
 import KakaoMapComponent from "../components/KakaoMapComponent";
+import { Layout } from "antd";
+
+const { Header, Sider, Content, Footer } = Layout;
 
 export const InitialState = {} as IInitialState;
 type T_context = {
@@ -47,10 +50,20 @@ const BasicLayout = () => {
   return (
     <>
       <InitialStore.Provider value={value}>
-        <SiderInputBox />
-        <LocationComponent />
-        <StationCopoment />
-        <KakaoMapComponent />
+        <Layout>
+          <Header>Header</Header>
+          <Layout>
+            <Sider theme="light" width={400} style={{ padding: "20px" }}>
+              <SiderInputBox />
+              <LocationComponent />
+            </Sider>
+            <Content>
+              <StationCopoment />
+              <KakaoMapComponent />
+            </Content>
+          </Layout>
+          <Footer>Footer</Footer>
+        </Layout>
       </InitialStore.Provider>
     </>
   );
