@@ -15,13 +15,20 @@ import {
 import SiderInputBox from "../components/SiderInputBox";
 import { reducer, T_ActionType } from "../reducer";
 import StationCopoment from "../components/StationCopoment";
-import LocationComponent from "../components/LocationComponent";
 import KakaoMapComponent from "../components/KakaoMapComponent";
 import { Layout } from "antd";
+import LocationComponent from "../components/LocationComponent";
 
 const { Header, Sider, Content, Footer } = Layout;
 
-export const InitialState = {} as IInitialState;
+export const InitialState = {
+  BasicbusInfo: [] as Item[],
+  BusLocationInfo: [] as IBusLoactionItem[],
+  BusStationInfo: [] as IBusStationItem[],
+  cityCode: 0,
+  routeId: "",
+  resetMapState: false,
+} as IInitialState;
 type T_context = {
   state: IInitialState;
   dispatch: Dispatch<ReturnType<T_ActionType>>;
@@ -45,6 +52,7 @@ const BasicLayout = () => {
       state.BusStationInfo,
       state.cityCode,
       state.routeId,
+      state.resetMapState,
     ]
   );
   return (
@@ -53,16 +61,17 @@ const BasicLayout = () => {
         <Layout>
           <Header>Header</Header>
           <Layout>
-            <Sider theme="light" width={400} style={{ padding: "20px" }}>
+            <Sider
+              theme="light"
+              width={"35%"}
+              style={{ padding: "0 20px", height: "100vh" }}
+            >
               <SiderInputBox />
-              <LocationComponent />
             </Sider>
             <Content>
-              <StationCopoment />
-              <KakaoMapComponent />
+              <LocationComponent />
             </Content>
           </Layout>
-          <Footer>Footer</Footer>
         </Layout>
       </InitialStore.Provider>
     </>

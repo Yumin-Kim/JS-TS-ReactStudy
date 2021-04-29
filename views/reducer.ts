@@ -12,6 +12,7 @@ interface GET_BUS {
   readonly LOCATION_INFO_FAILURE: "LOCATION_INFO_FAILURE";
   readonly ROUTEID_INFO: "ROUTEID_INFO";
   readonly CITYCODE_INFO: "CITYCODE_INFO";
+  readonly SWITCH_COMPONENT: "SWITCH_COMPONENT";
 }
 type T_ActionName = GET_BUS[keyof GET_BUS];
 type T_Payload = IInitialState[keyof IInitialState];
@@ -22,8 +23,6 @@ export function reducer(
   state: IInitialState,
   action: ReturnType<T_ActionType>
 ): IInitialState {
-  console.log(action, state);
-
   switch (action.type) {
     case "GET_BUS_BASE_INFO":
       const BasicbusInfo = <Item[]>action.payload;
@@ -38,7 +37,6 @@ export function reducer(
         BusStationInfo,
       };
     case "LOCATION_INFO_SUCCESS":
-      console.log(action.payload);
       if (!Array.isArray(action.payload)) {
         return {
           ...state,
@@ -66,6 +64,11 @@ export function reducer(
       return {
         ...state,
         routeId: action.payload as string,
+      };
+    case "SWITCH_COMPONENT":
+      return {
+        ...state,
+        resetMapState: action.payload as boolean,
       };
     default:
       return state;

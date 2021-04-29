@@ -8,6 +8,7 @@ export interface IInitialState {
   BusStationInfo: IBusStationItem[];
   BusLocationInfo: IBusLoactionItem[];
   getBusLoactionfailure: boolean;
+  resetMapState: boolean;
 }
 
 //////////////////////////////////////////////////

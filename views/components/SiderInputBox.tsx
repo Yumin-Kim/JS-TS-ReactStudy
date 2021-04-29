@@ -1,21 +1,24 @@
 import React, { memo, useCallback, useContext, useEffect, useRef } from "react";
 import { getBusBasic, getBusStationInfo } from "../api/busapi";
 import { InitialStore } from "../Layouts/index";
-import { Tag, Mentions, Divider } from "antd";
+import { Tag, Mentions, Divider, Row, Col } from "antd";
+import StationCopoment from "./StationCopoment";
 import {
   PresetColorTypes,
   PresetStatusColorTypes,
 } from "antd/lib/_util/colors";
 const { Option } = Mentions;
 
-const data = [...PresetColorTypes, ...PresetStatusColorTypes];
+export const antdDefaultColor = [
+  ...PresetColorTypes,
+  ...PresetStatusColorTypes,
+];
 
 const SiderInputBox = () => {
   const { state, dispatch } = useContext(InitialStore);
-  const { BasicbusInfo } = state;
-  const dataLength = useRef<number>(data.length);
+  const { BasicbusInfo, BusStationInfo } = state;
   useEffect(() => {
-    if (!BasicbusInfo) {
+    if (BasicbusInfo.length === 0) {
       (async () => {
         const data = await getBusBasic();
         if (data) {
@@ -57,9 +60,9 @@ const SiderInputBox = () => {
         defaultValue="@세종시"
         placement="top"
       >
-        {BasicbusInfo &&
+        {BasicbusInfo.length !== 0 &&
           BasicbusInfo.map((params, index) => {
-            if (index < data.length) {
+            if (index < antdDefaultColor.length) {
               return (
                 <Option
                   value={params.cityname}
@@ -72,13 +75,13 @@ const SiderInputBox = () => {
           })}
       </Mentions>
       {/* ref로 limit정하고 버튼눌렀을때 해당 limit를 통해서 더 보여주는 씩으로 진행 */}
-      {BasicbusInfo &&
+      {BasicbusInfo.length !== 0 &&
         BasicbusInfo.map((params, index) => {
-          if (index < data.length) {
+          if (index < antdDefaultColor.length) {
             return (
               <Tag
                 style={{ fontSize: "17px", marginBottom: "8px" }}
-                color={data[index]}
+                color={antdDefaultColor[index]}
                 onClick={() => onClickCityCategory(params.citycode)}
                 key={`${index}_${params.citycode}`}
               >
@@ -86,7 +89,14 @@ const SiderInputBox = () => {
               </Tag>
             );
           }
-        })}{" "}
+        })}
+
+      {BusStationInfo.length !== 0 && (
+        <div>
+          <Divider orientation="left">지역을 선택해주세요!!</Divider>
+          <StationCopoment />
+        </div>
+      )}
     </div>
   );
 };

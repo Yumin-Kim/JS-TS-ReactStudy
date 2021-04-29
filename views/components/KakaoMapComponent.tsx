@@ -1,18 +1,90 @@
-import React, { useEffect } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  VFC,
+} from "react";
 import { useContext } from "react";
+import { GetCurrentPostioin } from "../api/util";
 import { InitialStore } from "../Layouts";
+import { IBusLoactionItem } from "../typings/type";
 
-const KakaoMapComponent = () => {
+interface KakaoComponent {
+  KakaoMapListInfo: IBusLoactionItem;
+}
+
+const KakaoMapComponent: FC<KakaoComponent> = ({ KakaoMapListInfo }) => {
+  const [check, setCheck] = useState<
+    Pick<IBusLoactionItem, "gpslati" | "gpslong">
+  >({} as Pick<IBusLoactionItem, "gpslati" | "gpslong">);
   const { state, dispatch } = useContext(InitialStore);
-  const { BusLocationInfo } = state;
+  const { BusStationInfo, resetMapState } = state;
+  const checkMemo = useMemo(() => {
+    if (check.gpslati) {
+      let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
+      if (check.gpslati) {
+        let options = {
+          center: new window.kakao.maps.LatLng(check.gpslati, check.gpslong), //지도의 중심좌표.
+          level: 3, //지도의 레벨(확대, 축소 정도)
+        };
+        return new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+      }
+    }
+  }, [check, KakaoMapListInfo, BusStationInfo]);
 
   useEffect(() => {
-    if (BusLocationInfo) {
-      console.log("BusLocationInfo componentDidUpdate");
+    async function name() {
+      const data = await GetCurrentPostioin();
+      setCheck(data);
     }
-  }, [BusLocationInfo]);
+    name();
+  }, []);
+  useEffect(() => {
+    if (check.gpslong) {
+      if (KakaoMapListInfo.gpslati) {
+        var moveLatLon = new window.kakao.maps.LatLng(
+          KakaoMapListInfo.gpslati,
+          KakaoMapListInfo.gpslong
+        );
 
-  return <div>{BusLocationInfo && <p>Hello</p>}</div>;
+        checkMemo.panTo(moveLatLon);
+        var iwContent = `<div ><div style="font-size:12px;">지역 : ${KakaoMapListInfo.nodenm} </div>`;
+        iwContent += `<div style="font-size:12px;">버스 번호 : ${KakaoMapListInfo.vehicleno} </div>`;
+        iwContent += `<div style="font-size:12px;">버스 종류 :${KakaoMapListInfo.routetp} </div></div>`;
+        var infowindow = new window.kakao.maps.InfoWindow({
+          position: moveLatLon,
+          content: iwContent,
+        });
+        const marker = new window.kakao.maps.Marker({
+          map: checkMemo,
+          position: moveLatLon, // 마커를 표시할 위치
+        });
+        marker.setMap(checkMemo);
+      }
+    }
+  }, [check, KakaoMapListInfo]);
+
+  useEffect(() => {
+    if (resetMapState && check.gpslong) {
+      var moveLatLon = new window.kakao.maps.LatLng(
+        check.gpslati,
+        check.gpslong
+      );
+      checkMemo.panTo(moveLatLon);
+    }
+  }, [BusStationInfo]);
+
+  const onClickReset = () => {};
+
+  return (
+    <div>
+      <button onClick={onClickReset}></button>
+      <div id="map" style={{ width: "50vw", height: "50vh" }}></div>
+    </div>
+  );
 };
 
 export default KakaoMapComponent;
@@ -46,40 +118,19 @@ export default KakaoMapComponent;
 //   }
 // }, [busLocationInfo]);
 
-// useEffect(() => {
-//   let map;
-//   if (busInfo.length === 0) {
-//     getBusBasicInfo(busInfo, setBusInfo);
-//   } else {
-//     let container = document.getElementById("map"); //지도를 담을 영역의 DOM 레퍼런스
-//     let options = {
-//       //지도를 생성할 때 필요한 기본 옵션
-//       center: new window.kakao.maps.LatLng(36.475331, 127.27), //지도의 중심좌표.
-//       level: 3, //지도의 레벨(확대, 축소 정도)
-//     };
-
-//     map = new window.kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+// if (BusLocationInfo) {
+//   if (!clickTag) {
 //   }
-//   if (busLocationInfo.length > 0) {
-//     console.log("componentDidUpdate ///  busLocationInfo");
-//     console.log(busLocationInfo);
-//     var moveLatLon = new window.kakao.maps.LatLng(
-//       busLocationInfo[0].gpslati,
-//       busLocationInfo[0].gpslong
-//     );
+// } else {
+// }
+// if (busLocationInfo.length > 0) {
+//   console.log("componentDidUpdate ///  busLocationInfo");
+//   console.log(busLocationInfo);
+//   var moveLatLon = new window.kakao.maps.LatLng(
+//     busLocationInfo[0].gpslati,
+//     busLocationInfo[0].gpslong
+//   );
 
-//     map.panTo(moveLatLon);
-//     console.log(moveLatLon);
-//     var iwContent =
-//       '<div style="padding:5px;">Hello World! <br><a href="https://map.kakao.com/link/map/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">큰지도보기</a> <a href="https://map.kakao.com/link/to/Hello World!,33.450701,126.570667" style="color:blue" target="_blank">길찾기</a></div>';
-//     var infowindow = new window.kakao.maps.InfoWindow({
-//       position: moveLatLon,
-//       content: iwContent,
-//     });
-//     const marker = new window.kakao.maps.Marker({
-//       map: map,
-//       position: moveLatLon, // 마커를 표시할 위치
-//     });
-//     infowindow.open(map, marker);
-//   }
-// }, [busInfo, busStationInfo, busLocationInfo]);
+//   map.panTo(moveLatLon);
+//   console.log(moveLatLon);
+// }

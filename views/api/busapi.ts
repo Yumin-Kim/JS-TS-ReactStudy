@@ -11,7 +11,7 @@ import {
 } from "../typings/type";
 
 // const REQUESTURL = "http://localhost:5000" as const;
-const REQUESTURL = "https://busappyuminkim.herokuapp.com" as const;
+const REQUESTURL = "https://nesttoreact.herokuapp.com/bus" as const;
 
 export const getBusBasicInfo = async (
   state: Item[],
@@ -51,7 +51,6 @@ export const getBusStationInfo = async (
 };
 
 export const getBusLocationInfo = async (requestBody: T_BusRouteBodyType) => {
-  console.log(requestBody);
   const response = (
     await axios.post<IBusLocationType>(`${REQUESTURL}/buslocation`, requestBody)
   ).data;
