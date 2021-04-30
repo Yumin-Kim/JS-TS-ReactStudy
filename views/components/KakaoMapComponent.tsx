@@ -11,15 +11,23 @@ import { useContext } from "react";
 import { GetCurrentPostioin } from "../api/util";
 import { InitialStore } from "../Layouts";
 import { IBusLoactionItem } from "../typings/type";
+import { Spin } from "antd";
+//로딩 하는 모션 , 리팩토링
 
 interface KakaoComponent {
   KakaoMapListInfo: IBusLoactionItem;
+  checkThis: boolean;
+  changeCheckThis: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const KakaoMapComponent: FC<KakaoComponent> = ({ KakaoMapListInfo }) => {
+const KakaoMapComponent: FC<KakaoComponent> = ({
+  KakaoMapListInfo,
+  checkThis,
+}) => {
   const [check, setCheck] = useState<
     Pick<IBusLoactionItem, "gpslati" | "gpslong">
   >({} as Pick<IBusLoactionItem, "gpslati" | "gpslong">);
+  const [loading, setLoading] = useState(true);
   const { state, dispatch } = useContext(InitialStore);
   const { BusStationInfo, resetMapState } = state;
   const checkMemo = useMemo(() => {
@@ -38,13 +46,15 @@ const KakaoMapComponent: FC<KakaoComponent> = ({ KakaoMapListInfo }) => {
   useEffect(() => {
     async function name() {
       const data = await GetCurrentPostioin();
+      console.log(data);
+
       setCheck(data);
     }
     name();
   }, []);
   useEffect(() => {
     if (check.gpslong) {
-      if (KakaoMapListInfo.gpslati) {
+      if (KakaoMapListInfo.gpslati && checkThis) {
         var moveLatLon = new window.kakao.maps.LatLng(
           KakaoMapListInfo.gpslati,
           KakaoMapListInfo.gpslong
@@ -68,69 +78,41 @@ const KakaoMapComponent: FC<KakaoComponent> = ({ KakaoMapListInfo }) => {
   }, [check, KakaoMapListInfo]);
 
   useEffect(() => {
-    if (resetMapState && check.gpslong) {
-      var moveLatLon = new window.kakao.maps.LatLng(
-        check.gpslati,
-        check.gpslong
-      );
-      checkMemo.panTo(moveLatLon);
-    }
-  }, [BusStationInfo]);
+    console.log(check.gpslong, resetMapState);
 
-  const onClickReset = () => {};
+    if (check.gpslong) {
+      if (resetMapState) {
+        console.log("resetMapState");
+
+        console.log(check);
+        // console.log(check.gpslong);
+        var moveLatLon = new window.kakao.maps.LatLng(
+          check.gpslati,
+          check.gpslong
+        );
+        const marker = new window.kakao.maps.Marker({
+          map: checkMemo,
+          position: moveLatLon, // 마커를 표시할 위치
+        });
+        checkMemo.panTo(moveLatLon);
+        marker.setMap(checkMemo);
+        dispatch({ type: "SWITCH_COMPONENT", payload: false });
+      }
+    }
+  }, [check, resetMapState]);
+
+  const onClickReset = useCallback(() => {
+    setLoading(prev => !prev);
+  }, []);
 
   return (
     <div>
-      <button onClick={onClickReset}></button>
-      <div id="map" style={{ width: "50vw", height: "50vh" }}></div>
+      <button onClick={onClickReset}>qwe</button>
+      <Spin spinning={loading}>
+        <div id="map" style={{ width: "50vw", height: "50vh" }}></div>
+      </Spin>
     </div>
   );
 };
 
 export default KakaoMapComponent;
-// const [markInfo, setMarkInfo] = useState();
-// const onClickAsyncBusStationInfo = useCallback(async () => {
-//   try {
-//     const { response: responseBusStation } = await getBusStationInfo(12);
-//     setBusStationInfo([...responseBusStation.body.items.item]);
-//     console.log(busStationInfo);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }, [busStationInfo]);
-
-// const onClickAsyncBusLocationInfo = useCallback(async () => {
-//   const { response } = await getBusLocationInfo({
-//     cityCode: 12,
-//     routeId: "SJB293000302",
-//   });
-//   console.log(response.body.items.item);
-//   // 배열<객체> , 객체 ,
-//   if (Array.isArray(response.body.items.item)) {
-//     if (response.body.items.item[0].gpslati) {
-//       console.log("busLocationInfo", busLocationInfo);
-//       console.log(response.body.items.item);
-//       setBusLoactionInfo([...response.body.items.item]);
-//     }
-//   } else {
-//     console.log("busLocationInfo", busLocationInfo);
-//     setBusLoactionInfo([{ ...(response.body.items.item as any) }]);
-//   }
-// }, [busLocationInfo]);
-
-// if (BusLocationInfo) {
-//   if (!clickTag) {
-//   }
-// } else {
-// }
-// if (busLocationInfo.length > 0) {
-//   console.log("componentDidUpdate ///  busLocationInfo");
-//   console.log(busLocationInfo);
-//   var moveLatLon = new window.kakao.maps.LatLng(
-//     busLocationInfo[0].gpslati,
-//     busLocationInfo[0].gpslong
-//   );
-
-//   map.panTo(moveLatLon);
-//   console.log(moveLatLon);
-// }

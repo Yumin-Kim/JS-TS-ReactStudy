@@ -37,15 +37,15 @@ const StationCopoment = () => {
         cityCode,
         routeId,
       });
+      dispatch({
+        type: "SWITCH_COMPONENT",
+        payload: true,
+      });
       dispatch({ type: "ROUTEID_INFO", payload: routeId });
       if ((responseBusLocation.body.items as any) === "") {
         let findIndex = 0;
         BusStationInfo.find((params, index) => {
           if (params.routeid === routeId) findIndex = index;
-        });
-        dispatch({
-          type: "SWITCH_COMPONENT",
-          payload: true,
         });
 
         dispatch({

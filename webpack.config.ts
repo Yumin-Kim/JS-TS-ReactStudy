@@ -32,7 +32,7 @@ const config: webpack.Configuration = {
             "@babel/preset-react",
             "@babel/preset-typescript",
           ],
-          //   plugins: ["@babel/plugin-proposal-class-properties"],
+          plugins: ["@babel/plugin-proposal-class-properties"],
           env: {
             development: {
               plugins: [require.resolve("react-refresh/babel")],

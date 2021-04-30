@@ -2,6 +2,7 @@ import React, {
   createContext,
   Dispatch,
   ProviderProps,
+  useCallback,
   useEffect,
   useMemo,
   useReducer,
@@ -16,10 +17,12 @@ import SiderInputBox from "../components/SiderInputBox";
 import { reducer, T_ActionType } from "../reducer";
 import StationCopoment from "../components/StationCopoment";
 import KakaoMapComponent from "../components/KakaoMapComponent";
-import { Layout } from "antd";
+import { Layout, Button } from "antd";
 import LocationComponent from "../components/LocationComponent";
-
-const { Header, Sider, Content, Footer } = Layout;
+import VideoComponent from "../components/VideoModal";
+import { YoutubeOutlined } from "@ant-design/icons";
+import HeaderLayout from "./HeaderLayout";
+const { Sider, Content } = Layout;
 
 export const InitialState = {
   BasicbusInfo: [] as Item[],
@@ -55,11 +58,12 @@ const BasicLayout = () => {
       state.resetMapState,
     ]
   );
+
   return (
     <>
       <InitialStore.Provider value={value}>
         <Layout>
-          <Header>Header</Header>
+          <HeaderLayout />
           <Layout>
             <Sider
               theme="light"

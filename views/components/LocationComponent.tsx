@@ -1,22 +1,24 @@
 import React, { useCallback, useState } from "react";
 import { useContext } from "react";
 import { InitialStore } from "../Layouts/index";
-import { Tag, Divider, Empty } from "antd";
+import { Tag, Divider, Empty, Spin } from "antd";
 import { antdDefaultColor } from "./SiderInputBox";
 import KakaoMapComponent from "./KakaoMapComponent";
 import { IBusLoactionItem } from "../typings/type";
 
 const LocationComponent = () => {
   const { state } = useContext(InitialStore);
+  const [checkThis, setCheckThis] = useState(false);
   const [
     requireKakaoMapInfoList,
     setRequireKakaoMapInfoList,
   ] = useState<IBusLoactionItem>({} as IBusLoactionItem);
-  const { BusLocationInfo } = state;
+  const { BusLocationInfo, resetMapState } = state;
 
   const onClickBusLoaction = useCallback(
     (params: IBusLoactionItem) => {
       setRequireKakaoMapInfoList({ ...params });
+      setCheckThis(true);
     },
     [requireKakaoMapInfoList]
   );
@@ -36,7 +38,11 @@ const LocationComponent = () => {
               </Tag>
             );
           })}
-          <KakaoMapComponent KakaoMapListInfo={requireKakaoMapInfoList} />
+          <KakaoMapComponent
+            checkThis={checkThis}
+            changeCheckThis={setCheckThis}
+            KakaoMapListInfo={requireKakaoMapInfoList}
+          />
         </div>
       )}
       {BusLocationInfo.length === 0 && (
