@@ -1,6 +1,10 @@
 import React, { FC } from "react";
-import { Modal } from "antd";
-import VideoPlayer from "./VideoPlayer";
+import Modal from "antd/lib/modal";
+import loadable from "@loadable/component";
+
+const VideoPlayer = loadable(
+  () => import(/* webpackChunkName: "VideoPlayer" */ "./VideoPlayer")
+);
 
 interface VideoModalProps {
   InVisiable: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,7 +39,7 @@ const VideoModal: FC<VideoModalProps> = ({
       onOk={handleOk}
       onCancel={handleCancel}
     >
-      <VideoPlayer {...videoJsOptions} />
+      <VideoPlayer options={videoJsOptions} />
     </Modal>
   );
 };

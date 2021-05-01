@@ -1,27 +1,29 @@
-import React, {
-  createContext,
-  Dispatch,
-  ProviderProps,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-} from "react";
+import React, { createContext, Dispatch, useMemo, useReducer } from "react";
 import {
   IBusLoactionItem,
   IBusStationItem,
   IInitialState,
   Item,
 } from "../typings/type";
-import SiderInputBox from "../components/SiderInputBox";
 import { reducer, T_ActionType } from "../reducer";
-import StationCopoment from "../components/StationCopoment";
-import KakaoMapComponent from "../components/KakaoMapComponent";
-import { Layout, Button } from "antd";
-import LocationComponent from "../components/LocationComponent";
-import VideoComponent from "../components/VideoModal";
-import { YoutubeOutlined } from "@ant-design/icons";
-import HeaderLayout from "./HeaderLayout";
+import Layout from "antd/lib/layout";
+import loadable from "@loadable/component";
+
+const HeaderLayout = loadable(
+  () => import(/* webpackChunkName: "HeaderLayout" */ "./HeaderLayout")
+);
+const LocationComponent = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "LocationComponent" */ "../components/LocationComponent"
+    )
+);
+const SiderInputBox = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "SiderInputBox" */ "../components/SiderInputBox"
+    )
+);
 const { Sider, Content } = Layout;
 
 export const InitialState = {
@@ -32,6 +34,7 @@ export const InitialState = {
   routeId: "",
   resetMapState: false,
 } as IInitialState;
+
 type T_context = {
   state: IInitialState;
   dispatch: Dispatch<ReturnType<T_ActionType>>;

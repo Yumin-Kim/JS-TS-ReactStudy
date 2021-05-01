@@ -1,8 +1,12 @@
 import React, { useCallback, useState } from "react";
-import { Layout, Button } from "antd";
-import { YoutubeOutlined } from "@ant-design/icons";
-import VideoModal from "../components/VideoModal";
+import Layout from "antd/lib/layout";
+import Button from "antd/lib/button";
+import YoutubeOutlined from "@ant-design/icons/YoutubeOutlined";
+import loadable from "@loadable/component";
 
+const VideoModal = loadable(
+  () => import(/* webpackChunkName: "VideoModal" */ "../components/VideoModal")
+);
 const { Header } = Layout;
 
 const HeaderLayout = () => {

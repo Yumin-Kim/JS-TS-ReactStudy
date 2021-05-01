@@ -11,7 +11,6 @@ import { useContext } from "react";
 import { GetCurrentPostioin } from "../api/util";
 import { InitialStore } from "../Layouts";
 import { IBusLoactionItem } from "../typings/type";
-import { Spin } from "antd";
 //로딩 하는 모션 , 리팩토링
 
 interface KakaoComponent {
@@ -107,10 +106,7 @@ const KakaoMapComponent: FC<KakaoComponent> = ({
 
   return (
     <div>
-      <button onClick={onClickReset}>qwe</button>
-      <Spin spinning={loading}>
-        <div id="map" style={{ width: "50vw", height: "50vh" }}></div>
-      </Spin>
+      <div id="map" style={{ width: "100%", height: "50vh" }}></div>
     </div>
   );
 };

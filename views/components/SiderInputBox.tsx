@@ -1,14 +1,31 @@
-import React, { memo, useCallback, useContext, useEffect, useRef } from "react";
+import React, {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { getBusBasic, getBusStationInfo } from "../api/busapi";
 import { InitialStore } from "../Layouts/index";
-import { Tag, Mentions, Divider, Row, Col } from "antd";
-import StationCopoment from "./StationCopoment";
+import Divider from "antd/lib/divider";
+import Spin from "antd/lib/spin";
 import {
   PresetColorTypes,
   PresetStatusColorTypes,
 } from "antd/lib/_util/colors";
-const { Option } = Mentions;
-
+import loadable from "@loadable/component";
+//
+const TagList = loadable(
+  () => import(/* webpackChunkName: "TagList" */ "./TagList")
+);
+const MentionInputBox = loadable(
+  () => import(/* webpackChunkName: "MentionInputBox" */ "./MentionInputBox")
+);
+const StationCopoment = loadable(
+  () => import(/* webpackChunkName: "StationCopoment" */ "./StationCopoment")
+);
+//
 export const antdDefaultColor = [
   ...PresetColorTypes,
   ...PresetStatusColorTypes,
@@ -16,7 +33,10 @@ export const antdDefaultColor = [
 
 const SiderInputBox = () => {
   const { state, dispatch } = useContext(InitialStore);
-  const { BasicbusInfo, BusStationInfo } = state;
+  const [loadingState, setLoadingState] = useState(false);
+  const { BasicbusInfo, BusStationInfo, cityCode } = state;
+  const selectCityName = useRef<string>();
+  const openTable = useRef<boolean>(false);
   useEffect(() => {
     if (BasicbusInfo.length === 0) {
       (async () => {
@@ -26,75 +46,62 @@ const SiderInputBox = () => {
         }
       })();
     }
-  }, []);
+    if (cityCode > 0) {
+      const [filterBaiscBusInfo] = BasicbusInfo.filter(
+        value => Number(value.citycode) === cityCode
+      );
+      const { cityname } = filterBaiscBusInfo;
+      selectCityName.current = cityname;
+      setLoadingState(true);
+      openTable.current = false;
+      setTimeout(() => {
+        setLoadingState(false);
+      }, 800);
+    }
+  }, [cityCode]);
 
-  const onChange = (value: any) => {
-    console.log("Change:", value);
-  };
+  const onClickCityCategory = useCallback(
+    async (params: string) => {
+      dispatch({
+        type: "CITYCODE_INFO",
+        payload: Number(params),
+      });
 
-  const onSelect = (option: any) => {
-    console.log("select", option);
-  };
-
-  const onClickCityCategory = useCallback(async (params: string) => {
-    dispatch({
-      type: "CITYCODE_INFO",
-      payload: Number(params),
-    });
-    const { response: responseBusStation } = await getBusStationInfo(
-      Number(params)
-    );
-    dispatch({
-      type: "GET_BUS_STATION_INFO",
-      payload: responseBusStation.body.items.item,
-    });
-  }, []);
+      const { response: responseBusStation } = await getBusStationInfo(
+        Number(params)
+      );
+      dispatch({
+        type: "GET_BUS_STATION_INFO",
+        payload: responseBusStation.body.items.item,
+      });
+      if (BusStationInfo.length === 0) {
+        setLoadingState(true);
+        setTimeout(() => {
+          setLoadingState(false);
+        }, 800);
+      }
+      openTable.current = true;
+    },
+    [BusStationInfo]
+  );
 
   return (
     <div>
       <Divider orientation="left">지역을 선택해주세요</Divider>
-      <Mentions
-        style={{ width: "100%" }}
-        onChange={onChange}
-        onSelect={onSelect}
-        defaultValue="@세종시"
-        placement="top"
-      >
-        {BasicbusInfo.length !== 0 &&
-          BasicbusInfo.map((params, index) => {
-            if (index < antdDefaultColor.length) {
-              return (
-                <Option
-                  value={params.cityname}
-                  key={`${index}_${params.citycode}`}
-                >
-                  {params.cityname}
-                </Option>
-              );
-            }
-          })}
-      </Mentions>
-      {/* ref로 limit정하고 버튼눌렀을때 해당 limit를 통해서 더 보여주는 씩으로 진행 */}
-      {BasicbusInfo.length !== 0 &&
-        BasicbusInfo.map((params, index) => {
-          if (index < antdDefaultColor.length) {
-            return (
-              <Tag
-                style={{ fontSize: "17px", marginBottom: "8px" }}
-                color={antdDefaultColor[index]}
-                onClick={() => onClickCityCategory(params.citycode)}
-                key={`${index}_${params.citycode}`}
-              >
-                {params.cityname}
-              </Tag>
-            );
-          }
-        })}
+      <MentionInputBox />
+      <TagList
+        ListElement={BasicbusInfo}
+        onClickTagFunc={onClickCityCategory}
+      />
 
+      {BusStationInfo.length === 0 && loadingState && <Spin>Loading</Spin>}
       {BusStationInfo.length !== 0 && (
         <div>
-          <Divider orientation="left">지역을 선택해주세요!!</Divider>
-          <StationCopoment />
+          <Divider style={{ borderColor: "#40a9ff" }} dashed>
+            {selectCityName.current}
+          </Divider>
+          <Divider orientation="left">운행 버스 목록입니다</Divider>
+          {!loadingState ? <StationCopoment /> : <Spin>Loading</Spin>}
         </div>
       )}
     </div>

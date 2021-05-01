@@ -9,9 +9,11 @@ import React, {
 import { useContext } from "react";
 import { getBusLocationInfo } from "../api/busapi";
 import { InitialStore } from "../Layouts";
-import { Button, Table } from "antd";
+import Button from "antd/lib/button";
+import message from "antd/lib/message";
+import Table from "antd/lib/table";
 import { IBusStationItem } from "../typings/type";
-import { ColumnsType, TableProps } from "antd/lib/table";
+import { ColumnsType } from "antd/lib/table";
 
 interface CompactBusStationInfo
   extends Pick<
@@ -33,6 +35,14 @@ const StationCopoment = () => {
   const onClickBusLocation = useCallback(
     async (params: any) => {
       const [routeId] = params;
+
+      let findIndex = 0;
+      BusStationInfo.find((params, index) => {
+        if (params.routeid === routeId) findIndex = index;
+      });
+      message.info(
+        `${BusStationInfo[findIndex].startnodenm} ~ ${BusStationInfo[findIndex].startnodenm} 조회 중`
+      );
       const { response: responseBusLocation } = await getBusLocationInfo({
         cityCode,
         routeId,
@@ -43,20 +53,17 @@ const StationCopoment = () => {
       });
       dispatch({ type: "ROUTEID_INFO", payload: routeId });
       if ((responseBusLocation.body.items as any) === "") {
-        let findIndex = 0;
-        BusStationInfo.find((params, index) => {
-          if (params.routeid === routeId) findIndex = index;
-        });
-
         dispatch({
           type: "LOCATION_INFO_FAILURE",
           payload: findIndex,
         });
+        message.warning(`조회 결과 없습니다!`);
       } else {
         dispatch({
           type: "LOCATION_INFO_SUCCESS",
           payload: responseBusLocation.body.items.item,
         });
+        message.success(`조회 성공!`);
       }
     },
     [cityCode, BusStationInfo]

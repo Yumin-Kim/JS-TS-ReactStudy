@@ -1,7 +1,10 @@
 import path from "path";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import webpack from "webpack";
-// import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import HTMLWebpackPlugin from "html-webpack-plugin";
+
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 console.log(isDevelopment);
@@ -10,7 +13,7 @@ const config: webpack.Configuration = {
   mode: isDevelopment ? "development" : "production",
   devtool: isDevelopment ? "inline-source-map" : "eval",
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".css"],
   },
   entry: {
     app: "./views/clinet",
@@ -32,7 +35,10 @@ const config: webpack.Configuration = {
             "@babel/preset-react",
             "@babel/preset-typescript",
           ],
-          plugins: ["@babel/plugin-proposal-class-properties"],
+          plugins: [
+            "@babel/plugin-proposal-class-properties",
+            "transform-remove-console", //production
+          ],
           env: {
             development: {
               plugins: [require.resolve("react-refresh/babel")],
@@ -42,8 +48,19 @@ const config: webpack.Configuration = {
         exclude: path.join(__dirname, "node_modules"),
       },
       {
-        test: /\.css?$/,
-        use: ["style-loader", "css-loader"],
+        test: /\.css$/,
+        // include: [
+        //   path.resolve(__dirname,"")
+        // ]
+        use: [
+          // MiniCssExtractPlugin.loader, //css 최적화??
+          "style-loader", //MiniCssExtractPlugin 동시 사용 X
+          "css-loader",
+          // "postcss-loader",
+          // "sass-loader",
+          // "less-loader", //의미 없음
+        ],
+        // exclude: /node_modules/, //ReferenceError: document is not defined
       },
     ],
   },
@@ -54,14 +71,19 @@ const config: webpack.Configuration = {
     //   //   files: "./src/**/*",
     //   // },
     // }),
+    // new MiniCssExtractPlugin({
+    //   filename: "style.[name].css",
+    // }),//이미지 축소??
     new webpack.EnvironmentPlugin({
       NODE_ENV: isDevelopment ? "development" : "production",
     }),
+    new HTMLWebpackPlugin({ template: "./index.html" }),
   ],
+  // target: "web",
   output: {
     path: path.join(__dirname, "dist"),
     filename: "[name].js",
-    // chunkFilename: "[name].chunk.js",
+    chunkFilename: "[name].chunk.js",
     publicPath: "/dist/",
   },
   devServer: {
@@ -81,11 +103,13 @@ const config: webpack.Configuration = {
 if (isDevelopment && config.plugins) {
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
   config.plugins.push(new ReactRefreshWebpackPlugin());
-  // config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'server', openAnalyzer: true }));
+  // config.plugins.push(
+  //   new BundleAnalyzerPlugin({ analyzerMode: "server", openAnalyzer: true })
+  // );
 }
-// if (!isDevelopment && config.plugins) {
-//   config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
-//   config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
-// }
+if (!isDevelopment && config.plugins) {
+  config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
+  config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: "static" }));
+}
 
 export default config;
