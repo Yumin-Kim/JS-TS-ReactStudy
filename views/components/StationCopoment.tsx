@@ -129,6 +129,7 @@ const StationCopoment = () => {
         columns={columns.current}
         dataSource={spliceBusStatioinList}
         pagination={{ pageSize: 20 }}
+        style={{ height: "100%" }}
         scroll={{ y: 450 }}
       />
     </>

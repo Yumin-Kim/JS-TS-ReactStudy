@@ -3,6 +3,7 @@ import Layout from "antd/lib/layout";
 import Button from "antd/lib/button";
 import YoutubeOutlined from "@ant-design/icons/YoutubeOutlined";
 import loadable from "@loadable/component";
+import { Custom_Header } from "./style";
 
 const VideoModal = loadable(
   () => import(/* webpackChunkName: "VideoModal" */ "../components/VideoModal")
@@ -14,14 +15,8 @@ const HeaderLayout = () => {
   const onClickYoutubeBtn = useCallback(() => {
     setShowModal(prev => !prev);
   }, []);
-
   return (
-    <Header
-      style={{
-        backgroundColor: "rgba(0, 0, 0,0.12)",
-        boxShadow: "3px 5px 5px rgba(0,0,0,.5)",
-      }}
-    >
+    <Custom_Header>
       <Button
         onClick={onClickYoutubeBtn}
         type="primary"
@@ -31,7 +26,7 @@ const HeaderLayout = () => {
         Youtube
       </Button>
       <VideoModal modalState={showModal} InVisiable={setShowModal} />
-    </Header>
+    </Custom_Header>
   );
 };
 

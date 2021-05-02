@@ -1,4 +1,10 @@
-import React, { createContext, Dispatch, useMemo, useReducer } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  useEffect,
+  useMemo,
+  useReducer,
+} from "react";
 import {
   IBusLoactionItem,
   IBusStationItem,
@@ -8,6 +14,8 @@ import {
 import { reducer, T_ActionType } from "../reducer";
 import Layout from "antd/lib/layout";
 import loadable from "@loadable/component";
+import { GetCurrentPostioin } from "../api/util";
+import notification, { NotificationPlacement } from "antd/lib/notification";
 
 const HeaderLayout = loadable(
   () => import(/* webpackChunkName: "HeaderLayout" */ "./HeaderLayout")
@@ -46,6 +54,24 @@ export const InitialStore = createContext<T_context>({
 
 const BasicLayout = () => {
   const [state, dispatch] = useReducer(reducer, InitialState);
+  const openNotification = (placement: NotificationPlacement) => {
+    notification.info({
+      message: `위치 기반 동의`,
+      description:
+        "현재 위치를 기반으로 지도 확인이 가능하기 때문에 좌측상단 위치 정보를 동의해주세요",
+      placement,
+    });
+  };
+  useEffect(() => {
+    if (window.navigator) {
+      if (window.navigator.geolocation) {
+        openNotification("bottomLeft");
+        (async () => {
+          await GetCurrentPostioin();
+        })();
+      }
+    }
+  }, []);
 
   const value = useMemo<T_context>(
     () => ({
@@ -70,7 +96,7 @@ const BasicLayout = () => {
           <Layout>
             <Sider
               theme="light"
-              width={"35%"}
+              width={"30vw"}
               style={{ padding: "0 20px", height: "100vh" }}
             >
               <SiderInputBox />

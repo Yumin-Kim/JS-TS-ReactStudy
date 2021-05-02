@@ -93,17 +93,26 @@ const SiderInputBox = () => {
         ListElement={BasicbusInfo}
         onClickTagFunc={onClickCityCategory}
       />
-
-      {BusStationInfo.length === 0 && loadingState && <Spin>Loading</Spin>}
-      {BusStationInfo.length !== 0 && (
-        <div>
-          <Divider style={{ borderColor: "#40a9ff" }} dashed>
-            {selectCityName.current}
-          </Divider>
-          <Divider orientation="left">운행 버스 목록입니다</Divider>
-          {!loadingState ? <StationCopoment /> : <Spin>Loading</Spin>}
-        </div>
-      )}
+      <div style={{ height: "70vh" }}>
+        {BusStationInfo.length === 0 && loadingState && (
+          <Spin style={{ display: "block", margin: "100px auto 0" }} />
+        )}
+        {BusStationInfo.length !== 0 && (
+          <div>
+            <Divider style={{ borderColor: "#40a9ff" }} dashed>
+              {selectCityName.current}
+            </Divider>
+            <Divider orientation="left">운행 버스 목록입니다</Divider>
+            {!loadingState ? (
+              <StationCopoment />
+            ) : (
+              <Spin style={{ display: "block", margin: "100px auto 0" }}>
+                Loading
+              </Spin>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

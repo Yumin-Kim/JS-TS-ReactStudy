@@ -70,6 +70,7 @@ const KakaoMapComponent: FC<KakaoComponent> = ({
         const marker = new window.kakao.maps.Marker({
           map: checkMemo,
           position: moveLatLon, // 마커를 표시할 위치
+          content: iwContent,
         });
         marker.setMap(checkMemo);
       }

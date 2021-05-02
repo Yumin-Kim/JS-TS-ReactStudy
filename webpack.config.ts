@@ -37,7 +37,7 @@ const config: webpack.Configuration = {
           ],
           plugins: [
             "@babel/plugin-proposal-class-properties",
-            "transform-remove-console", //production
+            // "transform-remove-console", //production
           ],
           env: {
             development: {

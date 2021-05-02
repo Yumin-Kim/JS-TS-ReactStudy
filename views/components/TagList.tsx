@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  FC,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { IInitialState, Item } from "../typings/type";
 import { antdDefaultColor } from "./SiderInputBox";
 import Tag from "antd/lib/tag";
@@ -35,13 +42,13 @@ const TagList: FC<TagListProps> = ({ ListElement, onClickTagFunc }) => {
   return (
     <>
       {Array.isArray(ListElement) && ListElement.length !== 0 && moreInfo ? (
-        <div>
+        <div style={{ height: "12vh", width: "100%" }}>
           {ListIndex.current === 0
             ? ListElement.map((params, index) => {
                 if (index < antdDefaultColor.length) {
                   return (
                     <Tag
-                      style={{ fontSize: "17px", marginBottom: "8px" }}
+                      style={{ fontSize: "12px", marginBottom: "8px" }}
                       color={antdDefaultColor[index]}
                       onClick={() => onClickTagFunc(params.citycode)}
                       key={`${index}_${params.citycode}`}
@@ -78,7 +85,12 @@ const TagList: FC<TagListProps> = ({ ListElement, onClickTagFunc }) => {
         </div>
       ) : (
         <Spin
-          style={{ margin: "0 auto", display: "block" }}
+          style={{
+            margin: "30px auto 0",
+            display: "block",
+            textAlign: "center",
+            verticalAlign: "middle",
+          }}
           indicator={antIcon}
         />
       )}
@@ -86,4 +98,4 @@ const TagList: FC<TagListProps> = ({ ListElement, onClickTagFunc }) => {
   );
 };
 
-export default TagList;
+export default memo(TagList);
