@@ -15,10 +15,15 @@
 
 ## Todo
 
-- styled-commponent
+- styled-commponent XX
 - Testing
+  - https://www.nextree.io/react-testing-7-3/
+  - https://blog.rhostem.com/posts/2020-10-14-beginners-guide-to-testing-react-1
 - rendering 최적화
 - Hooks에 대한 깊은 이해
 - code spliting >> antd로 인해 필요성
 - **기능 추가**
 - 확장으로 인한 redux 또는
+
+* 클로저 공부
+  - <a href="https://poiemaweb.com/js-closure">클로저 정리</a> 해당 부분을 정리하는 이유는 클로저를 통해서 다양한 프로그래밍이 가능하며 <a href="https://overreacted.io/ko/react-as-a-ui-runtime/">react UI 변경</a> 포스팅을 통해서 클로저를 기반으로 컴포넌트 랜더링이 이루어지는
