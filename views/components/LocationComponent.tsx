@@ -7,6 +7,8 @@ import Empty from "antd/lib/empty";
 import { IBusLoactionItem, IBusStationItem } from "../typings/type";
 import loadable from "@loadable/component";
 import { antdDefaultColor } from "./SiderInputBox";
+import { getBusLocationInfo } from "../api/busapi";
+import message from "antd/lib/message";
 ///
 const KakaoMapComponent = loadable(
   () =>
@@ -14,23 +16,20 @@ const KakaoMapComponent = loadable(
 );
 ///
 const LocationComponent = () => {
-  const { state } = useContext(InitialStore);
+  const { state, dispatch } = useContext(InitialStore);
   const [checkThis, setCheckThis] = useState(false);
-  const [
-    requireKakaoMapInfoList,
-    setRequireKakaoMapInfoList,
-  ] = useState<IBusLoactionItem>({} as IBusLoactionItem);
-  const {
-    BusLocationInfo,
-    cityCode,
-    routeId,
-    BasicbusInfo,
-    BusStationInfo,
-  } = state;
+  const [onclickValid, setOnclickValid] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [counterIndex, setCounterIndex] = useState(0);
+  const [requireKakaoMapInfoList, setRequireKakaoMapInfoList] =
+    useState<IBusLoactionItem>({} as IBusLoactionItem);
+  const { BusLocationInfo, cityCode, routeId, BasicbusInfo, BusStationInfo } =
+    state;
   const cityName = useRef<string>();
-  const statioinInfo = useRef<
-    Pick<IBusStationItem, "endnodenm" | "startnodenm" | "routeno">
-  >();
+  // const interval = useRef<any>(null);
+  // const timeout = useRef<any>(null);
+  const statioinInfo =
+    useRef<Pick<IBusStationItem, "endnodenm" | "startnodenm" | "routeno">>();
   useEffect(() => {
     if (BusLocationInfo.length > 0) {
       if (BusStationInfo.length > 0) {
@@ -51,12 +50,68 @@ const LocationComponent = () => {
     }
   }, [cityCode, routeId, BusLocationInfo]);
 
+  useEffect(() => {
+    if (checkThis) {
+      console.log("checkThis", checkThis);
+      let timeout: any = null;
+      let interval: any = null;
+      let counter = 0;
+      setCounterIndex(counter);
+      interval = window.setInterval(async () => {
+        let findIndex = 0;
+        BusStationInfo.find((params, index) => {
+          if (params.routeid === routeId) findIndex = index;
+        });
+        const { response: responseBusLocation } = await getBusLocationInfo({
+          cityCode,
+          routeId,
+        });
+        dispatch({
+          type: "SWITCH_COMPONENT",
+          payload: true,
+        });
+        dispatch({ type: "ROUTEID_INFO", payload: routeId });
+        if ((responseBusLocation.body.items as any) === "") {
+          dispatch({
+            type: "LOCATION_INFO_FAILURE",
+            payload: findIndex,
+          });
+          message.warning(`조회 결과 없습니다!`);
+        } else {
+          dispatch({
+            type: "LOCATION_INFO_SUCCESS",
+            payload: responseBusLocation.body.items.item,
+          });
+          counter++;
+          message.success(`10초당 ${counter} 조회 >> 총 10회 성공!`);
+          setCounterIndex(counter);
+          setRequireKakaoMapInfoList({
+            ...responseBusLocation.body.items.item[index],
+          });
+        }
+      }, 1000 * 10);
+      timeout = window.setTimeout(
+        () => clearInterval(interval),
+        1000 * 10 * 10
+      );
+      return () => {
+        clearTimeout(timeout);
+        clearInterval(interval);
+      };
+    }
+  }, [checkThis, onclickValid]);
+
   const onClickBusLoaction = useCallback(
-    (params: IBusLoactionItem) => {
-      setRequireKakaoMapInfoList({ ...params });
+    (params: IBusLoactionItem) => (index: number) => {
+      setOnclickValid(prev => !prev);
+      setRequireKakaoMapInfoList({
+        ...params,
+      });
+      setIndex(index);
+
       setCheckThis(true);
     },
-    [requireKakaoMapInfoList]
+    [requireKakaoMapInfoList, BusLocationInfo]
   );
 
   return (
@@ -71,7 +126,9 @@ const LocationComponent = () => {
       }}
     >
       {BusLocationInfo.length !== 0 && (
-        <div>
+        <div style={{ marginTop: "100px" }}>
+          <h2>현재 위치 입니다 원하는 버스를 선택하여 조회 해주세요</h2>
+          {checkThis && <h3>10초당 {counterIndex}번 10회 조회 됩니다</h3>}
           <div style={{ marginBottom: "10px" }}>
             <Divider style={{ borderColor: "#40a9ff" }} dashed>
               {cityName.current}
@@ -87,7 +144,7 @@ const LocationComponent = () => {
               return (
                 <Tag
                   color={antdDefaultColor[index]}
-                  onClick={() => onClickBusLoaction(params)}
+                  onClick={() => onClickBusLoaction(params)(index)}
                 >
                   {params.routetp}
                 </Tag>

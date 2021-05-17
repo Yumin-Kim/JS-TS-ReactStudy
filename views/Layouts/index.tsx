@@ -63,14 +63,14 @@ const BasicLayout = () => {
     });
   };
   useEffect(() => {
-    if (window.navigator) {
-      if (window.navigator.geolocation) {
-        openNotification("bottomLeft");
-        (async () => {
-          await GetCurrentPostioin();
-        })();
-      }
-    }
+    // if (window.navigator) {
+    //   if (window.navigator.geolocation) {
+    //     openNotification("bottomLeft");
+    //     (async () => {
+    //       await GetCurrentPostioin();
+    //     })();
+    //   }
+    // }
   }, []);
 
   const value = useMemo<T_context>(

@@ -45,20 +45,21 @@ const KakaoMapComponent: FC<KakaoComponent> = ({
   useEffect(() => {
     async function name() {
       const data = await GetCurrentPostioin();
-      console.log(data);
-
       setCheck(data);
     }
     name();
   }, []);
   useEffect(() => {
+    console.log("useEffect KakaoMapListInfo");
+
     if (check.gpslong) {
       if (KakaoMapListInfo.gpslati && checkThis) {
+        console.log("KakaoMapListInfo", KakaoMapListInfo);
+
         var moveLatLon = new window.kakao.maps.LatLng(
           KakaoMapListInfo.gpslati,
           KakaoMapListInfo.gpslong
         );
-
         checkMemo.panTo(moveLatLon);
         var iwContent = `<div ><div style="font-size:12px;">지역 : ${KakaoMapListInfo.nodenm} </div>`;
         iwContent += `<div style="font-size:12px;">버스 번호 : ${KakaoMapListInfo.vehicleno} </div>`;
@@ -75,28 +76,25 @@ const KakaoMapComponent: FC<KakaoComponent> = ({
         marker.setMap(checkMemo);
       }
     }
-  }, [check, KakaoMapListInfo]);
+  }, [KakaoMapListInfo]);
 
   useEffect(() => {
-    console.log(check.gpslong, resetMapState);
-
     if (check.gpslong) {
       if (resetMapState) {
         console.log("resetMapState");
 
-        console.log(check);
         // console.log(check.gpslong);
-        var moveLatLon = new window.kakao.maps.LatLng(
-          check.gpslati,
-          check.gpslong
-        );
-        const marker = new window.kakao.maps.Marker({
-          map: checkMemo,
-          position: moveLatLon, // 마커를 표시할 위치
-        });
-        checkMemo.panTo(moveLatLon);
-        marker.setMap(checkMemo);
-        dispatch({ type: "SWITCH_COMPONENT", payload: false });
+        // var moveLatLon = new window.kakao.maps.LatLng(
+        //   check.gpslati,
+        //   check.gpslong
+        // );
+        // const marker = new window.kakao.maps.Marker({
+        //   map: checkMemo,
+        //   position: moveLatLon, // 마커를 표시할 위치
+        // });
+        // checkMemo.panTo(moveLatLon);
+        // marker.setMap(checkMemo);
+        // dispatch({ type: "SWITCH_COMPONENT", payload: false });
       }
     }
   }, [check, resetMapState]);
