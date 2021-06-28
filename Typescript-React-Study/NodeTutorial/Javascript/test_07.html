@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>201610309</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+    <script>
+        const student = ["홍길동", "이서연", "안은영"];
+        const eng = [40, 90, 20];
+        const math = [50, 70, 30];
+        const kor = [100, 50, 60];
+        const result = Array(student.length).fill().reduce((prev, cur, idx) => {
+            prev[idx] = eng[idx] + math[idx] + kor[idx];
+            return prev;
+        }, [])
+        const average = Array(student.length).fill().reduce((prev, cur, idx) => {
+            prev[idx] = Math.ceil(result[idx] / result.length);
+            return prev;
+        }, [])
+        const category = ["student", "eng", "math", "kor", "result", "average"]
+        const categoryData = [student, eng, math, kor, result, average];
+     
+        document.write("<table>")
+        document.write("<tr>")
+        category.forEach(val => document.write(`<td>${val}</td>`));
+        document.write("</tr>")
+        for (let i = 0; i < student.length; i++) {
+            const PersonInfo = category.reduce((prev, cur, curidx, arry) => {
+                prev[`${cur}`] = categoryData[curidx][i];
+                return prev;
+            }, {})
+            document.write("<tr>");
+            category.forEach((val,idx)=>{
+                document.write(`<td>${PersonInfo[val]}</td>`)
+            })    
+            document.write("</tr>");
+        }
+        document.write("<table>")
+    </script>
+
+</head>
+
+<body>
+</body>
+
+</html>

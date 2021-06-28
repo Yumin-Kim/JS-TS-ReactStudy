@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>요일출력</title>
+	<style type="text/css">
+		.wrap {
+			border: solid 1px #dcdcdc;
+			padding: 20px;
+			text-align: center;
+		}
+
+		#christmasBox,
+		#birthdayBox {
+			font-size: 2em;
+			padding: 10px;
+		}
+	</style>
+</head>
+<div class="wrap">
+	<h2>특정 해 크리스크마스 요일 출력하기</h2>
+	<label for="christmasYear">년 입력: </label><input type="text" id="christmasYear" placeholder="입력방법 : 2021">
+	<button type="button" id="christmasBtn">크리스마스 요일 출력</button>
+	<div id="christmasBox"></div>
+</div>
+<div class="wrap">
+	<h2>생일 요일 출력하기</h2>
+	<label for="year">생일을 입력하시오. </label><input type="text" id="birthday" placeholder="입력방법 : 2000.10.05">
+	<button type="button" id="birthdayBtn">생일 요일 출력</button>
+	<div id="birthdayBox"></div>
+</div>
+<body>
+	<script>
+		var array = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"];
+		document.getElementById("christmasBtn").addEventListener("click", () => {
+			var year = Number(document.getElementById("christmasYear").value);
+			var day = new Date(year, 11, 24).getDay();
+			document.getElementById("christmasBox").textContent = array[day];
+		});
+		document.getElementById("birthdayBtn").addEventListener("click", () => {
+			var day = document.getElementById("birthday").value.split(".");
+			var input = new Date(parseInt(day[0]), parseInt(day[1]) - 1, parseInt(day[2]) - 1).getDay();
+			document.getElementById("birthdayBox").textContent = array[input];
+		});
+	</script>
+</body>
+
+</html>

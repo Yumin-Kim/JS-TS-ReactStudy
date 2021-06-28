@@ -1,0 +1,26 @@
+{
+  "name": "webproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cheerio": "^1.0.0-rc.5",
+    "cheerio-httpcli": "^0.8.1",
+    "fs": "0.0.1-security",
+    "google-images": "^2.1.0",
+    "image-to-base64": "^2.1.1",
+    "images-scraper": "^5.0.7",
+    "node-zip": "^1.1.1",
+    "nodemon": "^2.0.6",
+    "puppeteer": "^5.5.0",
+    "request": "^2.88.2",
+    "url": "^0.11.0",
+    "url-parse": "^1.4.7"
+  }
+}

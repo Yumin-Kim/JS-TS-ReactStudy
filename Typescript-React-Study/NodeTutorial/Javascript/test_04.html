@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>201610309_곱하기 Prompt</title>
+    <script>
+        const CalculationFunc = (num) => {
+            document.write(`<br>${num}단입니다 <br>`);
+            Array(9).fill("").forEach((val, index) => {
+                const ResultVar = (index + 1) * num;
+                document.write(`${num} x ${index + 1} = ${ResultVar} <br>`)
+            })
+        };
+        window.onload = () => {
+            const CalCulationVariable_1 = parseInt(prompt(" 첫번째 단 숫자를 입력해주세요!!"));
+            const CalCulationVariable_2 = parseInt(prompt(" 두번째 단 숫자를 입력해주세요!!"));
+            CalculationFunc(CalCulationVariable_1);
+            CalculationFunc(CalCulationVariable_2);
+        }
+        </script>
+</head>
+<body>
+</body>
+</html>

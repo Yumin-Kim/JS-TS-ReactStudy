@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>로또</title>
+	<style>
+		#lottoBox {
+			width: 350px;
+			padding: 20px;
+			border: solid 3px #dcdcdc;
+			margin: 50px auto;
+			text-align: center;
+		}
+
+		.num {
+			width: 30px;
+			height: 30px;
+			border-radius: 30px;
+			background: #f00;
+			display: inline-block;
+			text-align: center;
+			line-height: 30px;
+			color: #fff;
+			margin: 0 5px;
+		}
+
+		.btnBox {
+			text-align: center;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div id="lottoBox">
+	</div>
+	<div class="btnBox"><button type="button" id="btn">로또번호출력</button></div>
+	<script>
+		var btn = document.getElementById("btn");
+		var LottoBox = document.getElementById("lottoBox");
+		function StartLotto() {
+			var array = new Array();
+			var idx = 0;
+			while (idx < 6) {
+				var random = Math.ceil(Math.random() * 45);
+				if (array.indexOf(random) < 0) {
+					idx++;
+					array.push(random);
+				}
+			}
+			return array;
+		}
+		btn.addEventListener("click", () => {
+			LottoBox.textContent = "";
+			for(var i = 0 ; i < 6 ; i++){
+				var create = document.createElement("div");
+				create.textContent = StartLotto()[i];
+				create.className = "num";
+				LottoBox.append(create)
+			}
+		})
+	</script>
+</body>
+
+</html>

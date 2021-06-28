@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>활용문제</title>
+</head>
+<body>
+   <div>
+      <p>
+         <label for="korea">국어</label>
+         <input type="text" id="korea"> 
+      </p>
+      <p>
+         <label for="english">영어</label>
+         <input type="text" id="english"> 
+      </p>
+      <p>
+         <label for="math">수학</label>
+         <input type="text" id="math"> 
+      </p>
+      <p>
+      <button type="button" onclick="alert(fn_sum())">합계출력</button>
+      <button type="button" onclick="alert(fn_avg())">평균출력</button>
+      <button type="button" onclick="fn_grad()">학점출력</button>
+      </p>
+   </div>
+   <script>
+
+      function fn_sum(){
+        
+      }
+
+      function fn_avg(){
+	
+      }
+
+      function fn_grad(){
+         const sumData = fn_avg();
+		 if(sumData >= 90)
+			alert("A학점");
+		else if(sumData >= 80)	
+		 	alert("B학점");
+		else if(sumData >= 70)
+			alert("C학점");
+		else if(sumData >= 60)
+			alert("D학점");
+		else
+			alert("F학점")
+      }
+   </script>
+</body>
+</html>

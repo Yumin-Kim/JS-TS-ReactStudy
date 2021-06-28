@@ -1,0 +1,80 @@
+// {
+//     "compilerOptions": {
+//         "strict": true,
+//         //"strict" 사용시 타입스크립트 사용 극대화!!
+//         "strictNullChecks": true, 
+//         //>> 옵션 추가 하면 null 과 undefined를 다르게 표현 한다
+//         "allowJs": true,
+//         "checkJs": true,
+//         // "outDir": "dist", >> 
+//         "jsx": "react",
+//         "target":"ES6", // 최신브라우저 만!!
+//         "typeRoots": ["./types", "./node_modules/@types"],//자신이 만든 d.ts를 인식하게끔 만드는 옵션!!
+//         "experimentalDecorators": true,
+//         "lib": ["ES5","ES2015","ES2020","ES2016","ES2017","ES2018","ES2019","DOM"]
+//         //lib 라이브러리 참조 함>> 브라우저 조작시 DOM 필요 다른 최신 문법 사용시 ES6이런식으로 추가하면 에러 없어짐!!
+//     },
+//     "exclude": ["*.js","./module","./collection","./types","./jscollector","./tutorial-ts","./tutorial-react/start.ts"]
+// }
+//React Config
+// {
+//   "compilerOptions": {
+//     "strict": true,
+//     "noImplicitAny": true, //false할시 any관련 에러 무시!!
+//     "strictNullChecks": true, // false 할시 null관련 무시!! 
+//     "moduleResolution": "node",//모듈에서 부터 찾도록 해주는 설정인데 기본 값은 classic으로 상대경로 보다 확장하는 "node"를 사용해준다!!
+//     "lib": [
+//       "es5",
+//       "es2015",
+//       "ES2016",
+//       "dom"
+//     ],
+//     "target": "ES6",
+//     "jsx": "react",
+//   },
+//   "exclude": [
+//     "*.js",
+//     "./lecture",
+//     "./src",
+//     "./webpack",
+//   ]
+// }
+{
+  "compileOnSave": false, //IDE에 설정하면 저장시 지정된 tsconfig,json에 대한 모든 파일을 생성한다 
+  "compilerOptions": {
+    "strict": true,
+    "target": "es5",
+    "module": "commonjs",  
+      "lib": [
+      "ES2015",
+      "ES2016",
+      "ES2017",
+    ],
+    "outDir": "./build",
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": true,
+    "sourceMap": false,
+    "moduleResolution": "node",
+  },
+  "exclude": [
+    "./node_modules",
+    "./lecture",
+    "./src",
+    // "./React_Project_Templete",
+    "./soruce",
+    "./tsTutorial",
+    "./dist",
+    "*.js",
+    "./Project",
+    "./source",
+    "./React_Project_Templete",
+    "./webpack",
+    "./config",
+    "./IOT_Server_Firebase",
+    "./public",
+    "./PWA_React",
+    "./TSSchoolLecture",
+    "./src",
+  ]
+}

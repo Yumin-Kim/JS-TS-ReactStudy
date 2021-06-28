@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>201610309_IF(Conditional Statement)</title>
+    <script>
+        function CompareNumber() {
+            const numberFirst = Number(prompt("비교할 숫자를 입력해주세요(첫번째)"));
+            const numberSecond = Number(prompt("비교할 숫자를 입력해주세요(두번째)"));
+            let MaxResult;
+            let MinResult;
+            if (numberFirst > numberSecond) {
+                MaxResult = numberFirst;
+                MinResult = numberSecond;
+            }
+            else if (numberFirst < numberSecond) {
+                MaxResult = numberSecond;
+                MinResult = numberFirst;
+            }
+            else {
+                MaxResult = "같습니다";
+            }
+            if (MaxResult.__proto__ === new String().__proto__) {
+                document.write(`같습니다`);
+            } else {
+                document.write(`큰값은 ${MaxResult} 작은 값은 ${MinResult}`);
+            }
+            document.write("<br>");
+        };
+        function CompareScore() {
+            let grade, check = false;
+            const TotalScore = Array(3).fill("").reduce((prev, curPrompt, curInd) => {
+                curVal = Number(prompt(`${curInd+1}번째 성적을 적어주세요!!`))
+                return prev + curVal;
+            }, 0)
+            const ResultScore = TotalScore / 3;
+            const OutputString = [90, 80, 70, 60].reduce((pred, cur_v, cur_i) => {
+                if (!check) {
+                    if (ResultScore >= cur_v) {
+                        switch (cur_v) {
+                            case 90:
+                                grade = "A";
+                                break;
+                            case 80:
+                                grade = "B";
+                                break;
+                            case 70:
+                                grade = "C";
+                                break;
+                            case 60:
+                                grade = "D";
+                                break;
+                        }
+                        check = true;
+                    }
+                    else
+                        grade = "F";
+                }
+            }, 0)
+            document.write(`받은 성적의 합계 : ${TotalScore}<br> 받은 평균값은 : ${ResultScore}<br> 받은 성적은 : ${grade}`);
+        }
+        window.onload = () => {
+            CompareNumber();
+            CompareScore();
+        };
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
