@@ -9,6 +9,8 @@ import loadable from "@loadable/component";
 import { antdDefaultColor } from "./SiderInputBox";
 import { getBusLocationInfo } from "../api/busapi";
 import message from "antd/lib/message";
+import RoadViewcomponent from "./RoadViewcomponent";
+import { isArray } from "util";
 ///
 const KakaoMapComponent = loadable(
   () =>
@@ -43,18 +45,19 @@ const LocationComponent = () => {
         const [data] = BusStationInfo.filter(
           params => params.routeid === routeId
         );
-
-        const { startnodenm, routeno, endnodenm } = data;
-        statioinInfo.current = { startnodenm, routeno, endnodenm };
+        if (data) {
+          const { startnodenm, routeno, endnodenm } = data;
+          statioinInfo.current = { startnodenm, routeno, endnodenm };
+        }
       }
     }
   }, [cityCode, routeId, BusLocationInfo]);
 
   useEffect(() => {
+    let timeout: any = null;
+    let interval: any = null;
+
     if (checkThis) {
-      console.log("checkThis", checkThis);
-      let timeout: any = null;
-      let interval: any = null;
       let counter = 0;
       setCounterIndex(counter);
       interval = window.setInterval(async () => {
@@ -71,12 +74,13 @@ const LocationComponent = () => {
           payload: true,
         });
         dispatch({ type: "ROUTEID_INFO", payload: routeId });
+
         if ((responseBusLocation.body.items as any) === "") {
           dispatch({
             type: "LOCATION_INFO_FAILURE",
             payload: findIndex,
           });
-          message.warning(`조회 결과 없습니다!`);
+          message.warning(`조회 결과 없습니다!!!`);
         } else {
           dispatch({
             type: "LOCATION_INFO_SUCCESS",
@@ -85,9 +89,15 @@ const LocationComponent = () => {
           counter++;
           message.success(`10초당 ${counter} 조회 >> 총 10회 성공!`);
           setCounterIndex(counter);
-          setRequireKakaoMapInfoList({
-            ...responseBusLocation.body.items.item[index],
-          });
+          if (isArray(responseBusLocation.body.items.item)) {
+            setRequireKakaoMapInfoList({
+              ...responseBusLocation.body.items.item[index],
+            });
+          } else {
+            setRequireKakaoMapInfoList({
+              ...(responseBusLocation.body.items.item as any),
+            });
+          }
         }
       }, 1000 * 10);
       timeout = window.setTimeout(
@@ -97,9 +107,14 @@ const LocationComponent = () => {
       return () => {
         clearTimeout(timeout);
         clearInterval(interval);
+        setCheckThis(false);
       };
     }
-  }, [checkThis, onclickValid]);
+    return () => {
+      clearTimeout(timeout);
+      clearInterval(interval);
+    };
+  }, [checkThis, onclickValid, index, BusStationInfo]);
 
   const onClickBusLoaction = useCallback(
     (params: IBusLoactionItem) => (index: number) => {
@@ -151,15 +166,22 @@ const LocationComponent = () => {
               );
             })}
           </div>
-          <KakaoMapComponent
-            checkThis={checkThis}
-            changeCheckThis={setCheckThis}
-            KakaoMapListInfo={requireKakaoMapInfoList}
-          />
+          {requireKakaoMapInfoList.gpslati && (
+            <>
+              <KakaoMapComponent
+                checkThis={checkThis}
+                changeCheckThis={setCheckThis}
+                KakaoMapListInfo={requireKakaoMapInfoList}
+              />
+            </>
+          )}
         </div>
       )}
       {BusLocationInfo.length === 0 && (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        <>
+          <h1>항목을 선택해야 로드뷰 , 지도가 제공됩니다</h1>
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        </>
       )}
     </div>
   );
